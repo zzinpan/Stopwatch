@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>sample</title>
+</head>
+<body>
+
+<span id="time">0.000</span>초
+<div>
+	<button id="start">시작</button>
+	<button id="pause">일시중지</button>
+	<button id="stop">중지</button>
+</div>
+<div>3초에 경고창이 표시됩니다.</div>
+
+<script type="module">
+
+import Timer from "./src/Timer.js";
+
+// timer api
+const timer = new Timer();
+timer.setAlarm( 3000, Timer.AlarmType.ABSOLUTE );
+
+// elements
+const spanTime = document.querySelector( "#time" );
+const buttonStart = document.querySelector( "#start" );
+const buttonPause = document.querySelector( "#pause" );
+const buttonStop = document.querySelector( "#stop" );
+
+
+buttonStart.addEventListener("click", ()=>{
+	timer.start();	
+});
+
+buttonPause.addEventListener("click", ()=>{
+	timer.pause();
+});
+
+buttonStop.addEventListener("click", ()=>{
+	timer.stop();
+});
+
+
+timer.on( "update", ( time )=>{
+	spanTime.innerText = ( time / 1000 ).toFixed( 3 );
+});
+
+timer.on("alarm", ()=>{
+
+	alert( "알람발생" );	
+
+});
+
+window.timer = timer;
+
+</script>
+</body>
+</html>
