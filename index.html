@@ -2,56 +2,346 @@
 <html>
 <head>
 <title>sample</title>
+<style type="text/css">
+body { 
+	
+	padding: 0px; 
+	margin: 0px; 
+	pointer-events: auto;
+	
+}
+
+.container {
+	
+	position: absolute;
+	left: 0px;
+	top: 0px;
+	width: 100%;
+	height: 100%;
+	
+}
+
+.stopwatch {
+
+	position: absolute; 
+	background: url('img/stopwatch.png'); 
+	width: 402px; 
+	height: 500px; 
+	background-size: 100%; 
+	transform: translate( -50%, -50% ); 
+	left: 50%; 
+	top: 50%;
+	pointer-events: auto;
+  	
+}
+.time-board {
+	
+	pointer-events: auto;
+    position: absolute;
+    left: 57px;
+    top: 168px;
+    background: url('img/time-board.png');
+    background-size: 100%;
+    width: 284px;
+    height: 284px;
+    
+}
+
+.hand {
+
+	position: absolute;
+   	left: 50%;
+	top: 12px;
+   	transform: translateX( -50% ) rotate( 0deg );
+
+}
+
+.hand-alarm {
+	
+	pointer-events: auto;
+	cursor: pointer;
+	position: absolute;
+   	left: 50%;
+	top: 72px;
+   	transform: translateX( -50% ) rotate( 105deg );
+
+}
+
+
+.hand-alarm:hover {
+
+	-webkit-filter: drop-shadow( 0px 0px 10px rgba(0, 255, 0, .7));
+  	filter: drop-shadow( 0px 0px 10px rgba(0, 255, 0, .7));
+
+}
+
+.hand-alarm.drag {
+
+	-webkit-filter: drop-shadow( 0px 0px 10px rgba(0, 255, 0, .7));
+  	filter: drop-shadow( 0px 0px 10px rgba(0, 255, 0, .7));
+
+}
+
+.hand-circle {
+
+	position: absolute;
+   	left: 50%;
+   	top: 50%;
+   	transform: translate( -50%, -50% ) rotate( 0deg );
+   	width: 14px;
+   	height: 14px;
+   	background-color: black;
+   	border-radius: 100px;
+	background-color: #CD361D;
+
+}
+
+.left-button {
+	
+	pointer-events: auto;
+	position: absolute;
+    left: 32px;
+    top: 142px;
+    width: 40px;
+    height: 40px;
+	background: url('img/left-button.png');
+	transform: rotate( 315deg );
+    background-size: 100%;
+    cursor: pointer;
+    transition: top 0.5s, left 0.5s;
+	
+}
+
+.left-button:hover {
+
+	-webkit-filter: drop-shadow( 0px 0px 10px rgba(0, 0, 255, .7));
+  	filter: drop-shadow( 0px 0px 10px rgba(0, 0, 255, .7));
+
+}
+.left-button.pushed {
+
+	left: 42px;
+    top: 152px;
+    transition: top 0.5s, left 0.5s;
+
+}
+
+.right-button {
+
+	pointer-events: auto;
+	position: absolute;
+	right: 34px;
+	top: 141px;
+	width: 38px;
+	height: 38px;
+	background: url('img/right-button.png');
+	transform: rotate( 45deg );
+    background-size: 100%;
+    cursor: pointer;
+    transition: top 0.5s, right 0.5s;
+	
+}
+.right-button:hover {
+
+	-webkit-filter: drop-shadow( 0px 0px 10px rgba(255, 0, 0, .7));
+  	filter: drop-shadow( 0px 0px 10px rgba(255, 0, 0, .7));
+
+}
+.right-button.pushed {
+
+	right: 44px;
+	top: 151px;
+    transition: top 0.5s, right 0.5s;
+
+}
+
+.time-value {
+	
+	pointer-events: none;
+	position: absolute;
+	top: 200px;
+	left: 50%;
+	display: inline-block;
+	transform: translate( -50%, -50% );
+	
+}
+
+.shadow {
+  	-webkit-filter: drop-shadow( 3px 3px 2px rgba(0, 0, 0, .7));
+  	filter: drop-shadow( 3px 3px 2px rgba(0, 0, 0, .7));
+}
+</style>
 </head>
 <body>
 
-<span id="time">0.000</span>초
-<div>
-	<button id="start">시작</button>
-	<button id="pause">일시중지</button>
-	<button id="stop">중지</button>
+<div class="container">
+
+	<div class="stopwatch shadow">
+		<div id="left-button" class="left-button"></div>
+		<div id="right-button" class="right-button"></div>
+		<div id="time-board" class="time-board">
+			
+			<div id="test" class="time-value">0.000</div>
+			
+			<svg id="hand-alarm" class="hand-alarm shadow" width="8" height="140" xmlns="http://www.w3.org/2000/svg">
+			  <path d="M3 0 L 5 5 L 8 90 L 0 90 L 1 5 Z" fill="white" stroke="black" stroke-width="2"/>
+			</svg>
+			
+			<svg id="hand" class="hand shadow" width="6" height="260" xmlns="http://www.w3.org/2000/svg">
+			  <path d="M3 0 L 6 150 L 0 150 Z" fill="#CD361D" stroke="#CD361D"/>
+			</svg>
+			
+			
+			<div id="hand-circle" class="hand-circle shadow"></div>
+			
+		</div>
+	</div>
+	
 </div>
-<div>3초에 경고창이 표시됩니다.</div>
+
 
 <script type="module">
 
-import Timer from "./src/Timer.js";
+import Stopwatch from "./src/Stopwatch.js";
 
-// timer api
-const timer = new Timer();
-timer.setAlarm( 3000, Timer.AlarmType.ABSOLUTE );
+document.body.addEventListener("selectstart", ( e )  => e.preventDefault() );
 
-// elements
-const spanTime = document.querySelector( "#time" );
-const buttonStart = document.querySelector( "#start" );
-const buttonPause = document.querySelector( "#pause" );
-const buttonStop = document.querySelector( "#stop" );
+const hand = document.querySelector("#hand");
+hand.deg = 0;
+hand.update = ( deg ) => {
+	
+	hand.deg = deg;
+	hand.style.transform = `translateX( -50% ) rotate( ${deg}deg )`;
+	handCircle.style.transform = `translate( -50%, -50% ) rotate( ${deg}deg )`;
 
+};
 
-buttonStart.addEventListener("click", ()=>{
-	timer.start();	
-});
+const timeBoard = document.querySelector("#time-board");
+const handAlarm = document.querySelector("#hand-alarm");
+handAlarm.isDrag = false;
+handAlarm.deg = 105;
+handAlarm.addEventListener("pointerdown", ( e ) => {
+	
+	if( e.button !== 0 ){
+		return;
+	}
 
-buttonPause.addEventListener("click", ()=>{
-	timer.pause();
-});
-
-buttonStop.addEventListener("click", ()=>{
-	timer.stop();
-});
-
-
-timer.on( "update", ( time )=>{
-	spanTime.innerText = ( time / 1000 ).toFixed( 3 );
-});
-
-timer.on("alarm", ()=>{
-
-	alert( "알람발생" );	
+	handAlarm.classList.add( "drag" );
+	handAlarm.isDrag = true;
+	timeBoard.boundingRect = timeBoard.getBoundingClientRect();
 
 });
+document.body.addEventListener("pointermove", ( e ) => {
+	
 
-window.timer = timer;
+	if( handAlarm.isDrag === false ){
+		return;
+	}
+	
+	const radians = Math.atan2( 
+						e.pageY - ( timeBoard.boundingRect.top + timeBoard.boundingRect.bottom ) / 2, 
+						e.pageX - ( timeBoard.boundingRect.left + timeBoard.boundingRect.right ) / 2 
+					) + Math.PI / 2;
+	
+	handAlarm.deg = radians / Math.PI * 180;
+	handAlarm.style.transform = `translateX( -50% ) rotate( ${radians}rad )`;
+
+});
+
+document.body.addEventListener("pointerup", ( e ) => {
+
+	if( e.button !== 0 ){
+		return;
+	}
+	
+	handAlarm.classList.remove( "drag" );
+	handAlarm.isDrag = false;
+
+});
+
+const handCircle = document.querySelector("#hand-circle");
+const leftButton = document.querySelector("#left-button");
+const rightButton = document.querySelector("#right-button");
+
+leftButton.addEventListener("click", function(){
+	
+	if( rightButton.classList.contains("pushed") === false ){
+		
+		return;
+
+	}
+
+	
+	const classList = this.classList;
+
+	if( classList.contains("pushed") ){
+
+		classList.remove("pushed");
+		stopwatch.start();
+
+	}else{
+
+		classList.add("pushed");
+		stopwatch.pause();
+
+	}
+
+
+});
+rightButton.addEventListener("click", function(){
+
+	const classList = this.classList;
+
+	if( classList.contains("pushed") ){
+
+		leftButton.classList.remove("pushed");
+		classList.remove("pushed");
+		stopwatch.stop();
+
+	}else{
+		
+		while( true ){
+			
+			if( hand.deg < 360 ){
+				break;
+			}			
+
+			hand.deg -= 360;
+
+		}
+
+		let rafId = null;
+		function frame(){
+		
+			rafId = requestAnimationFrame( frame );
+			hand.update( hand.deg - 5 );
+			
+			if( hand.deg <= 0 ){
+				
+				hand.update( 0 );
+				cancelAnimationFrame( rafId );
+				classList.add("pushed");
+				stopwatch.start();
+
+			}
+			
+		}
+		rafId = requestAnimationFrame( frame );
+
+	}
+
+
+});
+
+const stopwatch = new Stopwatch();
+stopwatch.on("update", ( time ) => {
+	
+	const deg = ( time * 360 ) / 60000;
+	hand.update( deg );
+	document.querySelector( "#test" ).innerText = ( time / 1000 ).toFixed( 3 );
+
+});
+
 
 </script>
 </body>
