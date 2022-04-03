@@ -21,6 +21,16 @@ body {
 	
 }
 
+@keyframes alarm {
+  from {
+    transform: translate( -50%, -50% ) rotate( -1deg );
+  }
+
+  to {
+    transform: translate( -50%, -50% ) rotate( 1deg );
+  }
+}
+
 .stopwatch {
 
 	position: absolute; 
@@ -31,11 +41,22 @@ body {
 	transform: translate( -50%, -50% ); 
 	left: 50%; 
 	top: 50%;
-	pointer-events: auto;
+	pointer-events: none;
   	
 }
+
+.stopwatch.alarm {
+
+ 	animation-duration: 0.01s;
+    animation-name: alarm;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+	
+}
+
 .time-board {
 	
+	border-radius: 284px;
 	pointer-events: auto;
     position: absolute;
     left: 57px;
@@ -176,12 +197,13 @@ body {
 
 <div class="container">
 
-	<div class="stopwatch shadow">
+	<div id="stopwatch" class="stopwatch shadow alarm">
 		<div id="left-button" class="left-button"></div>
 		<div id="right-button" class="right-button"></div>
 		<div id="time-board" class="time-board">
 			
-			<div id="test" class="time-value">0.000</div>
+			
+			<div id="time" class="time-value">0.000</div>
 			
 			<svg id="hand-alarm" class="hand-alarm shadow" width="8" height="140" xmlns="http://www.w3.org/2000/svg">
 			  <path d="M3 0 L 5 5 L 8 90 L 0 90 L 1 5 Z" fill="white" stroke="black" stroke-width="2"/>
@@ -206,6 +228,11 @@ import Stopwatch from "./src/Stopwatch.js";
 
 document.body.addEventListener("selectstart", ( e )  => e.preventDefault() );
 
+
+const stopwatchUI = document.querySelector("#stopwatch");
+const timeUI = document.querySelector("#time");
+
+
 const hand = document.querySelector("#hand");
 hand.deg = 0;
 hand.update = ( deg ) => {
@@ -229,6 +256,8 @@ handAlarm.addEventListener("pointerdown", ( e ) => {
 	handAlarm.classList.add( "drag" );
 	handAlarm.isDrag = true;
 	timeBoard.boundingRect = timeBoard.getBoundingClientRect();
+
+	stopwatch.clearAlarm();
 
 });
 document.body.addEventListener("pointermove", ( e ) => {
@@ -256,6 +285,13 @@ document.body.addEventListener("pointerup", ( e ) => {
 	
 	handAlarm.classList.remove( "drag" );
 	handAlarm.isDrag = false;
+
+	let pivotTime = stopwatch.get();
+	pivotTime /= 1000;
+	pivotTime -= now % 60;
+	
+	
+	stopwatch.setAlarm( pivotTime + handAlarm.deg );
 
 });
 
@@ -338,7 +374,12 @@ stopwatch.on("update", ( time ) => {
 	
 	const deg = ( time * 360 ) / 60000;
 	hand.update( deg );
-	document.querySelector( "#test" ).innerText = ( time / 1000 ).toFixed( 3 );
+	timeUI.innerText = ( time / 1000 ).toFixed( 3 );
+
+});
+stopwatch.on("alarm", ( time ) => {
+	
+	stopwatchUI.classList.add( "alarm" );
 
 });
 

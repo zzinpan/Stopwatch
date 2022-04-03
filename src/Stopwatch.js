@@ -5,6 +5,7 @@ import AlarmType from "./Stopwatch.AlarmType.js";
  * @constructor
  * @property {number} startTime 시간 시작값  
  * @property {number} time 현재 시간  
+ * @property {number} raf에서 반환되는 frame time  
  * @property {boolean} paused 일시정지 여부
  * @property {number} rafId requestAnimationFrame 아이디
  * @property {object} event 이벤트 모듈
@@ -15,6 +16,7 @@ class Stopwatch {
 
 	startTime;
 	time;
+	frameTime;
 	paused;
 	rafId;
 	event;
@@ -199,6 +201,18 @@ class Stopwatch {
 		
 		alarmTime = alarmType.timeCalculation( time, alarmTime );
 		this.alarms.push( alarmTime );
+		
+	}
+	
+
+	/**
+	 * @description 설정된 모든 알람이 제거 됩니다.
+	 * @returns {boolean} 명령 수행 여부
+	 */	
+	clearAlarm(){
+		
+		this.alarms = [];
+		return true;
 		
 	}
 	
