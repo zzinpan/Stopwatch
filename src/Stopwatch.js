@@ -1,4 +1,5 @@
 import AlarmType from "./Stopwatch.AlarmType.js";
+import Degree from "./Stopwatch.Degree.js";
 
 /**
  * 상식적인 타이머
@@ -24,6 +25,7 @@ class Stopwatch {
 	completeAlarms;
 
 	static AlarmType = AlarmType;
+	static Degree = Degree;
 
 	constructor(){
 		
@@ -204,6 +206,16 @@ class Stopwatch {
 		
 	}
 	
+	/**
+	 * @description 저장된 알람을 전달합니다.
+	 * @returns {boolean} 저장된 알람
+	 */	
+	getAlarm(){
+		
+		return this.alarms;
+		
+	}
+	
 
 	/**
 	 * @description 설정된 모든 알람이 제거 됩니다.
@@ -212,6 +224,7 @@ class Stopwatch {
 	clearAlarm(){
 		
 		this.alarms = [];
+		this.completeAlarms = [];
 		return true;
 		
 	}

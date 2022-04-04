@@ -195,9 +195,10 @@ body {
 </head>
 <body>
 
+
 <div class="container">
 
-	<div id="stopwatch" class="stopwatch shadow alarm">
+	<div id="stopwatch" class="stopwatch shadow">
 		<div id="left-button" class="left-button"></div>
 		<div id="right-button" class="right-button"></div>
 		<div id="time-board" class="time-board">
@@ -228,6 +229,15 @@ import Stopwatch from "./src/Stopwatch.js";
 
 document.body.addEventListener("selectstart", ( e )  => e.preventDefault() );
 
+const audio = new Audio();
+audio.addEventListener( "timeupdate", () => {
+
+	if( 2 < audio.currentTime ){
+		audio.currentTime = 1;
+	}
+
+} );
+audio.src = "./sound/alarm.mp3";
 
 const stopwatchUI = document.querySelector("#stopwatch");
 const timeUI = document.querySelector("#time");
@@ -272,10 +282,32 @@ document.body.addEventListener("pointermove", ( e ) => {
 						e.pageX - ( timeBoard.boundingRect.left + timeBoard.boundingRect.right ) / 2 
 					) + Math.PI / 2;
 	
-	handAlarm.deg = radians / Math.PI * 180;
+	handAlarm.deg = Stopwatch.Degree.fromRadian( radians );
 	handAlarm.style.transform = `translateX( -50% ) rotate( ${radians}rad )`;
 
 });
+
+function setAlarm(){
+
+	let pivotTime = stopwatch.get();
+	if( pivotTime == null ) {
+		return;
+	}
+
+	pivotTime -= pivotTime % 60000;
+
+	// 알람 바늘보다 초침이 넘어간 경우
+
+	const handAlarmDeg = Stopwatch.Degree.normalize( handAlarm.deg );
+	const handDeg = Stopwatch.Degree.normalize( hand.deg );
+	if( handAlarmDeg <= handDeg ){
+		pivotTime += 60000;
+	}
+	
+	console.log( "알람시간", handAlarmDeg * 60000 / 360 + pivotTime );
+	stopwatch.setAlarm( handAlarmDeg * 60000 / 360 + pivotTime, Stopwatch.AlarmType.ABSOLUTE );
+
+}
 
 document.body.addEventListener("pointerup", ( e ) => {
 
@@ -285,13 +317,6 @@ document.body.addEventListener("pointerup", ( e ) => {
 	
 	handAlarm.classList.remove( "drag" );
 	handAlarm.isDrag = false;
-
-	let pivotTime = stopwatch.get();
-	pivotTime /= 1000;
-	pivotTime -= now % 60;
-	
-	
-	stopwatch.setAlarm( pivotTime + handAlarm.deg );
 
 });
 
@@ -333,18 +358,11 @@ rightButton.addEventListener("click", function(){
 		leftButton.classList.remove("pushed");
 		classList.remove("pushed");
 		stopwatch.stop();
+		stopwatch.clearAlarm();
 
 	}else{
 		
-		while( true ){
-			
-			if( hand.deg < 360 ){
-				break;
-			}			
-
-			hand.deg -= 360;
-
-		}
+		hand.deg = Stopwatch.Degree.normalize( hand.deg );
 
 		let rafId = null;
 		function frame(){
@@ -372,6 +390,17 @@ rightButton.addEventListener("click", function(){
 const stopwatch = new Stopwatch();
 stopwatch.on("update", ( time ) => {
 	
+	if(
+ 
+		handAlarm.isDrag === false && 
+		stopwatch.getAlarm().length === 0
+ 
+	){
+
+		setAlarm();
+
+	}
+
 	const deg = ( time * 360 ) / 60000;
 	hand.update( deg );
 	timeUI.innerText = ( time / 1000 ).toFixed( 3 );
@@ -380,6 +409,20 @@ stopwatch.on("update", ( time ) => {
 stopwatch.on("alarm", ( time ) => {
 	
 	stopwatchUI.classList.add( "alarm" );
+	audio.play();
+
+});
+
+stopwatchUI.addEventListener("click", () => {
+	
+	if( stopwatchUI.classList.contains( "alarm" ) === false ){
+		return;
+	}
+
+	stopwatchUI.classList.remove( "alarm" );
+	audio.pause();
+	audio.currentTime = 0;
+	stopwatch.clearAlarm();
 
 });
 
