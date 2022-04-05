@@ -2,6 +2,8 @@
 
 스탑워치 라이브러리
 
+<br>
+
 ## getting started
 
 ```js
@@ -27,6 +29,8 @@ stopwatch.start();
 
 ```
 
+<br>
+
 ## sample - sample/index.html
 - https://zzinpan.github.io/Stopwatch/sample/
 - 시작: 오른쪽 버튼 클릭
@@ -34,6 +38,8 @@ stopwatch.start();
 - 일시정지: 왼쪽 버튼 클릭 ( 시작중에만 가능 )
 - 알람: 작은 침 드래그
 - 알람종료: 스탑워치 클릭
+
+<br>
 
 ## document
 https://zzinpan.github.io/Stopwatch/docs/
