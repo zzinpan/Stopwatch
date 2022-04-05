@@ -3,10 +3,22 @@ const AlarmTypes = [];
 /**
  * 알람 종류
  * @constructor
+ * @example
+ * // 새로운 알람 종류 생성
+ * const customAlarmType = new Stopwatch.AlarmType( "SNAP", ( time, alarmTime ) => {
+ *     
+ *     // 0.5초 단위 스냅
+ *     return alarmTime - alarmTime % 500;
+ * 
+ * } );
+ * 
+ * // 5초뒤 알람 발생
+ * stopwatch.setAlarm( 5321, customAlarmType );
  * @property {string} id 알람 종류 구분자
  * @property {function} timeCalculator 시간 계산자
  */
 class AlarmType {
+	
 	
 	id;
 	timeCalculator;
@@ -20,6 +32,9 @@ class AlarmType {
 	
 	/**
 	 * @description 알람시간을 계산하여 반환합니다.
+	 * @example
+	 * // 알람시간 계산
+	 * const alarmTime = customAlarmType.timeCalculation( 3000, 3435 );
 	 * @param {number} time 현재시간
 	 * @param {number} time 알람시간
 	 * @returns {number} 계산된 알람시간
@@ -29,18 +44,8 @@ class AlarmType {
 		return this.timeCalculator( time, alarmTime );
 		
 	}
-	
-	/**
-	 * @description 실존하는 알람타입인지 확인합니다.
-	 * @param {any} target 알람타입인지 확인할 대상
-	 * @returns {boolean} 알람타입 여부
-	 */	
-	static has( target ){
-			
-		return AlarmTypes.some( alarmType => alarmType == target );
-		
-	}
-	
+
+
 }
 
 AlarmType.ABSOLUTE = new AlarmType( 0, ( time, alarmTime )=>{

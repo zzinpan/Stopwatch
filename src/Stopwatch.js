@@ -2,8 +2,11 @@ import AlarmType from "./Stopwatch.AlarmType.js";
 import Degree from "./Stopwatch.Degree.js";
 
 /**
- * 상식적인 타이머
+ * 스탑워치 생성자
  * @constructor
+ * @example
+ * // 객체 생성
+ * const stopwatch = new Stopwatch();
  * @property {number} startTime 시간 시작값  
  * @property {number} time 현재 시간  
  * @property {number} raf에서 반환되는 frame time  
@@ -62,7 +65,10 @@ class Stopwatch {
 	}
 
 	/**
-	 * @description 타이머를 실행 시킵니다.
+	 * @description 스탑워치 실행 시킵니다.
+	 * @example
+	 * // 스탑워치 실행
+	 * stopwatch.start();
 	 * @returns {boolean} 명령 수행 여부
 	 */	
 	start(){
@@ -123,7 +129,10 @@ class Stopwatch {
 	
 	
 	/**
-	 * @description 타이머를 일시정지 시킵니다.
+	 * @description 스탑워치를 일시정지 시킵니다.
+	 * @example
+	 * // 스탑워치 일시중지
+	 * stopwatch.pause();
 	 * @returns {boolean} 명령 수행 여부
 	 */	
 	pause(){
@@ -143,7 +152,10 @@ class Stopwatch {
 	
 	
 	/**
-	 * @description 타이머를 중지 시킵니다.
+	 * @description 스탑워치를 중지 시킵니다.
+	 * @example
+	 * // 스탑워치 중지
+	 * stopwatch.stop();
 	 * @returns {boolean} 명령 수행 여부
 	 */	
 	stop(){
@@ -165,7 +177,10 @@ class Stopwatch {
 	
 	/**
 	 * @description 현재시간을 반환합니다.
-	 * @returns {number} 현재시간
+	 * @example
+	 * // 스탑워치 시간 조회
+	 * const time = stopwatch.get();
+	 * @returns {number} 현재시간(ms)
 	 */	
 	get(){
 		
@@ -175,7 +190,13 @@ class Stopwatch {
 	
 	/**
 	 * @description 알람을 설정합니다. 알람시간이 되면, 타이머에서 알람이벤트를 발생시킵니다.
-	 * @param {number} alarmTime 알람시간(밀리초)
+	 * @example
+	 * // 알람 설정 ( 알람종류: Stopwatch.AlarmType.RELATIVE )
+	 * stopwatch.setAlarm( 3000 );
+	 * @example
+	 * // 알람 설정
+	 * stopwatch.setAlarm( 3000, Stopwatch.AlarmType.ABSOLUTE );
+	 * @param {number} alarmTime 알람시간(ms)
 	 * @param {Stopwatch.AlarmType} [alarmType=Stopwatch.AlarmType.RELATIVE] 알람기준
 	 * @returns {boolean} 명령 수행 여부
 	 */	
@@ -189,11 +210,15 @@ class Stopwatch {
 			return false;
 		}
 		
-		if( Stopwatch.AlarmType.has( alarmType ) == false ){
+		if( alarmType instanceof Stopwatch.AlarmType == false ){
 			return false;
 		}
 		
 		const time = this.get();
+
+		/**
+		 * @todo 특정 인스턴스에 해당되는 필터는 제거 필요
+		 */
 		if( 
 			alarmType == Stopwatch.AlarmType.ABSOLUTE &&
 			alarmTime <= time
@@ -208,9 +233,12 @@ class Stopwatch {
 	
 	/**
 	 * @description 저장된 알람을 전달합니다.
-	 * @returns {boolean} 저장된 알람
+	 * @example
+	 * // 알람 조회
+	 * const alarms = stopwatch.getAlarms();
+	 * @returns {number[]} 저장된 알람
 	 */	
-	getAlarm(){
+	getAlarms(){
 		
 		return this.alarms;
 		
@@ -219,6 +247,9 @@ class Stopwatch {
 
 	/**
 	 * @description 설정된 모든 알람이 제거 됩니다.
+	 * @example
+	 * // 알람 초기화
+	 * stopwatch.clearAlarm();
 	 * @returns {boolean} 명령 수행 여부
 	 */	
 	clearAlarm(){
@@ -231,7 +262,15 @@ class Stopwatch {
 	
 	
 	/**
-	 * @description 이벤트 콜백 등록
+	 * @description 이벤트 콜백을 등록합니다.
+	 * @example
+	 * // 시간이 갱신되면, 호출
+	 * stopwatch.on( "update", ( ms ) => {
+	 * 
+	 *     const seconds = ms / 1000;
+	 *     console.log( seconds.toFixed( 3 ) );
+	 * 
+	 * } );
 	 * @param {string} eventName 등록할 이벤트명 ( 'update', 'alarm' ) 
 	 * @param {function} callback 이벤트 발생 시, 수행될 콜백함수 
 	 * @returns {boolean} 명령 수행 여부
@@ -252,7 +291,16 @@ class Stopwatch {
 	
 	
 	/**
-	 * @description 이벤트 콜백 삭제
+	 * @description 이벤트 콜백을 삭제합니다.
+	 * @example
+	 * // 모든 콜백 제거
+	 * stopwatch.off();
+	 * @example
+	 * // 특정 이벤트의 모든 콜백 제거
+	 * stopwatch.off( "alarm" );
+	 * @example
+	 * // 특정 이벤트의 특정 콜백 제거
+	 * stopwatch.off( "alarm", alarmListener );
 	 * @param {string} eventName 삭제할 이벤트명 ( 'update', 'alarm' ) 
 	 * @param {function} callback 삭제할 콜백함수 
 	 * @returns {boolean} 명령 수행 여부

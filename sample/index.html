@@ -296,7 +296,7 @@ function setAlarm(){
 
 	pivotTime -= pivotTime % 60000;
 
-	
+
 	// 알람 바늘보다 초침이 넘어간 경우
 	const handAlarmDeg = Stopwatch.Degree.normalize( handAlarm.deg );
 	const handDeg = Stopwatch.Degree.normalize( hand.deg );
@@ -392,7 +392,7 @@ stopwatch.on("update", ( time ) => {
 	if(
  
 		handAlarm.isDrag === false && 
-		stopwatch.getAlarm().length === 0
+		stopwatch.getAlarms().length === 0
  
 	){
 

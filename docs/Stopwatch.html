@@ -27,7 +27,7 @@
 
 <nav >
     
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="AlarmType.html">AlarmType</a><ul class='methods'><li data-type='method'><a href="AlarmType.html#.has">has</a></li><li data-type='method'><a href="AlarmType.html#timeCalculation">timeCalculation</a></li></ul></li><li><a href="Degree.html">Degree</a><ul class='methods'><li data-type='method'><a href="Degree.html#.fromRadian">fromRadian</a></li><li data-type='method'><a href="Degree.html#.normalize">normalize</a></li><li data-type='method'><a href="Degree.html#.toRadian">toRadian</a></li></ul></li><li><a href="Stopwatch.html">Stopwatch</a><ul class='methods'><li data-type='method'><a href="Stopwatch.html#clearAlarm">clearAlarm</a></li><li data-type='method'><a href="Stopwatch.html#get">get</a></li><li data-type='method'><a href="Stopwatch.html#getAlarm">getAlarm</a></li><li data-type='method'><a href="Stopwatch.html#off">off</a></li><li data-type='method'><a href="Stopwatch.html#on">on</a></li><li data-type='method'><a href="Stopwatch.html#pause">pause</a></li><li data-type='method'><a href="Stopwatch.html#setAlarm">setAlarm</a></li><li data-type='method'><a href="Stopwatch.html#start">start</a></li><li data-type='method'><a href="Stopwatch.html#stop">stop</a></li></ul></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="AlarmType.html">AlarmType</a><ul class='methods'><li data-type='method'><a href="AlarmType.html#timeCalculation">timeCalculation</a></li></ul></li><li><a href="Degree.html">Degree</a><ul class='methods'><li data-type='method'><a href="Degree.html#.fromRadian">fromRadian</a></li><li data-type='method'><a href="Degree.html#.normalize">normalize</a></li><li data-type='method'><a href="Degree.html#.toRadian">toRadian</a></li></ul></li><li><a href="Stopwatch.html">Stopwatch</a><ul class='methods'><li data-type='method'><a href="Stopwatch.html#clearAlarm">clearAlarm</a></li><li data-type='method'><a href="Stopwatch.html#get">get</a></li><li data-type='method'><a href="Stopwatch.html#getAlarms">getAlarms</a></li><li data-type='method'><a href="Stopwatch.html#off">off</a></li><li data-type='method'><a href="Stopwatch.html#on">on</a></li><li data-type='method'><a href="Stopwatch.html#pause">pause</a></li><li data-type='method'><a href="Stopwatch.html#setAlarm">setAlarm</a></li><li data-type='method'><a href="Stopwatch.html#start">start</a></li><li data-type='method'><a href="Stopwatch.html#stop">stop</a></li></ul></li></ul>
 </nav>
 
 <div id="main">
@@ -48,7 +48,7 @@
         Stopwatch
         </h2>
         
-            <div class="class-description usertext"><p>상식적인 타이머</p></div>
+            <div class="class-description usertext"><p>스탑워치 생성자</p></div>
         
     
 </header>
@@ -330,6 +330,11 @@
 
 
 
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>// 객체 생성const stopwatch = new Stopwatch();</code></pre>
+
+
 
 
 
@@ -431,6 +436,11 @@
 
 
 
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>// 알람 초기화stopwatch.clearAlarm();</code></pre>
 
 
 
@@ -537,6 +547,11 @@
 
 
 
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>// 스탑워치 시간 조회const time = stopwatch.get();</code></pre>
+
+
 
 
 
@@ -557,7 +572,7 @@
 
         
 <div class="param-desc">
-    <p>현재시간</p>
+    <p>현재시간(ms)</p>
 </div>
 
 
@@ -583,7 +598,7 @@
 
     
 
-    <h4 class="name" id="getAlarm"><span class="type-signature"></span>getAlarm<span class="signature">()</span><span class="type-signature"> &rarr; {boolean}</span></h4>
+    <h4 class="name" id="getAlarms"><span class="type-signature"></span>getAlarms<span class="signature">()</span><span class="type-signature"> &rarr; {Array.&lt;number>}</span></h4>
 
     
 
@@ -641,6 +656,11 @@
 
 
 
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>// 알람 조회const alarms = stopwatch.getAlarms();</code></pre>
+
+
 
 
 
@@ -672,7 +692,7 @@
     </dt>
     <dd>
         
-<span class="param-type">boolean</span>
+<span class="param-type">Array.&lt;number></span>
 
 
     </dd>
@@ -734,7 +754,7 @@
 
 
 <div class="description usertext">
-    <p>이벤트 콜백 삭제</p>
+    <p>이벤트 콜백을 삭제합니다.</p>
 </div>
 
 
@@ -743,6 +763,15 @@
 
 
 
+
+
+    <h5>Examples</h5>
+    
+    <pre class="prettyprint"><code>// 모든 콜백 제거stopwatch.off();</code></pre>
+
+    <pre class="prettyprint"><code>// 특정 이벤트의 모든 콜백 제거stopwatch.off( "alarm" );</code></pre>
+
+    <pre class="prettyprint"><code>// 특정 이벤트의 특정 콜백 제거stopwatch.off( "alarm", alarmListener );</code></pre>
 
 
 
@@ -910,7 +939,7 @@
 
 
 <div class="description usertext">
-    <p>이벤트 콜백 등록</p>
+    <p>이벤트 콜백을 등록합니다.</p>
 </div>
 
 
@@ -919,6 +948,11 @@
 
 
 
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>// 시간이 갱신되면, 호출stopwatch.on( "update", ( ms ) => {    const seconds = ms / 1000;    console.log( seconds.toFixed( 3 ) );} );</code></pre>
 
 
 
@@ -1086,7 +1120,7 @@
 
 
 <div class="description usertext">
-    <p>타이머를 일시정지 시킵니다.</p>
+    <p>스탑워치를 일시정지 시킵니다.</p>
 </div>
 
 
@@ -1095,6 +1129,11 @@
 
 
 
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>// 스탑워치 일시중지stopwatch.pause();</code></pre>
 
 
 
@@ -1201,6 +1240,13 @@
 
 
 
+    <h5>Examples</h5>
+    
+    <pre class="prettyprint"><code>// 알람 설정 ( 알람종류: Stopwatch.AlarmType.RELATIVE )stopwatch.setAlarm( 3000 );</code></pre>
+
+    <pre class="prettyprint"><code>// 알람 설정stopwatch.setAlarm( 3000, Stopwatch.AlarmType.ABSOLUTE );</code></pre>
+
+
 
 
     <h5>Parameters:</h5>
@@ -1260,7 +1306,7 @@
                 </td>
             
 
-            <td class="description last"><p>알람시간(밀리초)</p></td>
+            <td class="description last"><p>알람시간(ms)</p></td>
         </tr>
 
     
@@ -1398,7 +1444,7 @@
 
 
 <div class="description usertext">
-    <p>타이머를 실행 시킵니다.</p>
+    <p>스탑워치 실행 시킵니다.</p>
 </div>
 
 
@@ -1407,6 +1453,11 @@
 
 
 
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>// 스탑워치 실행stopwatch.start();</code></pre>
 
 
 
@@ -1502,7 +1553,7 @@
 
 
 <div class="description usertext">
-    <p>타이머를 중지 시킵니다.</p>
+    <p>스탑워치를 중지 시킵니다.</p>
 </div>
 
 
@@ -1511,6 +1562,11 @@
 
 
 
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>// 스탑워치 중지stopwatch.stop();</code></pre>
 
 
 
@@ -1574,7 +1630,7 @@
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.10</a> on Wed Apr 06 2022 06:06:25 GMT+0900 (대한민국 표준시) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.10</a> on Wed Apr 06 2022 06:42:01 GMT+0900 (대한민국 표준시) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
 </footer>
 
 <script>prettyPrint();</script>
