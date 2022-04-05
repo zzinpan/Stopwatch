@@ -42,8 +42,8 @@ class Stopwatch {
 		this.event = {
 			
 			// 콜백 목록
-			update: [],
-			alarm: [],
+			update: [], // ( {number} time )
+			alarm: [], // ( {number} time )
 			
 			execute( /** name, args... */ ){
 				
