@@ -32,7 +32,7 @@ stopwatch.start();
 <br>
 
 ## sample - sample/index.html
-https://zzinpan.github.io/Stopwatch/sample/
+https://zzinpan.github.io/Stopwatch.js/sample/
 - start: click the right button 
 - stop: click the right button ( toggle )
 - pause: click the left button ( during the start )
@@ -42,4 +42,4 @@ https://zzinpan.github.io/Stopwatch/sample/
 <br>
 
 ## document
-https://zzinpan.github.io/Stopwatch/docs/
+https://zzinpan.github.io/Stopwatch.js/docs/
