@@ -36,7 +36,7 @@ https://zzinpan.github.io/Stopwatch/sample/
 - start: click the right button 
 - stop: click the right button ( toggle )
 - pause: click the left button ( during the start )
-- setAlarm: drag small hand
+- setAlarm: drag the small hand
 - stopAlarm: click the stopwatch
 
 <br>
