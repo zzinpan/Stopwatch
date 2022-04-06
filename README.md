@@ -6,7 +6,7 @@
 
 ## getting started
 
-```js
+```html
 
 <script type="module">
 
@@ -25,7 +25,7 @@ stopwatch.setAlarm( 5000, Stopwatch.AlarmType.ABSOLUTE );
 // start
 stopwatch.start();
 
-<script>
+</script>
 
 ```
 
