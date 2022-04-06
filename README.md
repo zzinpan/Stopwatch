@@ -16,8 +16,8 @@ import Stopwatch from "Stopwatch.js";
 const stopwatch = new Stopwatch();
 
 // add events
-stopwatch.on( "update", ( time ) => console.log( ( time ) );
-stopwatch.on( "alarm", ( time ) => console.log( ( time ) );
+stopwatch.on( "update", ( time ) => console.log( time ) );
+stopwatch.on( "alarm", ( time ) => alert( time ) );
 
 // set alarm
 stopwatch.setAlarm( 5000, Stopwatch.AlarmType.ABSOLUTE );
