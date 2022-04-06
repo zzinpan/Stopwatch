@@ -73,7 +73,7 @@ class Stopwatch {
 	 */	
 	start(){
 		
-		if( this.paused == true ){
+		if( this.paused === true ){
 			this.paused = false;
 			return true;
 		}
@@ -91,7 +91,7 @@ class Stopwatch {
 				self.startTime = time;
 			}
 			
-			if( self.paused == true ){
+			if( self.paused === true ){
 				self.startTime += time - self.frameTime;
 			}
 			
@@ -141,7 +141,7 @@ class Stopwatch {
 			return false;
 		}
 		
-		if( this.paused == true ){
+		if( this.paused === true ){
 			return false;
 		}
 		
@@ -210,7 +210,7 @@ class Stopwatch {
 			return false;
 		}
 		
-		if( alarmType instanceof Stopwatch.AlarmType == false ){
+		if( alarmType instanceof Stopwatch.AlarmType === false ){
 			return false;
 		}
 		
@@ -220,7 +220,7 @@ class Stopwatch {
 		 * @todo 특정 인스턴스에 해당되는 필터는 제거 필요
 		 */
 		if( 
-			alarmType == Stopwatch.AlarmType.ABSOLUTE &&
+			alarmType === Stopwatch.AlarmType.ABSOLUTE &&
 			alarmTime <= time
 		){
 			return false;
