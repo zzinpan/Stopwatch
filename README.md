@@ -6,7 +6,7 @@
 
 ## getting started
 
-```js
+```html
 
 <script type="module">
 
