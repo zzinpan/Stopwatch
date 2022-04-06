@@ -25,7 +25,7 @@ stopwatch.setAlarm( 5000, Stopwatch.AlarmType.ABSOLUTE );
 // start
 stopwatch.start();
 
-<script/>
+</script>
 
 ```
 
