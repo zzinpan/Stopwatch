@@ -1,0 +1,192 @@
+body { 
+	
+	padding: 0px; 
+	margin: 0px; 
+	pointer-events: auto;
+	
+}
+
+.container {
+	
+	position: absolute;
+	left: 0px;
+	top: 0px;
+	width: 100%;
+	height: 100%;
+	
+}
+
+@keyframes alarm {
+  from {
+    transform: translate( -50%, -50% ) rotate( -1deg );
+  }
+
+  to {
+    transform: translate( -50%, -50% ) rotate( 1deg );
+  }
+}
+
+.stopwatch {
+
+	position: absolute; 
+	background: url('../img/stopwatch.png'); 
+	width: 402px; 
+	height: 500px; 
+	background-size: 100%; 
+	transform: translate( -50%, -50% ); 
+	left: 50%; 
+	top: 50%;
+	pointer-events: none;
+  	
+}
+
+.stopwatch.alarm {
+
+ 	animation-duration: 0.01s;
+    animation-name: alarm;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+    cursor: pointer;
+    
+	-webkit-filter: drop-shadow( 0px 0px 10px rgba(255, 255, 0, .7));
+  	filter: drop-shadow( 0px 0px 10px rgba(255, 255, 0, .7));
+
+}
+
+.time-board {
+	
+	border-radius: 284px;
+	pointer-events: auto;
+    position: absolute;
+    left: 57px;
+    top: 168px;
+    background: url('../img/time-board.png');
+    background-size: 100%;
+    width: 284px;
+    height: 284px;
+    
+}
+
+.hand {
+
+	position: absolute;
+   	left: 50%;
+	top: 12px;
+   	transform: translateX( -50% ) rotate( 0deg );
+
+}
+
+.hand-alarm {
+	
+	pointer-events: auto;
+	cursor: pointer;
+	position: absolute;
+   	left: 50%;
+	top: 72px;
+   	transform: translateX( -50% ) rotate( 105deg );
+
+}
+
+
+.hand-alarm:hover {
+
+	-webkit-filter: drop-shadow( 0px 0px 10px rgba(0, 255, 0, .7));
+  	filter: drop-shadow( 0px 0px 10px rgba(0, 255, 0, .7));
+
+}
+
+.hand-alarm.drag {
+
+	-webkit-filter: drop-shadow( 0px 0px 10px rgba(0, 255, 0, .7));
+  	filter: drop-shadow( 0px 0px 10px rgba(0, 255, 0, .7));
+
+}
+
+.hand-circle {
+
+	position: absolute;
+   	left: 50%;
+   	top: 50%;
+   	transform: translate( -50%, -50% ) rotate( 0deg );
+   	width: 14px;
+   	height: 14px;
+   	background-color: black;
+   	border-radius: 100px;
+	background-color: #CD361D;
+
+}
+
+.left-button {
+	
+	pointer-events: auto;
+	position: absolute;
+    left: 32px;
+    top: 142px;
+    width: 40px;
+    height: 40px;
+	background: url('../img/left-button.png');
+	transform: rotate( 315deg );
+    background-size: 100%;
+    cursor: pointer;
+    transition: top 0.5s, left 0.5s;
+	
+}
+
+.left-button:hover {
+
+	-webkit-filter: drop-shadow( 0px 0px 10px rgba(0, 0, 255, .7));
+  	filter: drop-shadow( 0px 0px 10px rgba(0, 0, 255, .7));
+
+}
+.left-button.pushed {
+
+	left: 42px;
+    top: 152px;
+    transition: top 0.5s, left 0.5s;
+
+}
+
+.right-button {
+
+	pointer-events: auto;
+	position: absolute;
+	right: 34px;
+	top: 141px;
+	width: 38px;
+	height: 38px;
+	background: url('../img/right-button.png');
+	transform: rotate( 45deg );
+    background-size: 100%;
+    cursor: pointer;
+    transition: top 0.5s, right 0.5s;
+	
+}
+.right-button:hover {
+
+	-webkit-filter: drop-shadow( 0px 0px 10px rgba(255, 0, 0, .7));
+  	filter: drop-shadow( 0px 0px 10px rgba(255, 0, 0, .7));
+
+}
+.right-button.pushed {
+
+	right: 44px;
+	top: 151px;
+    transition: top 0.5s, right 0.5s;
+
+}
+
+.time-value {
+	
+	pointer-events: none;
+	position: absolute;
+	top: 200px;
+	left: 50%;
+	display: inline-block;
+	transform: translate( -50%, -50% );
+	
+}
+
+.shadow {
+  	-webkit-filter: drop-shadow( 3px 3px 2px rgba(0, 0, 0, .7));
+  	filter: drop-shadow( 3px 3px 2px rgba(0, 0, 0, .7));
+}
