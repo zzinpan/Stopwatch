@@ -386,14 +386,14 @@ class Stopwatch {
 	
 	
 	/**
-	 * @description 객체를 삭제합니다.
-	 * 삭제된 객체는 캡슐 관리에서 제외됩니다.
+	 * @description 객체를 파괴합니다.
+	 * 파괴된 객체는 캡슐 관리에서 제외되고, Stopwatch의 기능을 잃어버립니다.
 	 * @example
-	 * // 객체 제거
-	 * stopwatch.remove();
+	 * // 객체 파괴
+	 * stopwatch.destroy();
 	 * @returns {boolean} 명령 수행 여부
 	 */	
-	remove(){
+	destroy(){
 
 		// 정지
 		this.stop();
@@ -406,6 +406,9 @@ class Stopwatch {
 
 		// 관리 제거
 		delete Const.stopwatchCapsules[ this.id ];
+
+		// 객체 원형정보 변경
+		this.__proto__ = Object.prototype;
 
 		return true;
 
