@@ -2,10 +2,20 @@ import AlarmType from "./Stopwatch.AlarmType.js";
 import Degree from "./Stopwatch.Degree.js";
 
 // 상수
-const Const = {
+const Const: {
+
+	stopwatchCapsules: {
+
+		[ id: string ]: StopwatchCapsule
+
+	},
+
+	getUniqueId: Function
+
+} = {
 
 	stopwatchCapsules: {},
-	getUniqueId(){
+	getUniqueId(): string {
 
 		return Date.now() + "" + Math.random() * 1000000000000000000;
 
@@ -13,11 +23,13 @@ const Const = {
 
 };
 
+
 /*** docs 제외
  * 스탑워치 캡슐
+ * @property {Stopwatch} stopwatch 스탑워치 객체
  * @property {number} startTime 시간 시작값  
  * @property {number} time 현재 시간  
- * @property {number} raf에서 반환되는 frame time  
+ * @property {number} frameTime raf에서 반환되는 frame time  
  * @property {boolean} paused 일시정지 여부
  * @property {number} rafId requestAnimationFrame 아이디
  * @property {object} event 이벤트 모듈
@@ -26,17 +38,19 @@ const Const = {
  ***/
 class StopwatchCapsule {
 
-	stopwatch;
-	startTime;
-	time;
-	frameTime;
-	paused;
-	rafId;
-	event;
-	alarms;
-	completeAlarms;
+	// 필드
+	stopwatch: Stopwatch;
+	startTime: number;
+	time: number;
+	frameTime: number;
+	paused: boolean;
+	rafId: number;
+	event: any;
+	alarms: number[];
+	completeAlarms: number[];
 
-	constructor( stopwatch ){
+
+	constructor( stopwatch: Stopwatch ){
 
 		const capsule = this;
 		
@@ -64,7 +78,7 @@ class StopwatchCapsule {
 				const callbacks = this[ name ];
 				
 				// 콜백수행
-				callbacks.forEach( cb => cb.apply( capsule.stopwatch, args ) );
+				callbacks.forEach( ( cb: Function ) => cb.apply( capsule.stopwatch, args ) );
 				
 			}
 			
@@ -81,18 +95,32 @@ class StopwatchCapsule {
  * @example
  * // 객체 생성
  * const stopwatch = new Stopwatch();
+ * @property {string|number} id 스탑워치 아이디
  */
 class Stopwatch {
+
+	id: string | number;
 
 	static AlarmType = AlarmType;
 	static Degree = Degree;
 
 	constructor(){
 		
-		this.id = Const.getUniqueId();
+		const id: string = Const.getUniqueId();
+
+		// 재할당, 삭제 불가능
+		Object.defineProperty( this, "id", {
+
+			configurable: false,
+			enumerable: true,
+			writable: false,
+
+			value: id
+
+		} )
 
 		const stopwatchCapsule = new StopwatchCapsule( this );
-		Const.stopwatchCapsules[ this.id ] = stopwatchCapsule;
+		Const.stopwatchCapsules[ id ] = stopwatchCapsule;
 		
 	}
 
@@ -103,7 +131,7 @@ class Stopwatch {
 	 * stopwatch.start();
 	 * @returns {boolean} 명령 수행 여부
 	 */	
-	start(){
+	start(): boolean {
 		
 		const capsule = Const.stopwatchCapsules[ this.id ];
 
@@ -118,7 +146,7 @@ class Stopwatch {
 		}
 		
 		
-		function frame( time ){
+		function frame( time: number ){
 			
 			capsule.rafId = window.requestAnimationFrame( frame );
 			if( capsule.startTime == null ){
@@ -169,7 +197,7 @@ class Stopwatch {
 	 * stopwatch.pause();
 	 * @returns {boolean} 명령 수행 여부
 	 */	
-	pause(){
+	pause(): boolean {
 		
 		const capsule = Const.stopwatchCapsules[ this.id ];
 
@@ -194,7 +222,7 @@ class Stopwatch {
 	 * stopwatch.stop();
 	 * @returns {boolean} 명령 수행 여부
 	 */	
-	stop(){
+	stop(): boolean {
 		
 		const capsule = Const.stopwatchCapsules[ this.id ];
 
@@ -220,7 +248,7 @@ class Stopwatch {
 	 * const time = stopwatch.get();
 	 * @returns {number} 현재시간(ms)
 	 */	
-	get(){
+	get(): number {
 		
 		const capsule = Const.stopwatchCapsules[ this.id ];
 		return capsule.time;
@@ -239,7 +267,7 @@ class Stopwatch {
 	 * @param {Stopwatch.AlarmType} [alarmType=Stopwatch.AlarmType.RELATIVE] 알람기준
 	 * @returns {boolean} 명령 수행 여부
 	 */	
-	setAlarm( alarmTime, alarmType = Stopwatch.AlarmType.RELATIVE ){
+	setAlarm( alarmTime: number, alarmType: AlarmType = Stopwatch.AlarmType.RELATIVE ): boolean {
 		
 		const capsule = Const.stopwatchCapsules[ this.id ];
 
@@ -279,7 +307,7 @@ class Stopwatch {
 	 * const alarms = stopwatch.getAlarms();
 	 * @returns {number[]} 저장된 알람
 	 */	
-	getAlarms(){
+	getAlarms(): number[] {
 		
 		const capsule = Const.stopwatchCapsules[ this.id ];
 		return capsule.alarms;
@@ -294,7 +322,7 @@ class Stopwatch {
 	 * stopwatch.clearAlarm();
 	 * @returns {boolean} 명령 수행 여부
 	 */	
-	clearAlarm(){
+	clearAlarm(): boolean {
 		
 		const capsule = Const.stopwatchCapsules[ this.id ];
 		
@@ -320,10 +348,10 @@ class Stopwatch {
 	 * @param {function} callback 이벤트 발생 시, 수행될 콜백함수 
 	 * @returns {boolean} 명령 수행 여부
 	 */	
-	on( eventName, callback ){
+	on( eventName: string, callback: Function ): boolean {
 		
-		const capsule = Const.stopwatchCapsules[ this.id ];
-		const callbacks = capsule.event[ eventName ];
+		const capsule: StopwatchCapsule = Const.stopwatchCapsules[ this.id ];
+		const callbacks: Function[] = capsule.event[ eventName ];
 		
 		// 등록가능한 이벤트명이 아님
 		if( callbacks == null ){
@@ -351,7 +379,7 @@ class Stopwatch {
 	 * @param {function} callback 삭제할 콜백함수 
 	 * @returns {boolean} 명령 수행 여부
 	 */	
-	off( eventName, callback ){
+	off( eventName?: string, callback?: Function ): boolean {
 		
 		const capsule = Const.stopwatchCapsules[ this.id ];
 
@@ -393,7 +421,7 @@ class Stopwatch {
 	 * stopwatch.destroy();
 	 * @returns {boolean} 명령 수행 여부
 	 */	
-	destroy(){
+	destroy(): boolean {
 
 		// 정지
 		this.stop();
@@ -408,7 +436,7 @@ class Stopwatch {
 		delete Const.stopwatchCapsules[ this.id ];
 
 		// 객체 원형정보 변경
-		this.__proto__ = Object.prototype;
+		(<any>Object).setPrototypeOf( this, Object.prototype );
 
 		return true;
 

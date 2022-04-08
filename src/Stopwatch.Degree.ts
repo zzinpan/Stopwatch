@@ -12,7 +12,7 @@ class Degree {
 	 * @param {number} deg 일반화할 각도
 	 * @returns {number} 일반화된 각도
 	 */	
-	static normalize( deg ){
+	static normalize( deg: number ): number{
 		
 		while( true ){
 			
@@ -44,7 +44,7 @@ class Degree {
 	 * @param {number} 변경할 degree 각도
 	 * @returns {number} 변경된 radian 각도
 	 */	
-	static toRadian( deg ){
+	static toRadian( deg: number ): number{
 		
 		return deg * Math.PI / 180;
 		
@@ -58,7 +58,7 @@ class Degree {
 	 * @param {number} 변경할 radian 각도
 	 * @returns {number} 변경된 degree 각도
 	 */	
-	static fromRadian( rad ){
+	static fromRadian( rad: number ): number{
 		
 		return rad / Math.PI * 180;
 		

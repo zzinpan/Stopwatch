@@ -14,16 +14,16 @@ const AlarmTypes = [];
  * 
  * // 5초뒤 알람 발생
  * stopwatch.setAlarm( 5321, customAlarmType );
- * @property {string} id 알람 종류 구분자
+ * @property {string|number} id 알람 종류 구분자
  * @property {function} timeCalculator 시간 계산자
  */
 class AlarmType {
 	
 	
-	id;
-	timeCalculator;
+	id: string | number;
+	timeCalculator: Function;
 	
-	constructor( id, timeCalculator ){
+	constructor( id: string | number, timeCalculator: Function ){
 		
 		this.id = id;
 		this.timeCalculator = timeCalculator;
@@ -39,26 +39,25 @@ class AlarmType {
 	 * @param {number} time 알람시간
 	 * @returns {number} 계산된 알람시간
 	 */	
-	timeCalculation( time, alarmTime ){
+	timeCalculation( time: number, alarmTime: number ): number{
 		
 		return this.timeCalculator( time, alarmTime );
 		
 	}
 
+	static ABSOLUTE = new AlarmType( 0, ( time: number, alarmTime: number ): number => {
+	
+		return alarmTime;
+		
+	} );
+
+	static RELATIVE = new AlarmType( 1, ( time: number, alarmTime: number ): number => {
+	
+		return time + alarmTime;
+		
+	} );
 
 }
-
-AlarmType.ABSOLUTE = new AlarmType( 0, ( time, alarmTime )=>{
-	
-	return alarmTime;
-	
-} );
-
-AlarmType.RELATIVE = new AlarmType( 1, ( time, alarmTime )=>{
-	
-	return time + alarmTime;
-	
-} );
 
 AlarmTypes.push( AlarmType.ABSOLUTE );
 AlarmTypes.push( AlarmType.RELATIVE );

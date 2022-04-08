@@ -4,7 +4,7 @@
 
 
 // 스탑워치
-import Stopwatch from "../../src/Stopwatch.js";
+import Stopwatch from "../../dist/Stopwatch.js";
 
 
 /**
