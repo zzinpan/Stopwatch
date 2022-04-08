@@ -133,7 +133,7 @@ class Stopwatch {
 	 */	
 	start(): boolean {
 		
-		const capsule = Const.stopwatchCapsules[ this.id ];
+		const capsule: StopwatchCapsule = Const.stopwatchCapsules[ this.id ];
 
 		if( capsule.paused === true ){
 			capsule.paused = false;
@@ -161,7 +161,7 @@ class Stopwatch {
 			capsule.time = time - capsule.startTime;
 			capsule.event.execute( "update", capsule.time );
 			
-			const alarms = capsule.alarms.filter( alarmTime => {
+			const alarms: number[] = capsule.alarms.filter( alarmTime => {
 				
 				// 이미 알람을 발생한 경우
 				const isComplete =  capsule.completeAlarms.some( cAlarmTime => cAlarmTime == alarmTime );
@@ -199,7 +199,7 @@ class Stopwatch {
 	 */	
 	pause(): boolean {
 		
-		const capsule = Const.stopwatchCapsules[ this.id ];
+		const capsule: StopwatchCapsule = Const.stopwatchCapsules[ this.id ];
 
 		if( capsule.rafId == null ){
 			return false;
@@ -224,7 +224,7 @@ class Stopwatch {
 	 */	
 	stop(): boolean {
 		
-		const capsule = Const.stopwatchCapsules[ this.id ];
+		const capsule: StopwatchCapsule = Const.stopwatchCapsules[ this.id ];
 
 		if( capsule.startTime == null ){
 			return false;
@@ -250,7 +250,7 @@ class Stopwatch {
 	 */	
 	get(): number {
 		
-		const capsule = Const.stopwatchCapsules[ this.id ];
+		const capsule: StopwatchCapsule = Const.stopwatchCapsules[ this.id ];
 		return capsule.time;
 		
 	}
@@ -269,7 +269,7 @@ class Stopwatch {
 	 */	
 	setAlarm( alarmTime: number, alarmType: AlarmType = Stopwatch.AlarmType.RELATIVE ): boolean {
 		
-		const capsule = Const.stopwatchCapsules[ this.id ];
+		const capsule: StopwatchCapsule = Const.stopwatchCapsules[ this.id ];
 
 		if( typeof alarmTime != "number" ){
 			return false;
@@ -283,7 +283,7 @@ class Stopwatch {
 			return false;
 		}
 		
-		const time = this.get();
+		const time: number = this.get();
 
 		/**
 		 * @todo 특정 인스턴스에 해당되는 필터는 제거 필요
@@ -309,7 +309,7 @@ class Stopwatch {
 	 */	
 	getAlarms(): number[] {
 		
-		const capsule = Const.stopwatchCapsules[ this.id ];
+		const capsule: StopwatchCapsule = Const.stopwatchCapsules[ this.id ];
 		return capsule.alarms;
 		
 	}
@@ -324,7 +324,7 @@ class Stopwatch {
 	 */	
 	clearAlarm(): boolean {
 		
-		const capsule = Const.stopwatchCapsules[ this.id ];
+		const capsule: StopwatchCapsule = Const.stopwatchCapsules[ this.id ];
 		
 		capsule.alarms = [];
 		capsule.completeAlarms = [];
@@ -381,7 +381,7 @@ class Stopwatch {
 	 */	
 	off( eventName?: string, callback?: Function ): boolean {
 		
-		const capsule = Const.stopwatchCapsules[ this.id ];
+		const capsule: StopwatchCapsule = Const.stopwatchCapsules[ this.id ];
 
 		// 모든 이벤트 삭제
 		if( eventName == null ){
@@ -405,8 +405,8 @@ class Stopwatch {
 		}
 
 		// 특정 이벤트의 콜백 삭제
-		const callbacks = capsule.event[ eventName ];
-		const index = callbacks.indexOf( callback );
+		const callbacks: Function[] = capsule.event[ eventName ];
+		const index: number = callbacks.indexOf( callback );
 		callbacks.splice( index, 1 );
 		return true;
 		
