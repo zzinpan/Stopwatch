@@ -6,11 +6,13 @@ class Degree {
 	
 	/**
 	 * @description 각도를 일반화합니다. ( 0 <= 각도 < 360 ) 
-	 * @example
-	 * // 9
-	 * const degree = Stopwatch.Degree.normalize( 369 );
 	 * @param {number} deg 일반화할 각도
 	 * @returns {number} 일반화된 각도
+	 * @example
+	 * ```js
+	 * // 9
+	 * const degree = Stopwatch.Degree.normalize( 369 );
+	 * ```
 	 */	
 	static normalize( deg: number ): number{
 		
@@ -38,11 +40,13 @@ class Degree {
 	
 	/**
 	 * @description 각도의 단위를 degree에서 radian으로 변경합니다. 
-	 * @example
-	 * // Math.PI
-	 * const radian = Stopwatch.Degree.toRadian( 180 );
 	 * @param {number} 변경할 degree 각도
 	 * @returns {number} 변경된 radian 각도
+	 * @example
+	 * ```js
+	 * // Math.PI
+	 * const radian = Stopwatch.Degree.toRadian( 180 );
+	 * ```
 	 */	
 	static toRadian( deg: number ): number{
 		
@@ -52,11 +56,13 @@ class Degree {
 	
 	/**
 	 * @description 각도의 단위를 radian에서 degree로 변경합니다. 
-	 * @example
-	 * // 90
-	 * const degree = Stopwatch.Degree.fromRadian( Math.PI / 2 );
 	 * @param {number} 변경할 radian 각도
 	 * @returns {number} 변경된 degree 각도
+	 * @example
+	 * ```js
+	 * // 90
+	 * const degree = Stopwatch.Degree.fromRadian( Math.PI / 2 );
+	 * ```
 	 */	
 	static fromRadian( rad: number ): number{
 		

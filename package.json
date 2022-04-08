@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "docs": "jsdoc -c jsdoc.conf README.md",
+    "docs": "typedoc src/Stopwatch.ts src/Stopwatch.AlarmType.ts src/Stopwatch.Degree.ts",
     "tsc": "tsc"
   },
   "repository": {
@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/zzinpan/Stopwatch#readme",
   "devDependencies": {
-    "docdash": "^1.2.0"
+    "jest": "^27.5.1",
+    "typedoc": "^0.22.14"
   }
 }
