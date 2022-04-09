@@ -1,5 +1,111 @@
-import AlarmType from "./Stopwatch.AlarmType.js";
-import Degree from "./Stopwatch.Degree.js";
+'use strict';
+
+/**
+ * 알람 종류
+ * @constructor
+ * @property {string|number} id 알람 종류 구분자
+ * @property {function} timeCalculator 시간 계산자
+ * @example
+ * ```js
+ * // 새로운 알람 종류 생성
+ * const customAlarmType = new Stopwatch.AlarmType( "SNAP", ( time, alarmTime ) => {
+ *
+ *     // 0.5초 단위 스냅
+ *     return alarmTime - alarmTime % 500;
+ *
+ * } );
+ *
+ * // 5초뒤 알람 발생
+ * stopwatch.setAlarm( 5321, customAlarmType );
+ * ```
+ */
+var AlarmType = /** @class */ (function () {
+    function AlarmType(id, timeCalculator) {
+        this.id = id;
+        this.timeCalculator = timeCalculator;
+    }
+    /**
+     * @description 알람시간을 계산하여 반환합니다.
+     * @param {number} time 현재시간
+     * @param {number} time 알람시간
+     * @returns {number} 계산된 알람시간
+     * @example
+     * ```js
+     * // 알람시간 계산
+     * const alarmTime = customAlarmType.timeCalculation( 3000, 3435 );
+     * ```
+     */
+    AlarmType.prototype.timeCalculation = function (time, alarmTime) {
+        return this.timeCalculator(time, alarmTime);
+    };
+    AlarmType.ABSOLUTE = new AlarmType(0, function (time, alarmTime) {
+        return alarmTime;
+    });
+    AlarmType.RELATIVE = new AlarmType(1, function (time, alarmTime) {
+        return time + alarmTime;
+    });
+    return AlarmType;
+}());
+
+/**
+ * 도, 또는 각도는 평면 각도의 단위로, 1회전의 360등분
+ * @constructor
+ */
+var Degree = /** @class */ (function () {
+    function Degree() {
+    }
+    /**
+     * @description 각도를 일반화합니다. ( 0 <= 각도 < 360 )
+     * @param {number} deg 일반화할 각도
+     * @returns {number} 일반화된 각도
+     * @example
+     * ```js
+     * // 9
+     * const degree = Stopwatch.Degree.normalize( 369 );
+     * ```
+     */
+    Degree.normalize = function (deg) {
+        while (true) {
+            if (360 <= deg) {
+                deg -= 360;
+                continue;
+            }
+            if (deg < 0) {
+                deg += 360;
+                continue;
+            }
+            return deg;
+        }
+    };
+    /**
+     * @description 각도의 단위를 degree에서 radian으로 변경합니다.
+     * @param {number} 변경할 degree 각도
+     * @returns {number} 변경된 radian 각도
+     * @example
+     * ```js
+     * // Math.PI
+     * const radian = Stopwatch.Degree.toRadian( 180 );
+     * ```
+     */
+    Degree.toRadian = function (deg) {
+        return deg * Math.PI / 180;
+    };
+    /**
+     * @description 각도의 단위를 radian에서 degree로 변경합니다.
+     * @param {number} 변경할 radian 각도
+     * @returns {number} 변경된 degree 각도
+     * @example
+     * ```js
+     * // 90
+     * const degree = Stopwatch.Degree.fromRadian( Math.PI / 2 );
+     * ```
+     */
+    Degree.fromRadian = function (rad) {
+        return rad / Math.PI * 180;
+    };
+    return Degree;
+}());
+
 // 상수
 var Const = {
     stopwatchCapsules: {},
@@ -18,6 +124,10 @@ var Const = {
  * @property {object} event 이벤트 모듈
  * @property {number[]} alarms 등록된 알람 시간
  * @property {number[]} completeAlarms 완료된 알람 시간
+ * @example
+ * ```js
+ * const stopwatch = new Stopwatch();
+ * ```
  ***/
 var StopwatchCapsule = /** @class */ (function () {
     function StopwatchCapsule(stopwatch) {
@@ -48,10 +158,12 @@ var StopwatchCapsule = /** @class */ (function () {
 /**
  * 스탑워치 생성자
  * @constructor
+ * @property {string|number} id 스탑워치 아이디
  * @example
+ * ```js
  * // 객체 생성
  * const stopwatch = new Stopwatch();
- * @property {string|number} id 스탑워치 아이디
+ * ```
  */
 var Stopwatch = /** @class */ (function () {
     function Stopwatch() {
@@ -68,10 +180,12 @@ var Stopwatch = /** @class */ (function () {
     }
     /**
      * @description 스탑워치 실행 시킵니다.
+     * @returns {boolean} 명령 수행 여부
      * @example
+     * ```js
      * // 스탑워치 실행
      * stopwatch.start();
-     * @returns {boolean} 명령 수행 여부
+     * ```
      */
     Stopwatch.prototype.start = function () {
         var capsule = Const.stopwatchCapsules[this.id];
@@ -112,10 +226,12 @@ var Stopwatch = /** @class */ (function () {
     };
     /**
      * @description 스탑워치를 일시정지 시킵니다.
+     * @returns {boolean} 명령 수행 여부
      * @example
+     * ```js
      * // 스탑워치 일시중지
      * stopwatch.pause();
-     * @returns {boolean} 명령 수행 여부
+     * ```
      */
     Stopwatch.prototype.pause = function () {
         var capsule = Const.stopwatchCapsules[this.id];
@@ -130,10 +246,12 @@ var Stopwatch = /** @class */ (function () {
     };
     /**
      * @description 스탑워치를 중지 시킵니다.
+     * @returns {boolean} 명령 수행 여부
      * @example
+     * ```js
      * // 스탑워치 중지
      * stopwatch.stop();
-     * @returns {boolean} 명령 수행 여부
+     * ```
      */
     Stopwatch.prototype.stop = function () {
         var capsule = Const.stopwatchCapsules[this.id];
@@ -149,10 +267,12 @@ var Stopwatch = /** @class */ (function () {
     };
     /**
      * @description 현재시간을 반환합니다.
+     * @returns {number} 현재시간(ms)
      * @example
+     * ```js
      * // 스탑워치 시간 조회
      * const time = stopwatch.get();
-     * @returns {number} 현재시간(ms)
+     * ```
      */
     Stopwatch.prototype.get = function () {
         var capsule = Const.stopwatchCapsules[this.id];
@@ -160,15 +280,19 @@ var Stopwatch = /** @class */ (function () {
     };
     /**
      * @description 알람을 설정합니다. 알람시간이 되면, 타이머에서 알람이벤트를 발생시킵니다.
-     * @example
-     * // 알람 설정 ( 알람종류: Stopwatch.AlarmType.RELATIVE )
-     * stopwatch.setAlarm( 3000 );
-     * @example
-     * // 알람 설정
-     * stopwatch.setAlarm( 3000, Stopwatch.AlarmType.ABSOLUTE );
      * @param {number} alarmTime 알람시간(ms)
      * @param {Stopwatch.AlarmType} [alarmType=Stopwatch.AlarmType.RELATIVE] 알람기준
      * @returns {boolean} 명령 수행 여부
+     * @example
+     * ```js
+     * // 알람 설정 ( 알람종류: Stopwatch.AlarmType.RELATIVE )
+     * stopwatch.setAlarm( 3000 );
+     * ```
+     * @example
+     * ```js
+     * // 알람 설정
+     * stopwatch.setAlarm( 3000, Stopwatch.AlarmType.ABSOLUTE );
+     * ```
      */
     Stopwatch.prototype.setAlarm = function (alarmTime, alarmType) {
         if (alarmType === void 0) { alarmType = Stopwatch.AlarmType.RELATIVE; }
@@ -195,10 +319,12 @@ var Stopwatch = /** @class */ (function () {
     };
     /**
      * @description 저장된 알람을 전달합니다.
+     * @returns {number[]} 저장된 알람
      * @example
+     * ```js
      * // 알람 조회
      * const alarms = stopwatch.getAlarms();
-     * @returns {number[]} 저장된 알람
+     * ```
      */
     Stopwatch.prototype.getAlarms = function () {
         var capsule = Const.stopwatchCapsules[this.id];
@@ -206,10 +332,12 @@ var Stopwatch = /** @class */ (function () {
     };
     /**
      * @description 설정된 모든 알람이 제거 됩니다.
+     * @returns {boolean} 명령 수행 여부
      * @example
+     * ```js
      * // 알람 초기화
      * stopwatch.clearAlarm();
-     * @returns {boolean} 명령 수행 여부
+     * ```
      */
     Stopwatch.prototype.clearAlarm = function () {
         var capsule = Const.stopwatchCapsules[this.id];
@@ -219,7 +347,11 @@ var Stopwatch = /** @class */ (function () {
     };
     /**
      * @description 이벤트 콜백을 등록합니다.
+     * @param {string} eventName 등록할 이벤트명 ( 'update', 'alarm' )
+     * @param {function} callback 이벤트 발생 시, 수행될 콜백함수
+     * @returns {boolean} 명령 수행 여부
      * @example
+     * ```js
      * // 시간이 갱신되면, 호출
      * stopwatch.on( "update", ( ms ) => {
      *
@@ -227,9 +359,7 @@ var Stopwatch = /** @class */ (function () {
      *     console.log( seconds.toFixed( 3 ) );
      *
      * } );
-     * @param {string} eventName 등록할 이벤트명 ( 'update', 'alarm' )
-     * @param {function} callback 이벤트 발생 시, 수행될 콜백함수
-     * @returns {boolean} 명령 수행 여부
+     * ```
      */
     Stopwatch.prototype.on = function (eventName, callback) {
         var capsule = Const.stopwatchCapsules[this.id];
@@ -243,18 +373,19 @@ var Stopwatch = /** @class */ (function () {
     };
     /**
      * @description 이벤트 콜백을 삭제합니다.
-     * @example
-     * // 모든 콜백 제거
-     * stopwatch.off();
-     * @example
-     * // 특정 이벤트의 모든 콜백 제거
-     * stopwatch.off( "alarm" );
-     * @example
-     * // 특정 이벤트의 특정 콜백 제거
-     * stopwatch.off( "alarm", alarmListener );
      * @param {string} eventName 삭제할 이벤트명 ( 'update', 'alarm' )
      * @param {function} callback 삭제할 콜백함수
      * @returns {boolean} 명령 수행 여부
+     * @example
+     * ```js
+     * // 특정 이벤트의 모든 콜백 제거
+     * stopwatch.off( "alarm" );
+     * ```
+     * @example
+     * ```js
+     * // 특정 이벤트의 특정 콜백 제거
+     * stopwatch.off( "alarm", alarmListener );
+     * ```
      */
     Stopwatch.prototype.off = function (eventName, callback) {
         var capsule = Const.stopwatchCapsules[this.id];
@@ -279,10 +410,12 @@ var Stopwatch = /** @class */ (function () {
     /**
      * @description 객체를 파괴합니다.
      * 파괴된 객체는 캡슐 관리에서 제외되고, Stopwatch의 기능을 잃어버립니다.
+     * @returns {boolean} 명령 수행 여부
      * @example
+     * ```js
      * // 객체 파괴
      * stopwatch.destroy();
-     * @returns {boolean} 명령 수행 여부
+     * ```
      */
     Stopwatch.prototype.destroy = function () {
         // 정지
@@ -301,5 +434,5 @@ var Stopwatch = /** @class */ (function () {
     Stopwatch.Degree = Degree;
     return Stopwatch;
 }());
-export default Stopwatch;
-//# sourceMappingURL=Stopwatch.js.map
+
+module.exports = Stopwatch;
