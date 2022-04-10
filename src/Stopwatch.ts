@@ -1,5 +1,6 @@
 import AlarmType from "./Stopwatch.AlarmType.js";
 import Degree from "./Stopwatch.Degree.js";
+import { requestAnimationFrame, cancelAnimationFrame } from "./polyfill/requestAnimatiionFrame.js";
 
 // 상수
 const Const: {
@@ -156,7 +157,7 @@ class Stopwatch {
 		
 		function frame( time: number ){
 			
-			capsule.rafId = window.requestAnimationFrame( frame );
+			capsule.rafId = requestAnimationFrame( frame );
 			if( capsule.startTime == null ){
 				capsule.startTime = time;
 			}
@@ -191,7 +192,7 @@ class Stopwatch {
 			
 		}
 		
-		capsule.rafId = window.requestAnimationFrame( frame );
+		capsule.rafId = requestAnimationFrame( frame );
 		
 		return true;
 		
@@ -242,7 +243,7 @@ class Stopwatch {
 			return false;
 		}
 		
-		window.cancelAnimationFrame( capsule.rafId );
+		cancelAnimationFrame( capsule.rafId );
 		capsule.rafId = null;
 		capsule.startTime = null;
 		capsule.paused = false;
