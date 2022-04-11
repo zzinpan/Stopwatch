@@ -1,7 +1,8 @@
 /**
  * import
  */
-require( ["../dist/amd/Stopwatch.js"], ( Stopwatch ) => {
+
+require( ["../dist/umd/Stopwatch.js"], ( Stopwatch ) => {
 
 	/* 스탑워치 API 객체 */
 	const stopwatch = new Stopwatch();

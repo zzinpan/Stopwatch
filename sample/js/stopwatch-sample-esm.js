@@ -1,15 +1,7 @@
 /**
  * import
  */
-
-
-// 스탑워치
 import Stopwatch from "../../dist/esm/Stopwatch.js";
-
-
-/**
- * declare
- */
 
 // 스탑워치 API 객체
  const stopwatch = new Stopwatch();

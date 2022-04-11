@@ -1,4 +1,4 @@
-define("Stopwatch", (function () { 'use strict';
+define((function () { 'use strict';
 
     /**
      * 알람 종류

@@ -1,36 +1,6 @@
 import typescript from '@rollup/plugin-typescript';
 import { terser } from 'rollup-plugin-terser';
-// import { RollupFileOptions } from "rollup";
-// import fs from 'fs';
 
-
-// function getDirNames( dirName, dirNames ){
-
-//     const subDirNames = fs.readdirSync( dirName );
-//     subDirNames.forEach(( subFileName ) => {
-
-//         const subDirName = dirName + "/" + subFileName;
-//         const isDirectory = fs.lstatSync( subDirName ).isDirectory();
-//         if( isDirectory === true ){
-
-//             dirNames.concat( getDirNames( subDirName, dirNames ) );
-//             return;
-
-//         }
-
-//         dirNames.push( subDirName );
-
-//     });
-    
-
-//     return dirNames;
-
-// }
-
-// const dirNames = getDirNames( "./src", [] );
-
-
-// console.log( dirNames );
 
 class RollupOption {
 
@@ -55,6 +25,7 @@ class RollupOption {
 
 }
 
+
 const Plugin = {
 
     typescript: typescript({
@@ -68,16 +39,20 @@ const Plugin = {
 
 };
 
+
 const Modules = [
     "esm", "cjs", "iife", "amd", "umd"
 ];
 
+
 export default Modules.reduce( ( rollupOptions, module ) => {
+
 
     rollupOptions.push( 
         new RollupOption( "Stopwatch.js", module )
                 .addPlugin( Plugin.typescript )
     );
+
 
     rollupOptions.push( 
         new RollupOption( "Stopwatch.min.js", module )
@@ -85,6 +60,8 @@ export default Modules.reduce( ( rollupOptions, module ) => {
                 .addPlugin( Plugin.terser )
     );
 
+
     return rollupOptions;
 
+    
 }, [] );

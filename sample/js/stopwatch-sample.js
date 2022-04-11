@@ -1,6 +1,3 @@
-/**
- * declare
- */
 
 // 스탑워치 API 객체
  const stopwatch = new Stopwatch();
