@@ -6,7 +6,7 @@
   "scripts": {
     "test": "jest",
     "docs": "typedoc src/Stopwatch.ts src/Stopwatch.AlarmType.ts src/Stopwatch.Degree.ts",
-    "bundle": "rollup --c"
+    "build": "rollup --c"
   },
   "repository": {
     "type": "git",
