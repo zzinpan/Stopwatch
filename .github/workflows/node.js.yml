@@ -30,8 +30,8 @@ jobs:
     - run: npm run build --if-present
     - run: npm run docs
     - run: npm test
-    - uses: stefanzweifel/git-auto-commit-action@v4.14.1
-    - name: Git auto commit
+      uses: stefanzweifel/git-auto-commit-action@v4.14.1
+      name: Git auto commit
       with:
         commit_message: upldate dist, docs folrder by nodejs CI
 
