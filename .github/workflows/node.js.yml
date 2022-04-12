@@ -22,6 +22,7 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Use Node.js ${{ matrix.node-version }}
+    
       uses: actions/setup-node@v3
       with:
         node-version: ${{ matrix.node-version }}
@@ -31,8 +32,8 @@ jobs:
     - run: npm run docs
     - run: npm test
 
-    - name: Git auto commit
     - uses: stefanzweifel/git-auto-commit-action@v4.14.1
+    - name: Git auto commit
       with:
         commit_message: upldate dist, docs folrder by nodejs CI
 
