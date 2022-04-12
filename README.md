@@ -1,3 +1,6 @@
+![example workflow](https://github.com/zzinpan/Stopwatch.js/actions/workflows/node.js.yml/badge.svg)
+
+
 # Stopwatch.js
 
 javascript stopwatch library.
