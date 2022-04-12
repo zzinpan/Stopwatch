@@ -100,7 +100,7 @@ class StopwatchCapsule {
  * @property {string|number} id 스탑워치 아이디
  * @example
  * ```js
- * // 객체 생성
+ * // create instance
  * const stopwatch = new Stopwatch();
  * ```
  */
