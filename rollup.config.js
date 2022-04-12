@@ -10,6 +10,7 @@ class RollupOption {
         this.output = {
             file: `./dist/${outFormat}/${outFileName}`,
             name: 'Stopwatch',
+            sourcemap: true,
             format: outFormat
         };
         this.plugins = [];
