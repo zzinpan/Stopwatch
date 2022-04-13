@@ -1,4 +1,4 @@
-var Stopwatch = (function () {
+var Stopwatch = (function (exports) {
     'use strict';
 
     /**
@@ -191,13 +191,11 @@ var Stopwatch = (function () {
         return StopwatchCapsule;
     }());
     /**
-     * @class Stopwatch
+     * Stopwatch
      */
     var Stopwatch = /** @class */ (function () {
         /**
-         * @constructor
-         * @description stopwatch constructor
-         * @example
+         * Stopwatch constructor
          * ```js
          * // create instance
          * const stopwatch = new Stopwatch();
@@ -472,7 +470,11 @@ var Stopwatch = (function () {
         return Stopwatch;
     }());
 
-    return Stopwatch;
+    exports.Stopwatch = Stopwatch;
 
-})();
+    Object.defineProperty(exports, '__esModule', { value: true });
+
+    return exports;
+
+})({});
 //# sourceMappingURL=Stopwatch.js.map

@@ -1,8 +1,8 @@
 (function (global, factory) {
-    typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
-    typeof define === 'function' && define.amd ? define(factory) :
-    (global = typeof globalThis !== 'undefined' ? globalThis : global || self, global.Stopwatch = factory());
-})(this, (function () { 'use strict';
+    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
+    typeof define === 'function' && define.amd ? define(['exports'], factory) :
+    (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.Stopwatch = {}));
+})(this, (function (exports) { 'use strict';
 
     /**
      * 알람 종류
@@ -194,13 +194,11 @@
         return StopwatchCapsule;
     }());
     /**
-     * @class Stopwatch
+     * Stopwatch
      */
     var Stopwatch = /** @class */ (function () {
         /**
-         * @constructor
-         * @description stopwatch constructor
-         * @example
+         * Stopwatch constructor
          * ```js
          * // create instance
          * const stopwatch = new Stopwatch();
@@ -475,7 +473,9 @@
         return Stopwatch;
     }());
 
-    return Stopwatch;
+    exports.Stopwatch = Stopwatch;
+
+    Object.defineProperty(exports, '__esModule', { value: true });
 
 }));
 //# sourceMappingURL=Stopwatch.js.map
