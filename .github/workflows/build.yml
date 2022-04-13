@@ -10,7 +10,8 @@ on:
     branches: [ main ]
 
 jobs:
-  build:
+
+  test:
 
     runs-on: ubuntu-latest
 
@@ -29,7 +30,7 @@ jobs:
     - run: npm ci
     - run: npm test
 
-  build:
+  build-and-docs:
 
     runs-on: ubuntu-latest
 
