@@ -17,7 +17,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [12.x, 14.x, 16.x]
+        node-version: [16.x]
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
@@ -26,11 +26,11 @@ jobs:
     - name: Checkout source
       uses: actions/checkout@v3
 
-    # 노드 16.x 사용
-    - name: Use Node.js 16.x
+    # 노드 설치
+    - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v3
       with:
-        node-version: 16.x
+        node-version: ${{ matrix.node-version }}
         cache: 'npm'
 
     # 모듈 설치
@@ -45,23 +45,9 @@ jobs:
     - name: docs
       run: npm run docs
 
-    # 노드 12.x, 14.x, 16.x 사용
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v3
-      with:
-        node-version: ${{ matrix.node-version }}
-        cache: 'npm'
-
     # 테스트
     - name: Test
       run: npm test
-
-    # 노드 16.x 사용
-    - name: Use Node.js 16.x
-      uses: actions/setup-node@v3
-      with:
-        node-version: 16.x
-        cache: 'npm'
 
     # 빌드 / 문서 반영
     - name: Auto commit
