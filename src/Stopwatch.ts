@@ -95,22 +95,27 @@ class StopwatchCapsule {
 }
 
 /**
- * 스탑워치 생성자
- * @constructor
- * @property {string|number} id 스탑워치 아이디
- * @example
- * ```js
- * // create instance
- * const stopwatch = new Stopwatch();
- * ```
+ * @class Stopwatch
  */
 class Stopwatch {
 
+	/**
+	 * @description stopwatch instance id
+	 */
 	id: string | number;
 
 	static AlarmType = AlarmType;
 	static Degree = Degree;
 
+	/**
+	 * @constructor
+	 * @description stopwatch constructor
+	 * @example
+	 * ```js
+	 * // create instance
+	 * const stopwatch = new Stopwatch();
+	 * ```
+	 */
 	constructor(){
 		
 		const id: string = Const.getUniqueId();
