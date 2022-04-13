@@ -127,7 +127,7 @@ define((function () { 'use strict';
     }
     if (!_this[rAF]) {
         _this[rAF] = function (callback) {
-            var currTime = new Date().getTime(), timeToCall = Math.max(0, 16 - (currTime - lastTime)), id = setTimeout(function () { callback(currTime + timeToCall); }, timeToCall);
+            var currTime = Date.now(), timeToCall = Math.max(0, 16 - (currTime - lastTime)), id = setTimeout(function () { callback(currTime + timeToCall); }, timeToCall);
             lastTime = currTime + timeToCall;
             return id;
         };
@@ -190,16 +190,18 @@ define((function () { 'use strict';
         return StopwatchCapsule;
     }());
     /**
-     * 스탑워치 생성자
-     * @constructor
-     * @property {string|number} id 스탑워치 아이디
-     * @example
-     * ```js
-     * // 객체 생성
-     * const stopwatch = new Stopwatch();
-     * ```
+     * @class Stopwatch
      */
     var Stopwatch = /** @class */ (function () {
+        /**
+         * @constructor
+         * @description stopwatch constructor
+         * @example
+         * ```js
+         * // create instance
+         * const stopwatch = new Stopwatch();
+         * ```
+         */
         function Stopwatch() {
             var id = Const.getUniqueId();
             // 재할당, 삭제 불가능
@@ -472,3 +474,4 @@ define((function () { 'use strict';
     return Stopwatch;
 
 }));
+//# sourceMappingURL=Stopwatch.js.map
