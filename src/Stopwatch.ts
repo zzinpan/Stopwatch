@@ -97,7 +97,7 @@ class StopwatchCapsule {
 /**
  * Stopwatch
  */
-export class Stopwatch {
+class Stopwatch {
 
 	/**
 	 * @description
@@ -472,8 +472,11 @@ export class Stopwatch {
 
 		return true;
 
+
 	}
 
 
-	
 }
+
+
+export { Stopwatch };
