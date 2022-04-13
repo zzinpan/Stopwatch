@@ -1,8 +1,7 @@
 # Stopwatch.js
 
-[![build](https://github.com/zzinpan/Stopwatch.js/actions/workflows/build.yml/badge.svg)](https://github.com/zzinpan/Stopwatch.js/actions/workflows/build.yml)
+[![build](https://github.com/zzinpan/Stopwatch.js/workflows/build/badge.svg)](https://github.com/zzinpan/Stopwatch.js/actions/workflows/build.yml)
 [![pages-build-deployment](https://github.com/zzinpan/Stopwatch.js/actions/workflows/pages/pages-build-deployment/badge.svg)](https://github.com/zzinpan/Stopwatch.js/actions/workflows/pages/pages-build-deployment)
-
 
 <br>
 
