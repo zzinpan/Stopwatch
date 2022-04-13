@@ -1,8 +1,8 @@
 # Stopwatch.js
 
-[![build](https://github.com/zzinpan/Stopwatch.js/actions/workflows/build.yml/badge.svg?branch=main&event=workflow_run)](https://github.com/zzinpan/Stopwatch.js/actions/workflows/build.yml)
-[![test](https://github.com/zzinpan/Stopwatch.js/workflows/test/badge.svg)](https://github.com/zzinpan/Stopwatch.js/actions/workflows/test.yml)
-[![docs](https://github.com/zzinpan/Stopwatch.js/workflows/docs/badge.svg)](https://github.com/zzinpan/Stopwatch.js/actions/workflows/docs.yml)
+[![build](https://github.com/zzinpan/Stopwatch.js/actions/workflows/build.yml/badge.svg)](https://github.com/zzinpan/Stopwatch.js/actions/workflows/build.yml)
+[![test](https://github.com/zzinpan/Stopwatch.js/actions/workflows/test.yml/badge.svg)](https://github.com/zzinpan/Stopwatch.js/actions/workflows/test.yml)
+[![docs](https://github.com/zzinpan/Stopwatch.js/actions/workflows/docs.yml/badge.svg)](https://github.com/zzinpan/Stopwatch.js/actions/workflows/docs.yml)
 [![pages-build-deployment](https://github.com/zzinpan/Stopwatch.js/actions/workflows/pages/pages-build-deployment/badge.svg)](https://github.com/zzinpan/Stopwatch.js/actions/workflows/pages/pages-build-deployment)
 
 
