@@ -27,7 +27,7 @@ for (x = 0; x < vendors.length && !_this[rAF]; ++x) {
 if (!_this[rAF]) {
     _this[rAF] = function ( callback: Function ) {
 
-        const currTime = new Date().getTime(),
+        const currTime = Date.now(),
         
         timeToCall = Math.max(0, 16 - (currTime - lastTime)),
         id = setTimeout(function () { callback(currTime + timeToCall); }, timeToCall);
