@@ -1,4 +1,4 @@
-var Stopwatch = (function (exports) {
+var Stopwatch = (function () {
     'use strict';
 
     /**
@@ -470,11 +470,7 @@ var Stopwatch = (function (exports) {
         return Stopwatch;
     }());
 
-    exports.Stopwatch = Stopwatch;
+    return Stopwatch;
 
-    Object.defineProperty(exports, '__esModule', { value: true });
-
-    return exports;
-
-})({});
+})();
 //# sourceMappingURL=Stopwatch.js.map

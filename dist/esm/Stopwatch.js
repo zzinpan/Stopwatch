@@ -467,5 +467,5 @@ var Stopwatch = /** @class */ (function () {
     return Stopwatch;
 }());
 
-export { Stopwatch };
+export { Stopwatch as default };
 //# sourceMappingURL=Stopwatch.js.map

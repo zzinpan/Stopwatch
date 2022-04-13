@@ -1,4 +1,4 @@
-define(['exports'], (function (exports) { 'use strict';
+define((function () { 'use strict';
 
     /**
      * 알람 종류
@@ -469,9 +469,7 @@ define(['exports'], (function (exports) { 'use strict';
         return Stopwatch;
     }());
 
-    exports.Stopwatch = Stopwatch;
-
-    Object.defineProperty(exports, '__esModule', { value: true });
+    return Stopwatch;
 
 }));
 //# sourceMappingURL=Stopwatch.js.map

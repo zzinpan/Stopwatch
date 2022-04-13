@@ -1,7 +1,5 @@
 'use strict';
 
-Object.defineProperty(exports, '__esModule', { value: true });
-
 /**
  * 알람 종류
  * @constructor
@@ -471,5 +469,5 @@ var Stopwatch = /** @class */ (function () {
     return Stopwatch;
 }());
 
-exports.Stopwatch = Stopwatch;
+module.exports = Stopwatch;
 //# sourceMappingURL=Stopwatch.js.map
