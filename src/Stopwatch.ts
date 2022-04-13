@@ -479,4 +479,4 @@ class Stopwatch {
 }
 
 
-export { Stopwatch };
+export default Stopwatch;
