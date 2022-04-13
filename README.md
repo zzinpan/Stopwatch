@@ -5,6 +5,8 @@
 [![docs](https://github.com/zzinpan/Stopwatch.js/workflows/docs/badge.svg)](https://github.com/zzinpan/Stopwatch.js/actions/workflows/docs.yml)
 [![pages-build-deployment](https://github.com/zzinpan/Stopwatch.js/actions/workflows/pages/pages-build-deployment/badge.svg)](https://github.com/zzinpan/Stopwatch.js/actions/workflows/pages/pages-build-deployment)
 
+[![build](https://github.com/zzinpan/Stopwatch.js/actions/workflows/build.yml/badge.svg?branch=main&event=push)](https://github.com/zzinpan/Stopwatch.js/actions/workflows/build.yml)
+
 javascript stopwatch library.
 
 <br>
