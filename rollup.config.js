@@ -49,7 +49,7 @@ const Modules = [
 export default Modules.reduce( ( rollupOptions, module ) => {
 
 
-    rollupOptions.push( 
+    rollupOptions.puadsh( 
         new RollupOption( "Stopwatch.js", module )
                 .addPlugin( Plugin.typescript )
     );
