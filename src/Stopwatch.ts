@@ -95,12 +95,13 @@ class StopwatchCapsule {
 }
 
 /**
- * @class Stopwatch
+ * Stopwatch
  */
-class Stopwatch {
+export class Stopwatch {
 
 	/**
-	 * @description stopwatch instance id
+	 * @description
+	 * ID of automatically created object
 	 */
 	id: string | number;
 
@@ -108,9 +109,7 @@ class Stopwatch {
 	static Degree = Degree;
 
 	/**
-	 * @constructor
-	 * @description stopwatch constructor
-	 * @example
+	 * Stopwatch constructor
 	 * ```js
 	 * // create instance
 	 * const stopwatch = new Stopwatch();
@@ -478,6 +477,3 @@ class Stopwatch {
 
 	
 }
-
-
-export default Stopwatch;
