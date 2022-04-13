@@ -188,13 +188,11 @@ var StopwatchCapsule = /** @class */ (function () {
     return StopwatchCapsule;
 }());
 /**
- * @class Stopwatch
+ * Stopwatch
  */
 var Stopwatch = /** @class */ (function () {
     /**
-     * @constructor
-     * @description stopwatch constructor
-     * @example
+     * Stopwatch constructor
      * ```js
      * // create instance
      * const stopwatch = new Stopwatch();
@@ -469,5 +467,5 @@ var Stopwatch = /** @class */ (function () {
     return Stopwatch;
 }());
 
-export { Stopwatch as default };
+export { Stopwatch };
 //# sourceMappingURL=Stopwatch.js.map

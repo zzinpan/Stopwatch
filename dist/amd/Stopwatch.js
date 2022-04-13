@@ -1,4 +1,4 @@
-define((function () { 'use strict';
+define(['exports'], (function (exports) { 'use strict';
 
     /**
      * 알람 종류
@@ -190,13 +190,11 @@ define((function () { 'use strict';
         return StopwatchCapsule;
     }());
     /**
-     * @class Stopwatch
+     * Stopwatch
      */
     var Stopwatch = /** @class */ (function () {
         /**
-         * @constructor
-         * @description stopwatch constructor
-         * @example
+         * Stopwatch constructor
          * ```js
          * // create instance
          * const stopwatch = new Stopwatch();
@@ -471,7 +469,9 @@ define((function () { 'use strict';
         return Stopwatch;
     }());
 
-    return Stopwatch;
+    exports.Stopwatch = Stopwatch;
+
+    Object.defineProperty(exports, '__esModule', { value: true });
 
 }));
 //# sourceMappingURL=Stopwatch.js.map
