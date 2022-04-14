@@ -4,11 +4,11 @@ import { terser } from 'rollup-plugin-terser';
 
 class RollupOption {
 
-    input;
-    output;
-    plugins;
+    input: string;
+    output: any;
+    plugins: any;
 
-    constructor( outFileName, outFormat ){
+    constructor( outFileName: string, outFormat: string ){
 
         this.input = "./src/Stopwatch.ts";
         this.output = {
@@ -21,7 +21,7 @@ class RollupOption {
 
     }
 
-    addPlugin( plugins ){
+    addPlugin( plugins: any ){
 
         this.plugins.push( plugins );
         return this;

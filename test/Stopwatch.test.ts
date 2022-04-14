@@ -1,30 +1,14 @@
-class Module {
+import TestModule from "./TestModule";
 
-    type;
-    Stopwatch;
 
-    constructor( type ){
-
-        this.type = type;
-        this.Stopwatch = require( `../dist/${type}/Stopwatch.js` );
-
-    }
-
-}
-
-[
-
-    new Module( "cjs" ),
-    new Module( "umd" )
-
-].forEach( ( module ) => {
+TestModule.Modules.forEach( ( testModule ) => {
 
 
     // Stopwatch Costructor
-    const Stopwatch = module.Stopwatch;
+    const Stopwatch = testModule.Stopwatch;
 
 
-    test(`[${module.type}] new insatnce`, () => {
+    test(`[${testModule.id}] new insatnce`, () => {
     
         const stopwatch = new Stopwatch();
         expect( stopwatch instanceof Stopwatch ).toBe( true );
@@ -33,7 +17,7 @@ class Module {
     });
 
     
-    test(`[${module.type}] start -> destroy`, () => {
+    test(`[${testModule.id}] start -> destroy`, () => {
         
         const stopwatch = new Stopwatch();
         return new Promise(( resolve, reject ) => {
@@ -54,7 +38,7 @@ class Module {
     });
 
     
-    test(`[${module.type}] start -> pause -> get -> destroy`, () => {
+    test(`[${testModule.id}] start -> pause -> get -> destroy`, () => {
         
         const stopwatch = new Stopwatch();
         return new Promise(( resolve, reject ) => {
@@ -62,7 +46,7 @@ class Module {
             stopwatch.start();
             setTimeout( () => {
     
-                resolve();
+                resolve( stopwatch );
     
             }, 500 );
     
@@ -74,7 +58,7 @@ class Module {
 
                 setTimeout( () => {
 
-                    resolve();
+                    resolve( stopwatch );
 
                 }, 500 );
 
@@ -91,7 +75,7 @@ class Module {
     });
     
 
-    test(`[${module.type}] start -> stop`, () => {
+    test(`[${testModule.id}] start -> stop`, () => {
         
         const stopwatch = new Stopwatch();
         return new Promise(( resolve, reject ) => {

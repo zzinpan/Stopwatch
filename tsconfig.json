@@ -7,8 +7,9 @@
       "preserveConstEnums": true,
       "outDir": "./dist",
       "sourceMap": true,
+      "esModuleInterop": true,
       "moduleResolution": "node"
     },
-    "include": ["src/**/*", "rollup.config.ts"],
+    "include": ["src/**/*", "rollup.config.js"],
     "exclude": ["node_modules", "**/*.spec.ts"]
   }
