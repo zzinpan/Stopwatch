@@ -10,9 +10,9 @@ const config: Config.InitialOptions = {
   transform: {
     '^.+\\.ts?$': 'ts-jest',
   },
-  transformIgnorePatterns: ['<rootDir>/node_modules/'],
-  collectCoverageFrom: [
-      "./test/**/*.test.ts"
+  transformIgnorePatterns: [ '<rootDir>/node_modules/' ],
+  testMatch: [
+      "<rootDir>/test/**/*.test.ts"
   ]
 
 };
