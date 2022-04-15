@@ -1,5 +1,6 @@
 name: test
 
+on:
   workflow_run:
     workflows: ["build"]
     types:
@@ -40,4 +41,3 @@ jobs:
     # 테스트
     - name: Test
       run: npm test
-      
