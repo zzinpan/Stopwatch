@@ -25,7 +25,9 @@ jobs:
     # 소스 가져오기
     - name: Checkout source
       uses: actions/checkout@v3
-      run: git pull origin main
+      with:
+        fetch-depth: 0
+        ref: main
 
     # 노드 설치
     - name: Use Node.js ${{ matrix.node-version }}
@@ -62,7 +64,9 @@ jobs:
     # 소스 가져오기
     - name: Checkout source
       uses: actions/checkout@v3
-      run: git pull origin main
+      with:
+        fetch-depth: 0
+        ref: main
 
     # 노드 설치
     - name: Use Node.js ${{ matrix.node-version }}
@@ -94,7 +98,9 @@ jobs:
     # 소스 가져오기
     - name: Checkout source
       uses: actions/checkout@v3
-      run: git pull origin main
+      with:
+        fetch-depth: 0
+        ref: main
 
     # 노드 설치
     - name: Use Node.js ${{ matrix.node-version }}
