@@ -100,8 +100,12 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
 
+    # 모듈 설치
+    - name: Install Dependencies
+      run: npm ci
+
     # 문서 생성
-    - name: docs
+    - name: Create document
       run: npm run docs
 
     # 반영
