@@ -49,6 +49,7 @@ jobs:
   test-jest:
 
     runs-on: ubuntu-latest
+    needs: build-with-auto-commit
 
     strategy:
       matrix:
@@ -79,6 +80,7 @@ jobs:
   documentation-with-auto-commit:
 
     runs-on: ubuntu-latest
+    needs: test-jest
 
     strategy:
       matrix:
