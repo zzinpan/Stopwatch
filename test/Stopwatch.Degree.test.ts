@@ -7,7 +7,23 @@ TestModule.Modules.forEach( ( testModule ) => {
     // Different constructors per module
     const Stopwatch = testModule.Stopwatch;
 
+
+    test(`[${testModule.id}] Stopwatch.Degree.normalize`, () => {
     
+        let degree = 452.1234;
+        expect( Stopwatch.Degree.normalize( degree ) ).toBe( 92.1234 );
+
+        degree = 834.7752;
+        expect( Stopwatch.Degree.normalize( degree ) ).toBe( 114.77520000000004 );
+
+        degree = -12;
+        expect( Stopwatch.Degree.normalize( degree ) ).toBe( 348 );
+
+        degree = -5000.1;
+        expect( Stopwatch.Degree.normalize( degree ) ).toBe( 39.899999999999636 );
+    
+    });
+
     test(`[${testModule.id}] new insatnce`, () => {
     
         const stopwatch = new Stopwatch();

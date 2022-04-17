@@ -5,7 +5,6 @@ class TestModule {
 
     static Modules: TestModule[];
 
-
     constructor( id: string, src: string ){
 
         this.id = id;
