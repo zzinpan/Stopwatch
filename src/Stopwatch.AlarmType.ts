@@ -1,5 +1,3 @@
-const AlarmTypes = [];
-
 /**
  * 알람 종류
  * @constructor
@@ -63,7 +61,5 @@ class AlarmType {
 
 }
 
-AlarmTypes.push( AlarmType.ABSOLUTE );
-AlarmTypes.push( AlarmType.RELATIVE );
 
 export default AlarmType;

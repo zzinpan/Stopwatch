@@ -10,7 +10,8 @@ TestModule.Modules.forEach( ( testModule ) => {
 
     test(`[${testModule.id}] Stopwatch.Degree.normalize`, () => {
     
-        let degree = 452.1234;
+        
+        let degree: any = 452.1234;
         expect( Stopwatch.Degree.normalize( degree ) ).toBe( 92.1234 );
 
         degree = 834.7752;
@@ -21,95 +22,100 @@ TestModule.Modules.forEach( ( testModule ) => {
 
         degree = -5000.1;
         expect( Stopwatch.Degree.normalize( degree ) ).toBe( 39.899999999999636 );
-    
-    });
 
-    test(`[${testModule.id}] new insatnce`, () => {
-    
-        const stopwatch = new Stopwatch();
-        expect( stopwatch instanceof Stopwatch ).toBe( true );
-        expect( Object.getPrototypeOf( stopwatch ) ).toBe( Stopwatch.prototype );
-    
-    });
+        degree = NaN;
+        expect( Stopwatch.Degree.normalize( degree ) ).toBeNaN();
 
-    
-    test(`[${testModule.id}] start -> destroy`, () => {
+        // ?
+        degree = Infinity;
+        expect( Stopwatch.Degree.normalize( degree ) ).toBeNaN();
+
+        // ?
+        degree = -Infinity;
+        expect( Stopwatch.Degree.normalize( degree ) ).toBeNaN();
+
+        degree = true;
+        expect( Stopwatch.Degree.normalize( degree ) ).toBeNaN();
+
+        degree = false;
+        expect( Stopwatch.Degree.normalize( degree ) ).toBeNaN();
+
+        degree = "string?";
+        expect( Stopwatch.Degree.normalize( degree ) ).toBeNaN();
         
-        const stopwatch = new Stopwatch();
-        return new Promise(( resolve, reject ) => {
-    
-            stopwatch.start();
-            setTimeout( () => {
-    
-                resolve( stopwatch );
-    
-            }, 1000 );
-    
-        }).then( () => {
-    
-            expect( stopwatch.destroy() ).toBe( true );
-    
-        } );
+        degree = "";
+        expect( Stopwatch.Degree.normalize( degree ) ).toBeNaN();
+
+        degree = {};
+        expect( Stopwatch.Degree.normalize( degree ) ).toBeNaN();
+
+        degree = () => {};
+        expect( Stopwatch.Degree.normalize( degree ) ).toBeNaN();
+
+        degree = undefined;
+        expect( Stopwatch.Degree.normalize( degree ) ).toBeNaN();
+
+        degree = null;
+        expect( Stopwatch.Degree.normalize( degree ) ).toBeNaN();
+
     
     });
 
+    test(`[${testModule.id}] Stopwatch.Degree.toRadian`, () => {
     
-    test(`[${testModule.id}] start -> pause -> get -> destroy`, () => {
+
+        let degree: any = 0;
+        expect( Stopwatch.Degree.toRadian( degree ) ).toBe( 0 );
+
+        degree = 90;
+        expect( Stopwatch.Degree.toRadian( degree ) ).toBe( Math.PI / 2 );
+
+        degree = 180;
+        expect( Stopwatch.Degree.toRadian( degree ) ).toBe( Math.PI );
+
+        degree = 270;
+        expect( Stopwatch.Degree.toRadian( degree ) ).toBe( Math.PI / 2 * 3 );
+
+        degree = 360;
+        expect( Stopwatch.Degree.toRadian( degree ) ).toBe( Math.PI * 2 );
+
+        degree = -270;
+        expect( Stopwatch.Degree.toRadian( degree ) ).toBe( -Math.PI / 2 * 3 );
+
+        degree = -360;
+        expect( Stopwatch.Degree.toRadian( degree ) ).toBe( -Math.PI * 2 );
+
+        degree = Infinity;
+        expect( Stopwatch.Degree.toRadian( degree ) ).toBe( Infinity );
+
+        degree = -Infinity;
+        expect( Stopwatch.Degree.toRadian( degree ) ).toBe( -Infinity );
+
+        degree = true;
+        expect( Stopwatch.Degree.toRadian( degree ) ).toBe( Math.PI / 180 );
+
+        degree = false;
+        expect( Stopwatch.Degree.toRadian( degree ) ).toBe( 0 );
+
+        degree = "string?";
+        expect( Stopwatch.Degree.toRadian( degree ) ).toBeNaN();
         
-        const stopwatch = new Stopwatch();
-        return new Promise(( resolve, reject ) => {
-    
-            stopwatch.start();
-            setTimeout( () => {
-    
-                resolve( stopwatch );
-    
-            }, 500 );
-    
-        }).then( () => {
-    
-            expect( stopwatch.pause() ).toBe( true );
-    
-            return new Promise(( resolve, reject ) => {
+        degree = "";
+        expect( Stopwatch.Degree.toRadian( degree ) ).toBe( 0 );
 
-                setTimeout( () => {
+        degree = {};
+        expect( Stopwatch.Degree.toRadian( degree ) ).toBeNaN();
 
-                    resolve( stopwatch );
+        degree = () => {};
+        expect( Stopwatch.Degree.toRadian( degree ) ).toBeNaN();
 
-                }, 500 );
+        degree = undefined;
+        expect( Stopwatch.Degree.toRadian( degree ) ).toBeNaN();
 
-            });
+        degree = null;
+        expect( Stopwatch.Degree.toRadian( degree ) ).toBe( 0 );
 
-        } ).then( () => {
-
-            const elapsed = stopwatch.get();
-            expect( 400 < elapsed && elapsed < 600 ).toBe( true );
-            expect( stopwatch.destroy() ).toBe( true );
-
-        } );
     
     });
-    
-
-    test(`[${testModule.id}] start -> stop`, () => {
-        
-        const stopwatch = new Stopwatch();
-        return new Promise(( resolve, reject ) => {
-    
-            stopwatch.start();
-            setTimeout( () => {
-    
-                resolve( stopwatch );
-    
-            }, 1000 );
-    
-        }).then( () => {
-    
-            expect( stopwatch.stop() ).toBe( true );
-    
-        } );
-    
-    });
-
 
 } );

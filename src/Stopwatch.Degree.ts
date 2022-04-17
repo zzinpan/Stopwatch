@@ -14,8 +14,22 @@ class Degree {
 	 * const degree = Stopwatch.Degree.normalize( 369 );
 	 * ```
 	 */	
-	static normalize( deg: number ): number{
+	static normalize( deg: number ): number {
 		
+
+		if( typeof deg !== "number" ){
+			return NaN;
+		}
+
+		if( isNaN( deg ) === true ){
+			return NaN;
+		}
+
+		if( isFinite( deg ) === false ){
+			return NaN;
+		}
+
+
 		while( true ){
 			
 			if( 360 <= deg ){
@@ -48,7 +62,7 @@ class Degree {
 	 * const radian = Stopwatch.Degree.toRadian( 180 );
 	 * ```
 	 */	
-	static toRadian( deg: number ): number{
+	static toRadian( deg: number ): number {
 		
 		return deg * Math.PI / 180;
 		
@@ -64,7 +78,7 @@ class Degree {
 	 * const degree = Stopwatch.Degree.fromRadian( Math.PI / 2 );
 	 * ```
 	 */	
-	static fromRadian( rad: number ): number{
+	static fromRadian( rad: number ): number {
 		
 		return rad / Math.PI * 180;
 		

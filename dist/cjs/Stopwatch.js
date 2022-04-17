@@ -65,6 +65,15 @@ var Degree = /** @class */ (function () {
      * ```
      */
     Degree.normalize = function (deg) {
+        if (typeof deg !== "number") {
+            return NaN;
+        }
+        if (isNaN(deg) === true) {
+            return NaN;
+        }
+        if (isFinite(deg) === false) {
+            return NaN;
+        }
         while (true) {
             if (360 <= deg) {
                 deg -= 360;
