@@ -348,15 +348,15 @@ var Stopwatch = /** @class */ (function () {
             return false;
         }
         var time = this.get();
-        /**
-         * @todo 특정 인스턴스에 해당되는 필터는 제거 필요
-         */
-        if (alarmType === Stopwatch.AlarmType.ABSOLUTE &&
-            alarmTime <= time) {
-            return false;
-        }
         alarmTime = alarmType.timeCalculation(time, alarmTime);
         data.alarms.push(alarmTime);
+        /*
+         * 이미 시간이 지난 알람의 경우, 완료처리
+         * 이 알람은 재시작 시, 발생 가능
+         */
+        if (alarmTime < time) {
+            data.completeAlarms.push(alarmTime);
+        }
     };
     /**
      * @description 저장된 알람을 전달합니다.
