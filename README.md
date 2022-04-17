@@ -5,11 +5,11 @@
 [![build](https://github.com/zzinpan/Stopwatch.js/workflows/documentation/badge.svg)](https://github.com/zzinpan/Stopwatch.js/actions/workflows/documentation.yml)
 [![pages-build-deployment](https://github.com/zzinpan/Stopwatch.js/actions/workflows/pages/pages-build-deployment/badge.svg)](https://github.com/zzinpan/Stopwatch.js/actions/workflows/pages/pages-build-deployment)
 
-<br>
-
 Stopwatch.js is a JavaScript-based stopwatch library.  
 Lightweight, easy to use,  
 Available in browsers, ESM, CJS, AMD, and UMD.  
+
+<br>
 
 ## getting started
 
