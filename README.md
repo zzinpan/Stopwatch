@@ -7,6 +7,10 @@
 
 <br>
 
+Stopwatch.js is a JavaScript-based stopwatch library.  
+Lightweight, easy to use,  
+Available in browsers, ESM, CJS, AMD, and UMD.  
+
 ## getting started
 
 ```html
