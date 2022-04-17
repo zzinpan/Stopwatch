@@ -5,9 +5,9 @@ import { requestAnimationFrame, cancelAnimationFrame } from "./polyfill/requestA
 // 상수
 const Const: {
 
-	stopwatchCapsules: {
+	datas: {
 
-		[ id: string ]: StopwatchCapsule
+		[ id: string ]: Data
 
 	},
 
@@ -15,7 +15,7 @@ const Const: {
 
 } = {
 
-	stopwatchCapsules: {},
+	datas: {},
 	getUniqueId(): string {
 
 		return Date.now() + "" + Math.random() * 1000000000000000000;
@@ -41,7 +41,7 @@ const Const: {
  * const stopwatch = new Stopwatch();
  * ```
  ***/
-class StopwatchCapsule {
+class Data {
 
 	// 필드
 	stopwatch: Stopwatch;
@@ -130,8 +130,8 @@ class Stopwatch {
 
 		} )
 
-		const stopwatchCapsule = new StopwatchCapsule( this );
-		Const.stopwatchCapsules[ id ] = stopwatchCapsule;
+		const data = new Data( this );
+		Const.datas[ id ] = data;
 		
 	}
 
@@ -146,57 +146,57 @@ class Stopwatch {
 	 */	
 	start(): boolean {
 		
-		const capsule: StopwatchCapsule = Const.stopwatchCapsules[ this.id ];
+		const data: Data = Const.datas[ this.id ];
 
-		if( capsule.paused === true ){
-			capsule.paused = false;
+		if( data.paused === true ){
+			data.paused = false;
 			return true;
 		}
 		
 		// 현재 수행중인 경우, 다시 실행시킬 수 없음
-		if( capsule.rafId != null ){
+		if( data.rafId != null ){
 			return false;
 		}
 		
 		
 		function frame( time: number ){
 			
-			capsule.rafId = requestAnimationFrame( frame );
-			if( capsule.startTime == null ){
-				capsule.startTime = time;
+			data.rafId = requestAnimationFrame( frame );
+			if( data.startTime == null ){
+				data.startTime = time;
 			}
 			
-			if( capsule.paused === true ){
-				capsule.startTime += time - capsule.frameTime;
+			if( data.paused === true ){
+				data.startTime += time - data.frameTime;
 			}
 			
-			capsule.frameTime = time;
-			capsule.time = time - capsule.startTime;
-			capsule.event.execute( "update", capsule.time );
+			data.frameTime = time;
+			data.time = time - data.startTime;
+			data.event.execute( "update", data.time );
 			
-			const alarms: number[] = capsule.alarms.filter( alarmTime => {
+			const alarms: number[] = data.alarms.filter( alarmTime => {
 				
 				// 이미 알람을 발생한 경우
-				const isComplete =  capsule.completeAlarms.some( cAlarmTime => cAlarmTime == alarmTime );
+				const isComplete =  data.completeAlarms.some( cAlarmTime => cAlarmTime == alarmTime );
 				
 				if( isComplete ){
 					return false;
 				}
 				
-				return alarmTime <= capsule.time;
+				return alarmTime <= data.time;
 				
 			} );
 			
 			for( let i=0; i<alarms.length; ++i ){
 				
-				capsule.event.execute( "alarm", capsule.time );
-				capsule.completeAlarms.push( alarms[ i ] );
+				data.event.execute( "alarm", data.time );
+				data.completeAlarms.push( alarms[ i ] );
 				
 			}
 			
 		}
 		
-		capsule.rafId = requestAnimationFrame( frame );
+		data.rafId = requestAnimationFrame( frame );
 		
 		return true;
 		
@@ -214,17 +214,17 @@ class Stopwatch {
 	 */	
 	pause(): boolean {
 		
-		const capsule: StopwatchCapsule = Const.stopwatchCapsules[ this.id ];
+		const data: Data = Const.datas[ this.id ];
 
-		if( capsule.rafId == null ){
+		if( data.rafId == null ){
 			return false;
 		}
 		
-		if( capsule.paused === true ){
+		if( data.paused === true ){
 			return false;
 		}
 		
-		capsule.paused = true;
+		data.paused = true;
 		return true;
 		
 	}
@@ -241,17 +241,17 @@ class Stopwatch {
 	 */	
 	stop(): boolean {
 		
-		const capsule: StopwatchCapsule = Const.stopwatchCapsules[ this.id ];
+		const data: Data = Const.datas[ this.id ];
 
-		if( capsule.startTime == null ){
+		if( data.startTime == null ){
 			return false;
 		}
 		
-		cancelAnimationFrame( capsule.rafId );
-		capsule.rafId = null;
-		capsule.startTime = null;
-		capsule.paused = false;
-		capsule.completeAlarms = [];
+		cancelAnimationFrame( data.rafId );
+		data.rafId = null;
+		data.startTime = null;
+		data.paused = false;
+		data.completeAlarms = [];
 		
 		return true;
 		
@@ -269,8 +269,8 @@ class Stopwatch {
 	 */	
 	get(): number {
 		
-		const capsule: StopwatchCapsule = Const.stopwatchCapsules[ this.id ];
-		return capsule.time;
+		const data: Data = Const.datas[ this.id ];
+		return data.time;
 		
 	}
 	
@@ -292,7 +292,7 @@ class Stopwatch {
 	 */	
 	setAlarm( alarmTime: number, alarmType: AlarmType = Stopwatch.AlarmType.RELATIVE ): boolean {
 		
-		const capsule: StopwatchCapsule = Const.stopwatchCapsules[ this.id ];
+		const data: Data = Const.datas[ this.id ];
 
 		if( typeof alarmTime != "number" ){
 			return false;
@@ -319,7 +319,7 @@ class Stopwatch {
 		}
 		
 		alarmTime = alarmType.timeCalculation( time, alarmTime );
-		capsule.alarms.push( alarmTime );
+		data.alarms.push( alarmTime );
 		
 	}
 	
@@ -334,8 +334,8 @@ class Stopwatch {
 	 */	
 	getAlarms(): number[] {
 		
-		const capsule: StopwatchCapsule = Const.stopwatchCapsules[ this.id ];
-		return capsule.alarms;
+		const data: Data = Const.datas[ this.id ];
+		return data.alarms;
 		
 	}
 	
@@ -351,10 +351,10 @@ class Stopwatch {
 	 */	
 	clearAlarm(): boolean {
 		
-		const capsule: StopwatchCapsule = Const.stopwatchCapsules[ this.id ];
+		const data: Data = Const.datas[ this.id ];
 		
-		capsule.alarms = [];
-		capsule.completeAlarms = [];
+		data.alarms = [];
+		data.completeAlarms = [];
 
 		return true;
 		
@@ -379,8 +379,8 @@ class Stopwatch {
 	 */	
 	on( eventName: string, callback: Function ): boolean {
 		
-		const capsule: StopwatchCapsule = Const.stopwatchCapsules[ this.id ];
-		const callbacks: Function[] = capsule.event[ eventName ];
+		const data: Data = Const.datas[ this.id ];
+		const callbacks: Function[] = data.event[ eventName ];
 		
 		// 등록가능한 이벤트명이 아님
 		if( callbacks == null ){
@@ -411,14 +411,14 @@ class Stopwatch {
 	 */	
 	off( eventName?: string, callback?: Function ): boolean {
 		
-		const capsule: StopwatchCapsule = Const.stopwatchCapsules[ this.id ];
+		const data: Data = Const.datas[ this.id ];
 
 		// 모든 이벤트 삭제
 		if( eventName == null ){
 			
-			for( eventName in capsule.event ){
+			for( eventName in data.event ){
 				
-				capsule.event[ eventName ] = [];
+				data.event[ eventName ] = [];
 				
 			}
 			
@@ -429,13 +429,13 @@ class Stopwatch {
 		// 특정 이벤트 삭제
 		if( callback == null ){
 			
-			capsule.event[ eventName ] = [];
+			data.event[ eventName ] = [];
 			return true;
 			
 		}
 
 		// 특정 이벤트의 콜백 삭제
-		const callbacks: Function[] = capsule.event[ eventName ];
+		const callbacks: Function[] = data.event[ eventName ];
 		const index: number = callbacks.indexOf( callback );
 		callbacks.splice( index, 1 );
 		return true;
@@ -465,7 +465,7 @@ class Stopwatch {
 		this.clearAlarm();
 
 		// 관리 제거
-		delete Const.stopwatchCapsules[ this.id ];
+		delete Const.datas[ this.id ];
 
 		// 객체 원형정보 변경
 		(<any>Object).setPrototypeOf( this, Object.prototype );
