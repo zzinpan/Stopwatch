@@ -1,11 +1,13 @@
 import Stopwatch from "../Stopwatch";
 import Data from "./Data";
 
-class DataManager extends Array {
+class DataManager {
+
+	datas: Array<Data>;
 
 	get( stopwatch: Stopwatch ): Data {
 
-		return this.find( ( data: Data ) => {
+		return this.datas.find( ( data: Data ) => {
 
 			return data.stopwatch === stopwatch;
 
@@ -13,15 +15,26 @@ class DataManager extends Array {
 
 	}
 
+	add( data: Data ): DataManager {
+
+		this.datas.push( data );
+		return this;
+
+	}
+
 	remove( stopwatch: Stopwatch ): boolean {
 
-		const index = this.indexOf( stopwatch );
+		const index = this.datas.findIndex( ( data: Data ) => {
+
+			return data.stopwatch === stopwatch;
+
+		} );
 
 		if( index < 0 ){
 			return false;
 		}
 
-		this.splice( index, 1 );
+		this.datas.splice( index, 1 );
 		return true;
 
 	}

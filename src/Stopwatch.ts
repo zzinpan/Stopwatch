@@ -7,18 +7,11 @@ import { requestAnimationFrame, cancelAnimationFrame } from "./polyfill/requestA
 // 상수
 const Const: {
 
-	datas: DataManager,
-
-	getUniqueId: Function
+	dataManager: DataManager,
 
 } = {
 
-	datas: new DataManager(),
-	getUniqueId(): string {
-
-		return Date.now() + "" + Math.random() * 1000000000000000000;
-
-	}
+	dataManager: new DataManager()
 
 };
 
@@ -46,21 +39,8 @@ class Stopwatch {
 	 */
 	constructor(){
 		
-		const id: string = Const.getUniqueId();
-
-		// 재할당, 삭제 불가능
-		Object.defineProperty( this, "id", {
-
-			configurable: false,
-			enumerable: true,
-			writable: false,
-
-			value: id
-
-		} )
-
 		const data = new Data( this );
-		Const.datas.push( data );
+		Const.dataManager.add( data );
 		
 	}
 
@@ -75,7 +55,7 @@ class Stopwatch {
 	 */	
 	start(): boolean {
 		
-		const data: Data = Const.datas.get( this );
+		const data: Data = Const.dataManager.get( this );
 
 		if( data.paused === true ){
 			data.paused = false;
@@ -143,7 +123,7 @@ class Stopwatch {
 	 */	
 	pause(): boolean {
 		
-		const data: Data = Const.datas.get( this );
+		const data: Data = Const.dataManager.get( this );
 
 		if( data.rafId == null ){
 			return false;
@@ -170,7 +150,7 @@ class Stopwatch {
 	 */	
 	stop(): boolean {
 		
-		const data: Data = Const.datas.get( this );
+		const data: Data = Const.dataManager.get( this );
 
 		if( data.startTime == null ){
 			return false;
@@ -198,7 +178,7 @@ class Stopwatch {
 	 */	
 	get(): number {
 		
-		const data: Data = Const.datas.get( this );
+		const data: Data = Const.dataManager.get( this );
 		return data.time;
 		
 	}
@@ -221,7 +201,7 @@ class Stopwatch {
 	 */	
 	setAlarm( alarmTime: number, alarmType: AlarmType = Stopwatch.AlarmType.RELATIVE ): boolean {
 		
-		const data: Data = Const.datas.get( this );
+		const data: Data = Const.dataManager.get( this );
 
 		if( typeof alarmTime != "number" ){
 			return false;
@@ -262,7 +242,7 @@ class Stopwatch {
 	 */	
 	getAlarms(): number[] {
 		
-		const data: Data = Const.datas.get( this );
+		const data: Data = Const.dataManager.get( this );
 		return data.alarms;
 		
 	}
@@ -279,7 +259,7 @@ class Stopwatch {
 	 */	
 	clearAlarm(): boolean {
 		
-		const data: Data = Const.datas.get( this );
+		const data: Data = Const.dataManager.get( this );
 		
 		data.alarms = [];
 		data.completeAlarms = [];
@@ -307,7 +287,7 @@ class Stopwatch {
 	 */	
 	on( eventName: string, callback: Function ): boolean {
 		
-		const data: Data = Const.datas.get( this );
+		const data: Data = Const.dataManager.get( this );
 		const callbacks: Function[] = data.event[ eventName ];
 		
 		// 등록가능한 이벤트명이 아님
@@ -339,7 +319,7 @@ class Stopwatch {
 	 */	
 	off( eventName?: string, callback?: Function ): boolean {
 		
-		const data: Data = Const.datas.get( this );
+		const data: Data = Const.dataManager.get( this );
 
 		// 모든 이벤트 삭제
 		if( eventName == null ){
@@ -393,7 +373,7 @@ class Stopwatch {
 		this.clearAlarm();
 
 		// 관리 제거
-		Const.datas.remove( this );
+		Const.dataManager.remove( this );
 
 		// 객체 원형정보 변경
 		(<any>Object).setPrototypeOf( this, Object.prototype );

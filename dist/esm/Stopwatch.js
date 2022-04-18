@@ -113,57 +113,30 @@ var Degree = /** @class */ (function () {
     return Degree;
 }());
 
-/*! *****************************************************************************
-Copyright (c) Microsoft Corporation.
-
-Permission to use, copy, modify, and/or distribute this software for any
-purpose with or without fee is hereby granted.
-
-THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
-REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
-AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
-INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM
-LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
-OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
-PERFORMANCE OF THIS SOFTWARE.
-***************************************************************************** */
-/* global Reflect, Promise */
-
-var extendStatics = function(d, b) {
-    extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
-    return extendStatics(d, b);
-};
-
-function __extends(d, b) {
-    if (typeof b !== "function" && b !== null)
-        throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
-    extendStatics(d, b);
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-}
-
-var DataManager = /** @class */ (function (_super) {
-    __extends(DataManager, _super);
+var DataManager = /** @class */ (function () {
     function DataManager() {
-        return _super !== null && _super.apply(this, arguments) || this;
     }
     DataManager.prototype.get = function (stopwatch) {
-        return this.find(function (data) {
+        return this.datas.find(function (data) {
             return data.stopwatch === stopwatch;
         });
     };
+    DataManager.prototype.add = function (data) {
+        this.datas.push(data);
+        return this;
+    };
     DataManager.prototype.remove = function (stopwatch) {
-        var index = this.indexOf(stopwatch);
+        var index = this.datas.findIndex(function (data) {
+            return data.stopwatch === stopwatch;
+        });
         if (index < 0) {
             return false;
         }
-        this.splice(index, 1);
+        this.datas.splice(index, 1);
         return true;
     };
     return DataManager;
-}(Array));
+}());
 
 /*** docs 제외
  * 스탑워치 캡슐
@@ -244,10 +217,7 @@ var cancelAnimationFrame = _this[cAF];
 
 // 상수
 var Const = {
-    datas: new DataManager(),
-    getUniqueId: function () {
-        return Date.now() + "" + Math.random() * 1000000000000000000;
-    }
+    dataManager: new DataManager()
 };
 /**
  * Stopwatch
@@ -261,16 +231,8 @@ var Stopwatch = /** @class */ (function () {
      * ```
      */
     function Stopwatch() {
-        var id = Const.getUniqueId();
-        // 재할당, 삭제 불가능
-        Object.defineProperty(this, "id", {
-            configurable: false,
-            enumerable: true,
-            writable: false,
-            value: id
-        });
         var data = new Data(this);
-        Const.datas.push(data);
+        Const.dataManager.add(data);
     }
     /**
      * @description 스탑워치 실행 시킵니다.
@@ -282,7 +244,7 @@ var Stopwatch = /** @class */ (function () {
      * ```
      */
     Stopwatch.prototype.start = function () {
-        var data = Const.datas.get(this);
+        var data = Const.dataManager.get(this);
         if (data.paused === true) {
             data.paused = false;
             return true;
@@ -328,7 +290,7 @@ var Stopwatch = /** @class */ (function () {
      * ```
      */
     Stopwatch.prototype.pause = function () {
-        var data = Const.datas.get(this);
+        var data = Const.dataManager.get(this);
         if (data.rafId == null) {
             return false;
         }
@@ -348,7 +310,7 @@ var Stopwatch = /** @class */ (function () {
      * ```
      */
     Stopwatch.prototype.stop = function () {
-        var data = Const.datas.get(this);
+        var data = Const.dataManager.get(this);
         if (data.startTime == null) {
             return false;
         }
@@ -369,7 +331,7 @@ var Stopwatch = /** @class */ (function () {
      * ```
      */
     Stopwatch.prototype.get = function () {
-        var data = Const.datas.get(this);
+        var data = Const.dataManager.get(this);
         return data.time;
     };
     /**
@@ -390,7 +352,7 @@ var Stopwatch = /** @class */ (function () {
      */
     Stopwatch.prototype.setAlarm = function (alarmTime, alarmType) {
         if (alarmType === void 0) { alarmType = Stopwatch.AlarmType.RELATIVE; }
-        var data = Const.datas.get(this);
+        var data = Const.dataManager.get(this);
         if (typeof alarmTime != "number") {
             return false;
         }
@@ -421,7 +383,7 @@ var Stopwatch = /** @class */ (function () {
      * ```
      */
     Stopwatch.prototype.getAlarms = function () {
-        var data = Const.datas.get(this);
+        var data = Const.dataManager.get(this);
         return data.alarms;
     };
     /**
@@ -434,7 +396,7 @@ var Stopwatch = /** @class */ (function () {
      * ```
      */
     Stopwatch.prototype.clearAlarm = function () {
-        var data = Const.datas.get(this);
+        var data = Const.dataManager.get(this);
         data.alarms = [];
         data.completeAlarms = [];
         return true;
@@ -456,7 +418,7 @@ var Stopwatch = /** @class */ (function () {
      * ```
      */
     Stopwatch.prototype.on = function (eventName, callback) {
-        var data = Const.datas.get(this);
+        var data = Const.dataManager.get(this);
         var callbacks = data.event[eventName];
         // 등록가능한 이벤트명이 아님
         if (callbacks == null) {
@@ -482,7 +444,7 @@ var Stopwatch = /** @class */ (function () {
      * ```
      */
     Stopwatch.prototype.off = function (eventName, callback) {
-        var data = Const.datas.get(this);
+        var data = Const.dataManager.get(this);
         // 모든 이벤트 삭제
         if (eventName == null) {
             for (eventName in data.event) {
@@ -519,7 +481,7 @@ var Stopwatch = /** @class */ (function () {
         // 알람 제거
         this.clearAlarm();
         // 관리 제거
-        Const.datas.remove(this);
+        Const.dataManager.remove(this);
         // 객체 원형정보 변경
         Object.setPrototypeOf(this, Object.prototype);
         return true;
