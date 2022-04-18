@@ -119,47 +119,58 @@
         return Degree;
     }());
 
-    // http://paulirish.com/2011/requestanimationframe-for-smart-animating/
-    // http://my.opera.com/emoller/blog/2011/12/20/requestanimationframe-for-smart-er-animating
-    // requestAnimationFrame polyfill by Erik Möller. fixes from Paul Irish and Tino Zijdel
-    // MIT license
-    var rAF = "requestAnimationFrame";
-    var cAF = "cancelAnimationFrame";
-    var _this = undefined;
-    // esm
-    if (_this == null) {
-        _this = {};
-    }
-    var vendors = ['ms', 'moz', 'webkit', 'o'];
-    var lastTime = 0;
-    var x;
-    for (x = 0; x < vendors.length && !_this[rAF]; ++x) {
-        _this[rAF] = _this[vendors[x] + 'RequestAnimationFrame'];
-        _this[cAF] = _this[vendors[x] + 'CancelAnimationFrame']
-            || _this[vendors[x] + 'CancelRequestAnimationFrame'];
-    }
-    if (!_this[rAF]) {
-        _this[rAF] = function (callback) {
-            var currTime = Date.now(), timeToCall = Math.max(0, 16 - (currTime - lastTime)), id = setTimeout(function () { callback(currTime + timeToCall); }, timeToCall);
-            lastTime = currTime + timeToCall;
-            return id;
-        };
-    }
-    if (!_this[cAF]) {
-        _this[cAF] = function (id) {
-            clearTimeout(id);
-        };
-    }
-    var requestAnimationFrame = _this[rAF];
-    var cancelAnimationFrame = _this[cAF];
+    /*! *****************************************************************************
+    Copyright (c) Microsoft Corporation.
 
-    // 상수
-    var Const = {
-        datas: {},
-        getUniqueId: function () {
-            return Date.now() + "" + Math.random() * 1000000000000000000;
-        }
+    Permission to use, copy, modify, and/or distribute this software for any
+    purpose with or without fee is hereby granted.
+
+    THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
+    REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
+    AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
+    INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM
+    LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
+    OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
+    PERFORMANCE OF THIS SOFTWARE.
+    ***************************************************************************** */
+    /* global Reflect, Promise */
+
+    var extendStatics = function(d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
+        return extendStatics(d, b);
     };
+
+    function __extends(d, b) {
+        if (typeof b !== "function" && b !== null)
+            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    }
+
+    var DataManager = /** @class */ (function (_super) {
+        __extends(DataManager, _super);
+        function DataManager() {
+            return _super !== null && _super.apply(this, arguments) || this;
+        }
+        DataManager.prototype.get = function (stopwatch) {
+            return this.find(function (data) {
+                return data.stopwatch === stopwatch;
+            });
+        };
+        DataManager.prototype.remove = function (stopwatch) {
+            var index = this.indexOf(stopwatch);
+            if (index < 0) {
+                return false;
+            }
+            this.splice(index, 1);
+            return true;
+        };
+        return DataManager;
+    }(Array));
+
     /*** docs 제외
      * 스탑워치 캡슐
      * @property {Stopwatch} stopwatch 스탑워치 객체
@@ -202,6 +213,48 @@
         }
         return Data;
     }());
+
+    // http://paulirish.com/2011/requestanimationframe-for-smart-animating/
+    // http://my.opera.com/emoller/blog/2011/12/20/requestanimationframe-for-smart-er-animating
+    // requestAnimationFrame polyfill by Erik Möller. fixes from Paul Irish and Tino Zijdel
+    // MIT license
+    var rAF = "requestAnimationFrame";
+    var cAF = "cancelAnimationFrame";
+    var _this = undefined;
+    // esm
+    if (_this == null) {
+        _this = {};
+    }
+    var vendors = ['ms', 'moz', 'webkit', 'o'];
+    var lastTime = 0;
+    var x;
+    for (x = 0; x < vendors.length && !_this[rAF]; ++x) {
+        _this[rAF] = _this[vendors[x] + 'RequestAnimationFrame'];
+        _this[cAF] = _this[vendors[x] + 'CancelAnimationFrame']
+            || _this[vendors[x] + 'CancelRequestAnimationFrame'];
+    }
+    if (!_this[rAF]) {
+        _this[rAF] = function (callback) {
+            var currTime = Date.now(), timeToCall = Math.max(0, 16 - (currTime - lastTime)), id = setTimeout(function () { callback(currTime + timeToCall); }, timeToCall);
+            lastTime = currTime + timeToCall;
+            return id;
+        };
+    }
+    if (!_this[cAF]) {
+        _this[cAF] = function (id) {
+            clearTimeout(id);
+        };
+    }
+    var requestAnimationFrame = _this[rAF];
+    var cancelAnimationFrame = _this[cAF];
+
+    // 상수
+    var Const = {
+        datas: new DataManager(),
+        getUniqueId: function () {
+            return Date.now() + "" + Math.random() * 1000000000000000000;
+        }
+    };
     /**
      * Stopwatch
      */
@@ -223,7 +276,7 @@
                 value: id
             });
             var data = new Data(this);
-            Const.datas[id] = data;
+            Const.datas.push(data);
         }
         /**
          * @description 스탑워치 실행 시킵니다.
@@ -235,7 +288,7 @@
          * ```
          */
         Stopwatch.prototype.start = function () {
-            var data = Const.datas[this.id];
+            var data = Const.datas.get(this);
             if (data.paused === true) {
                 data.paused = false;
                 return true;
@@ -281,7 +334,7 @@
          * ```
          */
         Stopwatch.prototype.pause = function () {
-            var data = Const.datas[this.id];
+            var data = Const.datas.get(this);
             if (data.rafId == null) {
                 return false;
             }
@@ -301,7 +354,7 @@
          * ```
          */
         Stopwatch.prototype.stop = function () {
-            var data = Const.datas[this.id];
+            var data = Const.datas.get(this);
             if (data.startTime == null) {
                 return false;
             }
@@ -322,7 +375,7 @@
          * ```
          */
         Stopwatch.prototype.get = function () {
-            var data = Const.datas[this.id];
+            var data = Const.datas.get(this);
             return data.time;
         };
         /**
@@ -343,7 +396,7 @@
          */
         Stopwatch.prototype.setAlarm = function (alarmTime, alarmType) {
             if (alarmType === void 0) { alarmType = Stopwatch.AlarmType.RELATIVE; }
-            var data = Const.datas[this.id];
+            var data = Const.datas.get(this);
             if (typeof alarmTime != "number") {
                 return false;
             }
@@ -354,15 +407,15 @@
                 return false;
             }
             var time = this.get();
-            /**
-             * @todo 특정 인스턴스에 해당되는 필터는 제거 필요
-             */
-            if (alarmType === Stopwatch.AlarmType.ABSOLUTE &&
-                alarmTime <= time) {
-                return false;
-            }
             alarmTime = alarmType.timeCalculation(time, alarmTime);
             data.alarms.push(alarmTime);
+            /*
+             * 이미 시간이 지난 알람의 경우, 완료처리
+             * 이 알람은 재시작 시, 발생 가능
+             */
+            if (alarmTime < time) {
+                data.completeAlarms.push(alarmTime);
+            }
         };
         /**
          * @description 저장된 알람을 전달합니다.
@@ -374,7 +427,7 @@
          * ```
          */
         Stopwatch.prototype.getAlarms = function () {
-            var data = Const.datas[this.id];
+            var data = Const.datas.get(this);
             return data.alarms;
         };
         /**
@@ -387,7 +440,7 @@
          * ```
          */
         Stopwatch.prototype.clearAlarm = function () {
-            var data = Const.datas[this.id];
+            var data = Const.datas.get(this);
             data.alarms = [];
             data.completeAlarms = [];
             return true;
@@ -409,7 +462,7 @@
          * ```
          */
         Stopwatch.prototype.on = function (eventName, callback) {
-            var data = Const.datas[this.id];
+            var data = Const.datas.get(this);
             var callbacks = data.event[eventName];
             // 등록가능한 이벤트명이 아님
             if (callbacks == null) {
@@ -435,7 +488,7 @@
          * ```
          */
         Stopwatch.prototype.off = function (eventName, callback) {
-            var data = Const.datas[this.id];
+            var data = Const.datas.get(this);
             // 모든 이벤트 삭제
             if (eventName == null) {
                 for (eventName in data.event) {
@@ -472,7 +525,7 @@
             // 알람 제거
             this.clearAlarm();
             // 관리 제거
-            delete Const.datas[this.id];
+            Const.datas.remove(this);
             // 객체 원형정보 변경
             Object.setPrototypeOf(this, Object.prototype);
             return true;

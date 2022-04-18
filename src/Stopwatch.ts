@@ -1,21 +1,19 @@
-import AlarmType from "./Stopwatch.AlarmType.js";
-import Degree from "./Stopwatch.Degree.js";
-import { requestAnimationFrame, cancelAnimationFrame } from "./polyfill/requestAnimatiionFrame.js";
+import AlarmType from "./Stopwatch.AlarmType";
+import Degree from "./Stopwatch.Degree";
+import DataManager from "./data/DataManager";
+import Data from "./data/Data";
+import { requestAnimationFrame, cancelAnimationFrame } from "./polyfill/requestAnimatiionFrame";
 
 // 상수
 const Const: {
 
-	datas: {
-
-		[ id: string ]: Data
-
-	},
+	datas: DataManager,
 
 	getUniqueId: Function
 
 } = {
 
-	datas: {},
+	datas: new DataManager(),
 	getUniqueId(): string {
 
 		return Date.now() + "" + Math.random() * 1000000000000000000;
@@ -24,75 +22,6 @@ const Const: {
 
 };
 
-
-/*** docs 제외
- * 스탑워치 캡슐
- * @property {Stopwatch} stopwatch 스탑워치 객체
- * @property {number} startTime 시간 시작값  
- * @property {number} time 현재 시간  
- * @property {number} frameTime raf에서 반환되는 frame time  
- * @property {boolean} paused 일시정지 여부
- * @property {number} rafId requestAnimationFrame 아이디
- * @property {object} event 이벤트 모듈
- * @property {number[]} alarms 등록된 알람 시간
- * @property {number[]} completeAlarms 완료된 알람 시간
- * @example
- * ```js
- * const stopwatch = new Stopwatch();
- * ```
- ***/
-class Data {
-
-	// 필드
-	stopwatch: Stopwatch;
-	startTime: number;
-	time: number;
-	frameTime: number;
-	paused: boolean;
-	rafId: number;
-	event: any;
-	alarms: number[];
-	completeAlarms: number[];
-
-
-	constructor( stopwatch: Stopwatch ){
-
-		const capsule = this;
-		
-		// 스탑워치
-		this.stopwatch = stopwatch;
-
-		// 일시정지 여부
-		this.paused = false;
-		
-		// 알람 설정 시간
-		this.alarms = [];
-		this.completeAlarms = [];
-		
-		// 이벤트 목록
-		this.event = {
-			
-			// 콜백 목록
-			update: [], // ( {number} time )
-			alarm: [], // ( {number} time )
-			
-			execute( /** name, args... */ ){
-				
-				const args = Array.prototype.slice.call( arguments );
-				const name = args.shift();
-				const callbacks = this[ name ];
-				
-				// 콜백수행
-				callbacks.forEach( ( cb: Function ) => cb.apply( capsule.stopwatch, args ) );
-				
-			}
-			
-			
-		};
-
-	}
-
-}
 
 /**
  * Stopwatch
@@ -131,7 +60,7 @@ class Stopwatch {
 		} )
 
 		const data = new Data( this );
-		Const.datas[ id ] = data;
+		Const.datas.push( data );
 		
 	}
 
@@ -146,7 +75,7 @@ class Stopwatch {
 	 */	
 	start(): boolean {
 		
-		const data: Data = Const.datas[ this.id ];
+		const data: Data = Const.datas.get( this );
 
 		if( data.paused === true ){
 			data.paused = false;
@@ -214,7 +143,7 @@ class Stopwatch {
 	 */	
 	pause(): boolean {
 		
-		const data: Data = Const.datas[ this.id ];
+		const data: Data = Const.datas.get( this );
 
 		if( data.rafId == null ){
 			return false;
@@ -241,7 +170,7 @@ class Stopwatch {
 	 */	
 	stop(): boolean {
 		
-		const data: Data = Const.datas[ this.id ];
+		const data: Data = Const.datas.get( this );
 
 		if( data.startTime == null ){
 			return false;
@@ -269,7 +198,7 @@ class Stopwatch {
 	 */	
 	get(): number {
 		
-		const data: Data = Const.datas[ this.id ];
+		const data: Data = Const.datas.get( this );
 		return data.time;
 		
 	}
@@ -292,7 +221,7 @@ class Stopwatch {
 	 */	
 	setAlarm( alarmTime: number, alarmType: AlarmType = Stopwatch.AlarmType.RELATIVE ): boolean {
 		
-		const data: Data = Const.datas[ this.id ];
+		const data: Data = Const.datas.get( this );
 
 		if( typeof alarmTime != "number" ){
 			return false;
@@ -333,7 +262,7 @@ class Stopwatch {
 	 */	
 	getAlarms(): number[] {
 		
-		const data: Data = Const.datas[ this.id ];
+		const data: Data = Const.datas.get( this );
 		return data.alarms;
 		
 	}
@@ -350,7 +279,7 @@ class Stopwatch {
 	 */	
 	clearAlarm(): boolean {
 		
-		const data: Data = Const.datas[ this.id ];
+		const data: Data = Const.datas.get( this );
 		
 		data.alarms = [];
 		data.completeAlarms = [];
@@ -378,7 +307,7 @@ class Stopwatch {
 	 */	
 	on( eventName: string, callback: Function ): boolean {
 		
-		const data: Data = Const.datas[ this.id ];
+		const data: Data = Const.datas.get( this );
 		const callbacks: Function[] = data.event[ eventName ];
 		
 		// 등록가능한 이벤트명이 아님
@@ -410,7 +339,7 @@ class Stopwatch {
 	 */	
 	off( eventName?: string, callback?: Function ): boolean {
 		
-		const data: Data = Const.datas[ this.id ];
+		const data: Data = Const.datas.get( this );
 
 		// 모든 이벤트 삭제
 		if( eventName == null ){
@@ -464,7 +393,7 @@ class Stopwatch {
 		this.clearAlarm();
 
 		// 관리 제거
-		delete Const.datas[ this.id ];
+		Const.datas.remove( this );
 
 		// 객체 원형정보 변경
 		(<any>Object).setPrototypeOf( this, Object.prototype );
