@@ -305,18 +305,18 @@ define((function () { 'use strict';
                     data.startTime += time - data.frameTime;
                 }
                 data.frameTime = time;
-                data.time = time - data.startTime;
-                data.event.execute("update", data.time);
+                data.elapsedTime = time - data.startTime;
+                data.event.execute("update", data.elapsedTime);
                 var alarms = data.alarms.filter(function (alarmTime) {
                     // 이미 알람을 발생한 경우
                     var isComplete = data.completeAlarms.some(function (cAlarmTime) { return cAlarmTime == alarmTime; });
                     if (isComplete) {
                         return false;
                     }
-                    return alarmTime <= data.time;
+                    return alarmTime <= data.elapsedTime;
                 });
                 for (var i = 0; i < alarms.length; ++i) {
-                    data.event.execute("alarm", data.time);
+                    data.event.execute("alarm", data.elapsedTime);
                     data.completeAlarms.push(alarms[i]);
                 }
             }
@@ -375,7 +375,7 @@ define((function () { 'use strict';
          */
         Stopwatch.prototype.get = function () {
             var data = Const.dataManager.get(this);
-            return data.time;
+            return data.elapsedTime;
         };
         /**
          * @description 알람을 설정합니다. 알람시간이 되면, 타이머에서 알람이벤트를 발생시킵니다.
