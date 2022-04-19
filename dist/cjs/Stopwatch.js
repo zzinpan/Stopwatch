@@ -115,42 +115,81 @@ var Degree = /** @class */ (function () {
     return Degree;
 }());
 
-var DataManager = /** @class */ (function () {
+/*! *****************************************************************************
+Copyright (c) Microsoft Corporation.
+
+Permission to use, copy, modify, and/or distribute this software for any
+purpose with or without fee is hereby granted.
+
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
+REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
+AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
+INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM
+LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
+OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
+PERFORMANCE OF THIS SOFTWARE.
+***************************************************************************** */
+/* global Reflect, Promise */
+
+var extendStatics = function(d, b) {
+    extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
+    return extendStatics(d, b);
+};
+
+function __extends(d, b) {
+    if (typeof b !== "function" && b !== null)
+        throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
+    extendStatics(d, b);
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+}
+
+/**
+ * Data manager
+ * @description
+ *
+ */
+var DataManager = /** @class */ (function (_super) {
+    __extends(DataManager, _super);
     function DataManager() {
+        return _super !== null && _super.apply(this, arguments) || this;
     }
+    // class DataManager implements Manager<Data, Stopwatch> {
     DataManager.prototype.get = function (stopwatch) {
-        return this.datas.find(function (data) {
+        return this.find(function (data) {
             return data.stopwatch === stopwatch;
         });
     };
     DataManager.prototype.add = function (data) {
-        this.datas.push(data);
+        this.push(data);
         return this;
     };
     DataManager.prototype.remove = function (stopwatch) {
-        var index = this.datas.findIndex(function (data) {
+        var index = this.findIndex(function (data) {
             return data.stopwatch === stopwatch;
         });
         if (index < 0) {
             return false;
         }
-        this.datas.splice(index, 1);
+        this.splice(index, 1);
         return true;
     };
     return DataManager;
-}());
+}(Array));
 
-/*** docs 제외
- * 스탑워치 캡슐
- * @property {Stopwatch} stopwatch 스탑워치 객체
- * @property {number} startTime 시간 시작값
- * @property {number} time 현재 시간
- * @property {number} frameTime raf에서 반환되는 frame time
- * @property {boolean} paused 일시정지 여부
- * @property {number} rafId requestAnimationFrame 아이디
- * @property {object} event 이벤트 모듈
- * @property {number[]} alarms 등록된 알람 시간
- * @property {number[]} completeAlarms 완료된 알람 시간
+/*** docs exclude
+ * Stopwatch data
+ * @property {Stopwatch} stopwatch It is a stopwatch object and serves as a key for data
+ * @property {number} startTime requestAnimationFrame start time
+ * @property {number} elapsedTime elapsed time = now time - start time
+ * @property {number} frameTime requestAnimationFrame now time
+ * @property {boolean} paused paused
+ * @property {number} rafId return id from requestAnimationFrame
+ * @property {object} event event items
+ * @property {number[]} alarms set alarm times
+ * @property {number[]} completeAlarms complete alarm times
  * @example
  * ```js
  * const stopwatch = new Stopwatch();
@@ -159,24 +198,26 @@ var DataManager = /** @class */ (function () {
 var Data = /** @class */ (function () {
     function Data(stopwatch) {
         var capsule = this;
-        // 스탑워치
         this.stopwatch = stopwatch;
-        // 일시정지 여부
         this.paused = false;
-        // 알람 설정 시간
         this.alarms = [];
         this.completeAlarms = [];
-        // 이벤트 목록
         this.event = {
-            // 콜백 목록
             update: [],
             alarm: [],
             execute: function ( /** name, args... */) {
                 var args = Array.prototype.slice.call(arguments);
                 var name = args.shift();
+                if (name == null) {
+                    return false;
+                }
                 var callbacks = this[name];
-                // 콜백수행
+                if (callbacks == null) {
+                    return false;
+                }
+                // execute callbacks
                 callbacks.forEach(function (cb) { return cb.apply(capsule.stopwatch, args); });
+                return true;
             }
         };
     }

@@ -1,31 +1,38 @@
 import Stopwatch from "../Stopwatch";
 
-/*** docs 제외
- * 스탑워치 캡슐
- * @property {Stopwatch} stopwatch 스탑워치 객체
- * @property {number} startTime 시간 시작값  
- * @property {number} time 현재 시간  
- * @property {number} frameTime raf에서 반환되는 frame time  
- * @property {boolean} paused 일시정지 여부
- * @property {number} rafId requestAnimationFrame 아이디
- * @property {object} event 이벤트 모듈
- * @property {number[]} alarms 등록된 알람 시간
- * @property {number[]} completeAlarms 완료된 알람 시간
+/*** docs exclude
+ * Stopwatch data
+ * @property {Stopwatch} stopwatch It is a stopwatch object and serves as a key for data
+ * @property {number} startTime requestAnimationFrame start time
+ * @property {number} elapsedTime elapsed time = now time - start time
+ * @property {number} frameTime requestAnimationFrame now time
+ * @property {boolean} paused paused
+ * @property {number} rafId return id from requestAnimationFrame
+ * @property {object} event event items
+ * @property {number[]} alarms set alarm times
+ * @property {number[]} completeAlarms complete alarm times
  * @example
  * ```js
  * const stopwatch = new Stopwatch();
  * ```
  ***/
+
  class Data {
 
 	// 필드
 	stopwatch: Stopwatch;
 	startTime: number;
-	time: number;
+	elapsedTime: number;
 	frameTime: number;
 	paused: boolean;
 	rafId: number;
-	event: any;
+
+	event: {
+		update: Function[],
+		alarm: Function[],
+		execute: Function
+	};
+
 	alarms: number[];
 	completeAlarms: number[];
 
@@ -34,34 +41,34 @@ import Stopwatch from "../Stopwatch";
 
 		const capsule = this;
 		
-		// 스탑워치
 		this.stopwatch = stopwatch;
-
-		// 일시정지 여부
 		this.paused = false;
-		
-		// 알람 설정 시간
 		this.alarms = [];
 		this.completeAlarms = [];
-		
-		// 이벤트 목록
 		this.event = {
 			
-			// 콜백 목록
-			update: [], // ( {number} time )
-			alarm: [], // ( {number} time )
-			
-			execute( /** name, args... */ ){
+			update: [],
+			alarm: [],
+			execute( /** name, args... */ ): boolean {
 				
 				const args = Array.prototype.slice.call( arguments );
+
 				const name = args.shift();
+				if( name == null ){
+					return false;
+				}
+
 				const callbacks = this[ name ];
+				if( callbacks == null ){
+					return false;
+				}
 				
-				// 콜백수행
+				// execute callbacks
 				callbacks.forEach( ( cb: Function ) => cb.apply( capsule.stopwatch, args ) );
-				
+
+				return true;
+
 			}
-			
 			
 		};
 

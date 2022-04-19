@@ -1,15 +1,11 @@
 import AlarmType from "./Stopwatch.AlarmType";
 import Degree from "./Stopwatch.Degree";
-import DataManager from "./data/DataManager";
+import DataManager from "./manager/DataManager";
 import Data from "./data/Data";
 import { requestAnimationFrame, cancelAnimationFrame } from "./polyfill/requestAnimatiionFrame";
 
 // 상수
-const Const: {
-
-	dataManager: DataManager,
-
-} = {
+const Const = {
 
 	dataManager: new DataManager()
 
@@ -20,12 +16,6 @@ const Const: {
  * Stopwatch
  */
 class Stopwatch {
-
-	/**
-	 * @description
-	 * ID of automatically created object
-	 */
-	id: string | number;
 
 	static AlarmType = AlarmType;
 	static Degree = Degree;
@@ -80,8 +70,8 @@ class Stopwatch {
 			}
 			
 			data.frameTime = time;
-			data.time = time - data.startTime;
-			data.event.execute( "update", data.time );
+			data.elapsedTime = time - data.startTime;
+			data.event.execute( "update", data.elapsedTime );
 			
 			const alarms: number[] = data.alarms.filter( alarmTime => {
 				
@@ -92,13 +82,13 @@ class Stopwatch {
 					return false;
 				}
 				
-				return alarmTime <= data.time;
+				return alarmTime <= data.elapsedTime;
 				
 			} );
 			
 			for( let i=0; i<alarms.length; ++i ){
 				
-				data.event.execute( "alarm", data.time );
+				data.event.execute( "alarm", data.elapsedTime );
 				data.completeAlarms.push( alarms[ i ] );
 				
 			}
@@ -179,7 +169,7 @@ class Stopwatch {
 	get(): number {
 		
 		const data: Data = Const.dataManager.get( this );
-		return data.time;
+		return data.elapsedTime;
 		
 	}
 	
@@ -285,7 +275,7 @@ class Stopwatch {
 	 * } );
 	 * ```
 	 */	
-	on( eventName: string, callback: Function ): boolean {
+	on( eventName: ( 'alarm' | 'update' ), callback: Function ): boolean {
 		
 		const data: Data = Const.dataManager.get( this );
 		const callbacks: Function[] = data.event[ eventName ];

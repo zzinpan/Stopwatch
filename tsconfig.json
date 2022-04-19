@@ -8,7 +8,7 @@
       "outDir": "./dist",
       "sourceMap": true,
       "esModuleInterop": true,
-      "moduleResolution": "node"
+      "moduleResolution": "node",
     },
     "include": ["src/**/*", "rollup.config.js"],
     "exclude": ["node_modules", "**/*.spec.ts"]
