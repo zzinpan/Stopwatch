@@ -7,8 +7,8 @@ import Manager from "./Manager";
  * @description
  * 
  */
-class DataManager extends Array<Data> implements Manager<Data, Stopwatch> {
-// class DataManager implements Manager<Data, Stopwatch> {
+// class DataManager extends Array<Data> implements Manager<Data, Stopwatch> {
+class DataManager implements Manager<Data, Stopwatch> {
 
 	get( stopwatch: Stopwatch ): Data {
 
@@ -46,5 +46,5 @@ class DataManager extends Array<Data> implements Manager<Data, Stopwatch> {
 
 }
 
-// Object.setPrototypeOf( DataManager.prototype, Array.prototype );
+Object.setPrototypeOf( DataManager.prototype, Array.prototype );
 export default DataManager;
