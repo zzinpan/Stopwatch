@@ -1,4 +1,4 @@
-import { Stopwatch } from "../Stopwatch";
+import Stopwatch from "../Stopwatch";
 import StopwatchData from "../data/StopwatchData";
 import Manager from "./Manager";
 

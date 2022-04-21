@@ -1,5 +1,5 @@
-import { AlarmType } from "./Stopwatch.AlarmType";
-import { Degree } from "./Stopwatch.Degree";
+import AlarmType from "./Stopwatch.AlarmType";
+import Degree from "./Stopwatch.Degree";
 import StopwatchDataManager from "./manager/StopwatchDataManager";
 import StopwatchData from "./data/StopwatchData";
 import { requestAnimationFrame, cancelAnimationFrame } from "./polyfill/requestAnimatiionFrame";
@@ -15,7 +15,7 @@ const Const = {
 /**
  * Stopwatch
  */
-export class Stopwatch {
+export default class Stopwatch {
 
 	static AlarmType = AlarmType;
 	static Degree = Degree;

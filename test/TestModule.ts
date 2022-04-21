@@ -6,7 +6,7 @@ class TestModule {
     constructor( id: string, src: string ){
 
         this.id = id;
-        this.Stopwatch = require( src );
+        this.Stopwatch = require( src ).Stopwatch;
 
     }
 

@@ -17,7 +17,7 @@
  * stopwatch.setAlarm( 5321, customAlarmType );
  * ```
  */
-export class AlarmType {
+export default class AlarmType {
 	
 	
 	id: string | number;
