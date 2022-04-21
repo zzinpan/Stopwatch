@@ -414,13 +414,12 @@ define((function () { 'use strict';
             return true;
         };
         /**
-         * @description 이벤트 콜백을 등록합니다.
-         * @param {StopwatchAlarmEvent} eventName 등록할 이벤트명 ( 'update', 'alarm' )
-         * @param {function} callback 이벤트 발생 시, 수행될 콜백함수
-         * @returns {boolean} 명령 수행 여부
+         * @description
+         * Register event callbacks.
+         *
          * @example
          * ```js
-         * // 시간이 갱신되면, 호출
+         * // It is executed when the time is updated.
          * stopwatch.on( "update", ( ms ) => {
          *
          *     const seconds = ms / 1000;
@@ -428,6 +427,10 @@ define((function () { 'use strict';
          *
          * } );
          * ```
+         *
+         * @param {StopwatchAlarmEvent} eventName Events to register for callbacks
+         * @param {function} callback A callback to be executed when an event occurs
+         * @returns {boolean} Whether to run
          */
         Stopwatch.prototype.on = function (eventName, callback) {
             var data = Const.dataManager.get(this);
@@ -440,20 +443,23 @@ define((function () { 'use strict';
             return true;
         };
         /**
-         * @description 이벤트 콜백을 삭제합니다.
-         * @param {StopwatchAlarmEvent} eventName 삭제할 이벤트명 ( 'update', 'alarm' )
-         * @param {function} callback 삭제할 콜백함수
-         * @returns {boolean} 명령 수행 여부
+         * @description
+         * Remove the event callback.
+         *
          * @example
          * ```js
-         * // 특정 이벤트의 모든 콜백 제거
+         * // Remove all callbacks for a specific event
          * stopwatch.off( "alarm" );
          * ```
+         *
          * @example
          * ```js
-         * // 특정 이벤트의 특정 콜백 제거
+         * // Remove specific callbacks for specific events
          * stopwatch.off( "alarm", alarmListener );
          * ```
+         * @param {StopwatchAlarmEvent} eventName Event to delete callback
+         * @param {function} callback callback to delete
+         * @returns {boolean} Whether to run
          */
         Stopwatch.prototype.off = function (eventName, callback) {
             var data = Const.dataManager.get(this);
@@ -475,6 +481,21 @@ define((function () { 'use strict';
             callbacks.splice(index, 1);
             return true;
         };
+        /**
+         * @description
+         * Dispatch events.
+         * Used only inside a class.
+         *
+         * @example
+         * ```js
+         * // Dispatch events.
+         * this.dispatch( "alarm", this.get() );
+         * ```
+         *
+         * @param {StopwatchAlarmEvent} eventName Event to execute callback
+         * @param {any} args Argument value to be passed to the callback
+         * @returns {boolean} Whether to run
+         */
         Stopwatch.prototype.dispatch = function (eventName) {
             var _this = this;
             var args = [];
@@ -491,14 +512,18 @@ define((function () { 'use strict';
             return true;
         };
         /**
-         * @description 객체를 파괴합니다.
-         * 파괴된 객체는 캡슐 관리에서 제외되고, Stopwatch의 기능을 잃어버립니다.
-         * @returns {boolean} 명령 수행 여부
+         * @description
+         * Destroys the stopwatch object.
+         * This means exempt from management, removing references to internal data that we manage internally.
+         * t loses its function as a stopwatch.
+         *
          * @example
          * ```js
-         * // 객체 파괴
+         * // object destruction
          * stopwatch.destroy();
          * ```
+         *
+         * @returns {boolean} Whether to run
          */
         Stopwatch.prototype.destroy = function () {
             // 정지
