@@ -39,5 +39,5 @@ jobs:
       run: npm ci
 
     # 테스트 jest
-    - name: Test
-      run: npm test-jest
+    - name: Test jest
+      run: npm run test-jest
