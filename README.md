@@ -39,8 +39,8 @@ stopwatch.start();
 <br>
 
 ## sample
-https://zzinpan.github.io/Stopwatch.js/sample/index.html
-https://zzinpan.github.io/Stopwatch.js/sample/index-amd.html
+https://zzinpan.github.io/Stopwatch.js/sample/index.html  
+https://zzinpan.github.io/Stopwatch.js/sample/index-amd.html  
 https://zzinpan.github.io/Stopwatch.js/sample/index-umd.html
 - start: click the right button 
 - stop: click the right button ( toggle )
