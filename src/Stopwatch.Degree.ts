@@ -2,7 +2,7 @@
  * 도, 또는 각도는 평면 각도의 단위로, 1회전의 360등분
  * @constructor
  */
-class Degree {
+export class Degree {
 	
 	/**
 	 * @description 각도를 일반화합니다. ( 0 <= 각도 < 360 ) 
@@ -86,5 +86,3 @@ class Degree {
 	
 	
 }
-
-export default Degree;

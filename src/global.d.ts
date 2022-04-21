@@ -1,0 +1,1 @@
+type StopwatchAlarmEvent = "alarm" | "update";

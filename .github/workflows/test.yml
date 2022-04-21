@@ -38,6 +38,6 @@ jobs:
     - name: Install Dependencies
       run: npm ci
 
-    # 테스트
+    # 테스트 jest
     - name: Test
-      run: npm test
+      run: npm test-jest

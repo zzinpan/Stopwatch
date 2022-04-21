@@ -4,9 +4,9 @@
  * @description
  * Manager interface
  */
-interface Manager<T, K> {
+interface Manager<K, T> {
 
-    add( t: T ): Manager<T, K>;
+    put( k: K, t: T ): Manager<K, T>;
     remove( k: K ): boolean;
     get( k: K ): T;
 

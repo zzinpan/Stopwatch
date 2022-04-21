@@ -1,13 +1,13 @@
-import AlarmType from "./Stopwatch.AlarmType";
-import Degree from "./Stopwatch.Degree";
-import DataManager from "./manager/DataManager";
-import Data from "./data/Data";
+import { AlarmType } from "./Stopwatch.AlarmType";
+import { Degree } from "./Stopwatch.Degree";
+import StopwatchDataManager from "./manager/StopwatchDataManager";
+import StopwatchData from "./data/StopwatchData";
 import { requestAnimationFrame, cancelAnimationFrame } from "./polyfill/requestAnimatiionFrame";
 
 // 상수
 const Const = {
 
-	dataManager: new DataManager()
+	dataManager: new StopwatchDataManager()
 
 };
 
@@ -15,7 +15,7 @@ const Const = {
 /**
  * Stopwatch
  */
-class Stopwatch {
+export class Stopwatch {
 
 	static AlarmType = AlarmType;
 	static Degree = Degree;
@@ -29,8 +29,8 @@ class Stopwatch {
 	 */
 	constructor(){
 		
-		const data = new Data( this );
-		Const.dataManager.add( data );
+		const data = new StopwatchData();
+		Const.dataManager.put( this, data );
 		
 	}
 
@@ -45,7 +45,8 @@ class Stopwatch {
 	 */	
 	start(): boolean {
 		
-		const data: Data = Const.dataManager.get( this );
+		const self = this;
+		const data: StopwatchData = Const.dataManager.get( this );
 
 		if( data.paused === true ){
 			data.paused = false;
@@ -71,7 +72,7 @@ class Stopwatch {
 			
 			data.frameTime = time;
 			data.elapsedTime = time - data.startTime;
-			data.event.execute( "update", data.elapsedTime );
+			self.dispatch( "update", data.elapsedTime );
 			
 			const alarms: number[] = data.alarms.filter( alarmTime => {
 				
@@ -88,7 +89,7 @@ class Stopwatch {
 			
 			for( let i=0; i<alarms.length; ++i ){
 				
-				data.event.execute( "alarm", data.elapsedTime );
+				self.dispatch( "alarm", data.elapsedTime );
 				data.completeAlarms.push( alarms[ i ] );
 				
 			}
@@ -113,7 +114,7 @@ class Stopwatch {
 	 */	
 	pause(): boolean {
 		
-		const data: Data = Const.dataManager.get( this );
+		const data: StopwatchData = Const.dataManager.get( this );
 
 		if( data.rafId == null ){
 			return false;
@@ -140,7 +141,7 @@ class Stopwatch {
 	 */	
 	stop(): boolean {
 		
-		const data: Data = Const.dataManager.get( this );
+		const data: StopwatchData = Const.dataManager.get( this );
 
 		if( data.startTime == null ){
 			return false;
@@ -168,7 +169,7 @@ class Stopwatch {
 	 */	
 	get(): number {
 		
-		const data: Data = Const.dataManager.get( this );
+		const data: StopwatchData = Const.dataManager.get( this );
 		return data.elapsedTime;
 		
 	}
@@ -176,22 +177,22 @@ class Stopwatch {
 	/**
 	 * @description 알람을 설정합니다. 알람시간이 되면, 타이머에서 알람이벤트를 발생시킵니다.
 	 * @param {number} alarmTime 알람시간(ms)
-	 * @param {Stopwatch.AlarmType} [alarmType=Stopwatch.AlarmType.RELATIVE] 알람기준
+	 * @param {Stopwatch.AlarmType} [alarmType=Stopwatch.AlarmType.ABSOLUTE] 알람기준
 	 * @returns {boolean} 명령 수행 여부
 	 * @example
 	 * ```js
-	 * // 알람 설정 ( 알람종류: Stopwatch.AlarmType.RELATIVE )
+	 * // 알람 설정 ( 알람종류: Stopwatch.AlarmType.ABSOLUTE )
 	 * stopwatch.setAlarm( 3000 );
 	 * ```
 	 * @example
 	 * ```js
 	 * // 알람 설정
-	 * stopwatch.setAlarm( 3000, Stopwatch.AlarmType.ABSOLUTE );
+	 * stopwatch.setAlarm( 3000, Stopwatch.AlarmType.RELATIVE );
 	 * ```
 	 */	
-	setAlarm( alarmTime: number, alarmType: AlarmType = Stopwatch.AlarmType.RELATIVE ): boolean {
+	setAlarm( alarmTime: number, alarmType: AlarmType = Stopwatch.AlarmType.ABSOLUTE ): boolean {
 		
-		const data: Data = Const.dataManager.get( this );
+		const data: StopwatchData = Const.dataManager.get( this );
 
 		if( typeof alarmTime != "number" ){
 			return false;
@@ -232,7 +233,7 @@ class Stopwatch {
 	 */	
 	getAlarms(): number[] {
 		
-		const data: Data = Const.dataManager.get( this );
+		const data: StopwatchData = Const.dataManager.get( this );
 		return data.alarms;
 		
 	}
@@ -249,7 +250,7 @@ class Stopwatch {
 	 */	
 	clearAlarm(): boolean {
 		
-		const data: Data = Const.dataManager.get( this );
+		const data: StopwatchData = Const.dataManager.get( this );
 		
 		data.alarms = [];
 		data.completeAlarms = [];
@@ -261,7 +262,7 @@ class Stopwatch {
 	
 	/**
 	 * @description 이벤트 콜백을 등록합니다.
-	 * @param {string} eventName 등록할 이벤트명 ( 'update', 'alarm' ) 
+	 * @param {StopwatchAlarmEvent} eventName 등록할 이벤트명 ( 'update', 'alarm' ) 
 	 * @param {function} callback 이벤트 발생 시, 수행될 콜백함수 
 	 * @returns {boolean} 명령 수행 여부
 	 * @example
@@ -275,9 +276,9 @@ class Stopwatch {
 	 * } );
 	 * ```
 	 */	
-	on( eventName: ( 'alarm' | 'update' ), callback: Function ): boolean {
+	on( eventName: StopwatchAlarmEvent, callback: Function ): boolean {
 		
-		const data: Data = Const.dataManager.get( this );
+		const data: StopwatchData = Const.dataManager.get( this );
 		const callbacks: Function[] = data.event[ eventName ];
 		
 		// 등록가능한 이벤트명이 아님
@@ -293,7 +294,7 @@ class Stopwatch {
 	
 	/**
 	 * @description 이벤트 콜백을 삭제합니다.
-	 * @param {string} eventName 삭제할 이벤트명 ( 'update', 'alarm' ) 
+	 * @param {StopwatchAlarmEvent} eventName 삭제할 이벤트명 ( 'update', 'alarm' ) 
 	 * @param {function} callback 삭제할 콜백함수 
 	 * @returns {boolean} 명령 수행 여부
 	 * @example
@@ -307,9 +308,9 @@ class Stopwatch {
 	 * stopwatch.off( "alarm", alarmListener );
 	 * ```
 	 */	
-	off( eventName?: string, callback?: Function ): boolean {
+	off( eventName?: StopwatchAlarmEvent, callback?: Function ): boolean {
 		
-		const data: Data = Const.dataManager.get( this );
+		const data: StopwatchData = Const.dataManager.get( this );
 
 		// 모든 이벤트 삭제
 		if( eventName == null ){
@@ -340,6 +341,21 @@ class Stopwatch {
 		
 	}
 	
+	private dispatch( eventName: StopwatchAlarmEvent, ...args: any ): boolean {
+		
+		const data: StopwatchData = Const.dataManager.get( this );
+
+		const callbacks = data.event[ eventName ];
+		if( callbacks == null ){
+			return false;
+		}
+		
+		// execute callbacks
+		callbacks.forEach( ( cb: Function ) => cb.apply( this, args ) );
+
+		return true;
+
+	}
 	
 	/**
 	 * @description 객체를 파괴합니다.
@@ -375,6 +391,3 @@ class Stopwatch {
 
 
 }
-
-
-export default Stopwatch;

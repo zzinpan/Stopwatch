@@ -1,19 +1,19 @@
-import Data from "../../src/data/Data";
+import StopwatchData from "../../src/data/StopwatchData";
 import TestModule from "../TestModule";
 
 TestModule.Modules.forEach( ( testModule ) => {
 
     test(`[${testModule.id}] create instance`, () => {
         
-        const data = new Data( testModule.Stopwatch );
-        expect( data instanceof Data ).toBe( true );
+        const data = new StopwatchData();
+        expect( data instanceof StopwatchData ).toBe( true );
     
     });
 
     test(`[${testModule.id}] create instance`, () => {
         
-        const data = new Data( testModule.Stopwatch );
-        expect( data instanceof Data ).toBe( true );
+        const data = new StopwatchData();
+        expect( data instanceof StopwatchData ).toBe( true );
     
     });
 

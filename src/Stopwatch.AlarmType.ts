@@ -17,7 +17,7 @@
  * stopwatch.setAlarm( 5321, customAlarmType );
  * ```
  */
-class AlarmType {
+export class AlarmType {
 	
 	
 	id: string | number;
@@ -60,6 +60,3 @@ class AlarmType {
 	} );
 
 }
-
-
-export default AlarmType;
