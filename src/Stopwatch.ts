@@ -205,13 +205,13 @@ export default class Stopwatch {
 	 * 
 	 * @example
 	 * ```js
-	 * // 알람 설정 ( 알람종류: Stopwatch.AlarmType.ABSOLUTE )
+	 * // Set an alarm. ( Default alarm type: Stopwatch.AlarmType.ABSOLUTE )
 	 * stopwatch.setAlarm( 3000 );
 	 * ```
 	 * 
 	 * @example
 	 * ```js
-	 * // 알람 설정
+	 * // Set an alarm.
 	 * stopwatch.setAlarm( 3000, Stopwatch.AlarmType.RELATIVE );
 	 * ```
 	 * 
