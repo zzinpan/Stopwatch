@@ -213,7 +213,10 @@
      */
     var Stopwatch = /** @class */ (function () {
         /**
+         * @description
          * Stopwatch constructor
+         *
+         * @example
          * ```js
          * // create instance
          * const stopwatch = new Stopwatch();
@@ -224,13 +227,16 @@
             Const.dataManager.put(this, data);
         }
         /**
-         * @description 스탑워치 실행 시킵니다.
-         * @returns {boolean} 명령 수행 여부
+         * @description
+         * Start the stopwatch.
+         *
          * @example
          * ```js
-         * // 스탑워치 실행
+         * // Start the stopwatch.
          * stopwatch.start();
          * ```
+         *
+         * @returns {boolean} Whether to run
          */
         Stopwatch.prototype.start = function () {
             var self = this;
@@ -271,13 +277,16 @@
             return true;
         };
         /**
-         * @description 스탑워치를 일시정지 시킵니다.
-         * @returns {boolean} 명령 수행 여부
+         * @description
+         * Pause the stopwatch.
+         *
          * @example
          * ```js
-         * // 스탑워치 일시중지
+         * // Pause the stopwatch.
          * stopwatch.pause();
          * ```
+         *
+         * @returns {boolean} Whether to run
          */
         Stopwatch.prototype.pause = function () {
             var data = Const.dataManager.get(this);
@@ -291,13 +300,16 @@
             return true;
         };
         /**
-         * @description 스탑워치를 중지 시킵니다.
-         * @returns {boolean} 명령 수행 여부
+         * @description
+         * Stop the stopwatch.
+         *
          * @example
          * ```js
-         * // 스탑워치 중지
+         * // Stop the stopwatch.
          * stopwatch.stop();
          * ```
+         *
+         * @returns {boolean} Whether to run
          */
         Stopwatch.prototype.stop = function () {
             var data = Const.dataManager.get(this);
@@ -312,33 +324,41 @@
             return true;
         };
         /**
-         * @description 현재시간을 반환합니다.
-         * @returns {number} 현재시간(ms)
+         * @description
+         * Get the elapsed time.
+         *
          * @example
          * ```js
-         * // 스탑워치 시간 조회
+         * // Get the elapsed time.
          * const time = stopwatch.get();
          * ```
+         *
+         * @returns {number} elapsed time
          */
         Stopwatch.prototype.get = function () {
             var data = Const.dataManager.get(this);
             return data.elapsedTime;
         };
         /**
-         * @description 알람을 설정합니다. 알람시간이 되면, 타이머에서 알람이벤트를 발생시킵니다.
-         * @param {number} alarmTime 알람시간(ms)
-         * @param {Stopwatch.AlarmType} [alarmType=Stopwatch.AlarmType.ABSOLUTE] 알람기준
-         * @returns {boolean} 명령 수행 여부
+         * @description
+         * Set an alarm.
+         * When the alarm time comes, the stopwatch triggers an alarm event.
+         *
          * @example
          * ```js
          * // 알람 설정 ( 알람종류: Stopwatch.AlarmType.ABSOLUTE )
          * stopwatch.setAlarm( 3000 );
          * ```
+         *
          * @example
          * ```js
          * // 알람 설정
          * stopwatch.setAlarm( 3000, Stopwatch.AlarmType.RELATIVE );
          * ```
+         *
+         * @param {number} alarmTime Alarm time ( unit: ms )
+         * @param {Stopwatch.AlarmType} [alarmType=Stopwatch.AlarmType.ABSOLUTE] Alarm type
+         * @returns {boolean} Whether to run
          */
         Stopwatch.prototype.setAlarm = function (alarmTime, alarmType) {
             if (alarmType === void 0) { alarmType = Stopwatch.AlarmType.ABSOLUTE; }
@@ -364,26 +384,32 @@
             }
         };
         /**
-         * @description 저장된 알람을 전달합니다.
-         * @returns {number[]} 저장된 알람
+         * @description
+         * Get the set alarm list.
+         *
          * @example
          * ```js
-         * // 알람 조회
+         * // Get the set alarm list.
          * const alarms = stopwatch.getAlarms();
          * ```
+         *
+         * @returns {number[]} alarm list
          */
         Stopwatch.prototype.getAlarms = function () {
             var data = Const.dataManager.get(this);
             return data.alarms;
         };
         /**
-         * @description 설정된 모든 알람이 제거 됩니다.
-         * @returns {boolean} 명령 수행 여부
+         * @description
+         * All set alarms are cleared.
+         *
          * @example
          * ```js
-         * // 알람 초기화
+         * // All set alarms are cleared.
          * stopwatch.clearAlarm();
          * ```
+         *
+         * @returns {boolean} Whether to run
          */
         Stopwatch.prototype.clearAlarm = function () {
             var data = Const.dataManager.get(this);
@@ -491,7 +517,15 @@
             Object.setPrototypeOf(this, Object.prototype);
             return true;
         };
+        /**
+         * @description
+         * Stopwatch alarm type.
+         */
         Stopwatch.AlarmType = AlarmType;
+        /**
+         * @description
+         * A utility object associated with degree.
+         */
         Stopwatch.Degree = Degree;
         return Stopwatch;
     }());

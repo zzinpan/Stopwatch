@@ -17,11 +17,23 @@ const Const = {
  */
 export default class Stopwatch {
 
+	/**
+	 * @description
+	 * Stopwatch alarm type.
+	 */
 	static AlarmType = AlarmType;
+
+	/**
+	 * @description
+	 * A utility object associated with degree.
+	 */
 	static Degree = Degree;
 
 	/**
+	 * @description
 	 * Stopwatch constructor
+	 * 
+	 * @example
 	 * ```js
 	 * // create instance
 	 * const stopwatch = new Stopwatch();
@@ -35,13 +47,16 @@ export default class Stopwatch {
 	}
 
 	/**
-	 * @description 스탑워치 실행 시킵니다.
-	 * @returns {boolean} 명령 수행 여부
+	 * @description
+	 * Start the stopwatch.
+	 * 
 	 * @example
 	 * ```js
-	 * // 스탑워치 실행
+	 * // Start the stopwatch.
 	 * stopwatch.start();
 	 * ```
+	 * 
+	 * @returns {boolean} Whether to run
 	 */	
 	start(): boolean {
 		
@@ -104,13 +119,16 @@ export default class Stopwatch {
 	
 	
 	/**
-	 * @description 스탑워치를 일시정지 시킵니다.
-	 * @returns {boolean} 명령 수행 여부
+	 * @description
+	 * Pause the stopwatch.
+	 * 
 	 * @example
 	 * ```js
-	 * // 스탑워치 일시중지
+	 * // Pause the stopwatch.
 	 * stopwatch.pause();
 	 * ```
+	 * 
+	 * @returns {boolean} Whether to run
 	 */	
 	pause(): boolean {
 		
@@ -131,13 +149,16 @@ export default class Stopwatch {
 	
 	
 	/**
-	 * @description 스탑워치를 중지 시킵니다.
-	 * @returns {boolean} 명령 수행 여부
+	 * @description
+	 * Stop the stopwatch.
+	 * 
 	 * @example
 	 * ```js
-	 * // 스탑워치 중지
+	 * // Stop the stopwatch.
 	 * stopwatch.stop();
 	 * ```
+	 * 
+	 * @returns {boolean} Whether to run
 	 */	
 	stop(): boolean {
 		
@@ -159,13 +180,16 @@ export default class Stopwatch {
 	
 	
 	/**
-	 * @description 현재시간을 반환합니다.
-	 * @returns {number} 현재시간(ms)
+	 * @description
+	 * Get the elapsed time.
+	 * 
 	 * @example
 	 * ```js
-	 * // 스탑워치 시간 조회
+	 * // Get the elapsed time.
 	 * const time = stopwatch.get();
 	 * ```
+	 * 
+	 * @returns {number} elapsed time
 	 */	
 	get(): number {
 		
@@ -175,20 +199,25 @@ export default class Stopwatch {
 	}
 	
 	/**
-	 * @description 알람을 설정합니다. 알람시간이 되면, 타이머에서 알람이벤트를 발생시킵니다.
-	 * @param {number} alarmTime 알람시간(ms)
-	 * @param {Stopwatch.AlarmType} [alarmType=Stopwatch.AlarmType.ABSOLUTE] 알람기준
-	 * @returns {boolean} 명령 수행 여부
+	 * @description
+	 * Set an alarm. 
+	 * When the alarm time comes, the stopwatch triggers an alarm event.
+	 * 
 	 * @example
 	 * ```js
 	 * // 알람 설정 ( 알람종류: Stopwatch.AlarmType.ABSOLUTE )
 	 * stopwatch.setAlarm( 3000 );
 	 * ```
+	 * 
 	 * @example
 	 * ```js
 	 * // 알람 설정
 	 * stopwatch.setAlarm( 3000, Stopwatch.AlarmType.RELATIVE );
 	 * ```
+	 * 
+	 * @param {number} alarmTime Alarm time ( unit: ms )
+	 * @param {Stopwatch.AlarmType} [alarmType=Stopwatch.AlarmType.ABSOLUTE] Alarm type
+	 * @returns {boolean} Whether to run
 	 */	
 	setAlarm( alarmTime: number, alarmType: AlarmType = Stopwatch.AlarmType.ABSOLUTE ): boolean {
 		
@@ -223,13 +252,16 @@ export default class Stopwatch {
 	}
 	
 	/**
-	 * @description 저장된 알람을 전달합니다.
-	 * @returns {number[]} 저장된 알람
+	 * @description 
+	 * Get the set alarm list.
+	 * 
 	 * @example
 	 * ```js
-	 * // 알람 조회
+	 * // Get the set alarm list.
 	 * const alarms = stopwatch.getAlarms();
 	 * ```
+	 * 
+	 * @returns {number[]} alarm list
 	 */	
 	getAlarms(): number[] {
 		
@@ -240,13 +272,16 @@ export default class Stopwatch {
 	
 
 	/**
-	 * @description 설정된 모든 알람이 제거 됩니다.
-	 * @returns {boolean} 명령 수행 여부
+	 * @description
+	 * All set alarms are cleared.
+	 * 
 	 * @example
 	 * ```js
-	 * // 알람 초기화
+	 * // All set alarms are cleared.
 	 * stopwatch.clearAlarm();
 	 * ```
+	 * 
+	 * @returns {boolean} Whether to run
 	 */	
 	clearAlarm(): boolean {
 		
@@ -261,13 +296,12 @@ export default class Stopwatch {
 	
 	
 	/**
-	 * @description 이벤트 콜백을 등록합니다.
-	 * @param {StopwatchAlarmEvent} eventName 등록할 이벤트명 ( 'update', 'alarm' ) 
-	 * @param {function} callback 이벤트 발생 시, 수행될 콜백함수 
-	 * @returns {boolean} 명령 수행 여부
+	 * @description
+	 * Register event callbacks.
+	 * 
 	 * @example
 	 * ```js
-	 * // 시간이 갱신되면, 호출
+	 * // It is executed when the time is updated.
 	 * stopwatch.on( "update", ( ms ) => {
 	 * 
 	 *     const seconds = ms / 1000;
@@ -275,6 +309,10 @@ export default class Stopwatch {
 	 * 
 	 * } );
 	 * ```
+	 * 
+	 * @param {StopwatchAlarmEvent} eventName Events to register for callbacks
+	 * @param {function} callback A callback to be executed when an event occurs
+	 * @returns {boolean} Whether to run
 	 */	
 	on( eventName: StopwatchAlarmEvent, callback: Function ): boolean {
 		
@@ -293,20 +331,23 @@ export default class Stopwatch {
 	
 	
 	/**
-	 * @description 이벤트 콜백을 삭제합니다.
-	 * @param {StopwatchAlarmEvent} eventName 삭제할 이벤트명 ( 'update', 'alarm' ) 
-	 * @param {function} callback 삭제할 콜백함수 
-	 * @returns {boolean} 명령 수행 여부
+	 * @description
+	 * Remove the event callback.
+	 * 
 	 * @example
 	 * ```js
-	 * // 특정 이벤트의 모든 콜백 제거
+	 * // Remove all callbacks for a specific event
 	 * stopwatch.off( "alarm" );
 	 * ```
+	 * 
 	 * @example
 	 * ```js
-	 * // 특정 이벤트의 특정 콜백 제거
+	 * // Remove specific callbacks for specific events
 	 * stopwatch.off( "alarm", alarmListener );
 	 * ```
+	 * @param {StopwatchAlarmEvent} eventName Event to delete callback
+	 * @param {function} callback callback to delete
+	 * @returns {boolean} Whether to run
 	 */	
 	off( eventName?: StopwatchAlarmEvent, callback?: Function ): boolean {
 		
@@ -341,6 +382,22 @@ export default class Stopwatch {
 		
 	}
 	
+
+	/**
+	 * @description
+	 * Dispatch events.
+	 * Used only inside a class.
+	 * 
+	 * @example
+	 * ```js
+	 * // Dispatch events.
+	 * this.dispatch( "alarm", this.get() );
+	 * ```
+	 * 
+	 * @param {StopwatchAlarmEvent} eventName Event to execute callback
+	 * @param {any} args Argument value to be passed to the callback
+	 * @returns {boolean} Whether to run
+	 */	
 	private dispatch( eventName: StopwatchAlarmEvent, ...args: any ): boolean {
 		
 		const data: StopwatchData = Const.dataManager.get( this );
@@ -358,14 +415,18 @@ export default class Stopwatch {
 	}
 	
 	/**
-	 * @description 객체를 파괴합니다.
-	 * 파괴된 객체는 캡슐 관리에서 제외되고, Stopwatch의 기능을 잃어버립니다.
-	 * @returns {boolean} 명령 수행 여부
+	 * @description
+	 * Destroys the stopwatch object.
+	 * This means exempt from management, removing references to internal data that we manage internally.
+	 * t loses its function as a stopwatch.
+	 * 
 	 * @example
 	 * ```js
-	 * // 객체 파괴
+	 * // object destruction
 	 * stopwatch.destroy();
 	 * ```
+	 * 
+	 * @returns {boolean} Whether to run
 	 */	
 	destroy(): boolean {
 

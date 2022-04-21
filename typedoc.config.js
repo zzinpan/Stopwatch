@@ -5,5 +5,6 @@ module.exports = {
         "./src/Stopwatch.AlarmType.ts",
         "./src/Stopwatch.Degree.ts"
     ],
-    out: "docs"
+    out: "docs",
+    excludePrivate: true
 }
