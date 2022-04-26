@@ -1,29 +1,40 @@
 /**
- * 알람 종류
- * @constructor
- * @property {string|number} id 알람 종류 구분자
- * @property {function} timeCalculator 시간 계산자
- * @example
- * ```js
- * // 새로운 알람 종류 생성
- * const customAlarmType = new Stopwatch.AlarmType( "SNAP", ( time, alarmTime ) => {
- *     
- *     // 0.5초 단위 스냅
- *     return alarmTime - alarmTime % 500;
- * 
- * } );
- * 
- * // 5초뒤 알람 발생
- * stopwatch.setAlarm( 5321, customAlarmType );
- * ```
+ * Alarm type
  */
 export default class AlarmType {
 	
-	
-	id: string | number;
+	/**
+	 * @property {StringOrNumber} id Alarm type id
+	 */
+	id: StringOrNumber;
+
+	/**
+	 * @property {Function} timeCalculator function to calculate time
+	 */
 	timeCalculator: Function;
 	
-	constructor( id: string | number, timeCalculator: Function ){
+	/**
+	 * @description
+	 * Constructor of AlarmType
+	 * 
+	 * @example
+	 * ```js
+ 	 * // Create alarm type
+	 * const customAlarmType = new Stopwatch.AlarmType( "SNAP", ( time, alarmTime ) => {
+	 *     
+	 *     // Snap in 0.5 second increments
+	 *     return alarmTime - alarmTime % 500;
+	 * 
+	 * } );
+	 * 
+	 * // Alarm occurs after 5 seconds
+	 * stopwatch.setAlarm( 5321, customAlarmType );
+	 * ```
+	 * 
+	 * @param {StringOrNumber} id Alarm type id
+	 * @param {Function} timeCalculator function to calculate time 
+	 */
+	constructor( id: StringOrNumber, timeCalculator: Function ){
 		
 		this.id = id;
 		this.timeCalculator = timeCalculator;
@@ -31,31 +42,44 @@ export default class AlarmType {
 	}
 	
 	/**
-	 * @description 알람시간을 계산하여 반환합니다.
-	 * @param {number} time 현재시간
-	 * @param {number} time 알람시간
-	 * @returns {number} 계산된 알람시간
+	 * @description
+	 * Calculates and returns the alarm time.
+	 * 
 	 * @example
 	 * ```js
-	 * // 알람시간 계산
+	 * // Alarm time calculation
 	 * const alarmTime = customAlarmType.timeCalculation( 3000, 3435 );
 	 * ```
+	 * 
+	 * @param {number} elapsedTime elapsed time
+	 * @param {number} alarmTime alarm time
+	 * @returns {number} Calculated alarm time
 	 */	
-	timeCalculation( time: number, alarmTime: number ): number{
+	timeCalculation( elapsedTime: number, alarmTime: number ): number{
 		
-		return this.timeCalculator( time, alarmTime );
+		return this.timeCalculator( elapsedTime, alarmTime );
 		
 	}
 
-	static ABSOLUTE = new AlarmType( 0, ( time: number, alarmTime: number ): number => {
+	/**
+	 * @description
+	 * This is the default value for the alarm type.
+	 * Regardless of the elapsed time, the argument value itself is used for the alarm.
+	 */
+	static ABSOLUTE = new AlarmType( 0, ( elapsedTime: number, alarmTime: number ): number => {
 	
 		return alarmTime;
 		
 	} );
 
-	static RELATIVE = new AlarmType( 1, ( time: number, alarmTime: number ): number => {
+	/**
+	 * @description
+	 * This is the default value for the alarm type.
+	 * The time obtained by adding the argument value from the elapsed time becomes the alarm time.
+	 */
+	static RELATIVE = new AlarmType( 1, ( elapsedTime: number, alarmTime: number ): number => {
 	
-		return time + alarmTime;
+		return elapsedTime + alarmTime;
 		
 	} );
 

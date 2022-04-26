@@ -4,7 +4,7 @@ import StopwatchDataManager from "./manager/StopwatchDataManager";
 import StopwatchData from "./data/StopwatchData";
 import { requestAnimationFrame, cancelAnimationFrame } from "./polyfill/requestAnimatiionFrame";
 
-// 상수
+// constant
 const Const = {
 
 	dataManager: new StopwatchDataManager()
@@ -310,11 +310,11 @@ export default class Stopwatch {
 	 * } );
 	 * ```
 	 * 
-	 * @param {StopwatchAlarmEvent} eventName Events to register for callbacks
+	 * @param {StopwatchEventType} eventName Events to register for callbacks
 	 * @param {function} callback A callback to be executed when an event occurs
 	 * @returns {boolean} Whether to run
 	 */	
-	on( eventName: StopwatchAlarmEvent, callback: Function ): boolean {
+	on( eventName: StopwatchEventType, callback: Function ): boolean {
 		
 		const data: StopwatchData = Const.dataManager.get( this );
 		const callbacks: Function[] = data.event[ eventName ];
@@ -345,11 +345,11 @@ export default class Stopwatch {
 	 * // Remove specific callbacks for specific events
 	 * stopwatch.off( "alarm", alarmListener );
 	 * ```
-	 * @param {StopwatchAlarmEvent} eventName Event to delete callback
+	 * @param {StopwatchEventType} eventName Event to delete callback
 	 * @param {function} callback callback to delete
 	 * @returns {boolean} Whether to run
 	 */	
-	off( eventName?: StopwatchAlarmEvent, callback?: Function ): boolean {
+	off( eventName?: StopwatchEventType, callback?: Function ): boolean {
 		
 		const data: StopwatchData = Const.dataManager.get( this );
 
@@ -394,11 +394,11 @@ export default class Stopwatch {
 	 * this.dispatch( "alarm", this.get() );
 	 * ```
 	 * 
-	 * @param {StopwatchAlarmEvent} eventName Event to execute callback
+	 * @param {StopwatchEventType} eventName Event to execute callback
 	 * @param {any} args Argument value to be passed to the callback
 	 * @returns {boolean} Whether to run
 	 */	
-	private dispatch( eventName: StopwatchAlarmEvent, ...args: any ): boolean {
+	private dispatch( eventName: StopwatchEventType, ...args: any ): boolean {
 		
 		const data: StopwatchData = Const.dataManager.get( this );
 

@@ -1,68 +1,89 @@
 define((function () { 'use strict';
 
     /**
-     * 알람 종류
-     * @constructor
-     * @property {string|number} id 알람 종류 구분자
-     * @property {function} timeCalculator 시간 계산자
-     * @example
-     * ```js
-     * // 새로운 알람 종류 생성
-     * const customAlarmType = new Stopwatch.AlarmType( "SNAP", ( time, alarmTime ) => {
-     *
-     *     // 0.5초 단위 스냅
-     *     return alarmTime - alarmTime % 500;
-     *
-     * } );
-     *
-     * // 5초뒤 알람 발생
-     * stopwatch.setAlarm( 5321, customAlarmType );
-     * ```
+     * Alarm type
      */
     var AlarmType = /** @class */ (function () {
+        /**
+         * @description
+         * Constructor of AlarmType
+         *
+         * @example
+         * ```js
+         * // Create alarm type
+         * const customAlarmType = new Stopwatch.AlarmType( "SNAP", ( time, alarmTime ) => {
+         *
+         *     // Snap in 0.5 second increments
+         *     return alarmTime - alarmTime % 500;
+         *
+         * } );
+         *
+         * // Alarm occurs after 5 seconds
+         * stopwatch.setAlarm( 5321, customAlarmType );
+         * ```
+         *
+         * @param {StringOrNumber} id Alarm type id
+         * @param {Function} timeCalculator function to calculate time
+         */
         function AlarmType(id, timeCalculator) {
             this.id = id;
             this.timeCalculator = timeCalculator;
         }
         /**
-         * @description 알람시간을 계산하여 반환합니다.
-         * @param {number} time 현재시간
-         * @param {number} time 알람시간
-         * @returns {number} 계산된 알람시간
+         * @description
+         * Calculates and returns the alarm time.
+         *
          * @example
          * ```js
-         * // 알람시간 계산
+         * // Alarm time calculation
          * const alarmTime = customAlarmType.timeCalculation( 3000, 3435 );
          * ```
+         *
+         * @param {number} elapsedTime elapsed time
+         * @param {number} alarmTime alarm time
+         * @returns {number} Calculated alarm time
          */
-        AlarmType.prototype.timeCalculation = function (time, alarmTime) {
-            return this.timeCalculator(time, alarmTime);
+        AlarmType.prototype.timeCalculation = function (elapsedTime, alarmTime) {
+            return this.timeCalculator(elapsedTime, alarmTime);
         };
-        AlarmType.ABSOLUTE = new AlarmType(0, function (time, alarmTime) {
+        /**
+         * @description
+         * This is the default value for the alarm type.
+         * Regardless of the elapsed time, the argument value itself is used for the alarm.
+         */
+        AlarmType.ABSOLUTE = new AlarmType(0, function (elapsedTime, alarmTime) {
             return alarmTime;
         });
-        AlarmType.RELATIVE = new AlarmType(1, function (time, alarmTime) {
-            return time + alarmTime;
+        /**
+         * @description
+         * This is the default value for the alarm type.
+         * The time obtained by adding the argument value from the elapsed time becomes the alarm time.
+         */
+        AlarmType.RELATIVE = new AlarmType(1, function (elapsedTime, alarmTime) {
+            return elapsedTime + alarmTime;
         });
         return AlarmType;
     }());
 
     /**
-     * 도, 또는 각도는 평면 각도의 단위로, 1회전의 360등분
-     * @constructor
+     * A degree, or angle, is a unit of plane angle, divided into 360 equal parts of one rotation.
+     * A class that provides convenience functions related to angles.
      */
     var Degree = /** @class */ (function () {
         function Degree() {
         }
         /**
-         * @description 각도를 일반화합니다. ( 0 <= 각도 < 360 )
-         * @param {number} deg 일반화할 각도
-         * @returns {number} 일반화된 각도
+         * @description
+         * Normalize the angle. ( 0 <= angle < 360 )
+         *
          * @example
          * ```js
          * // 9
          * const degree = Stopwatch.Degree.normalize( 369 );
          * ```
+         *
+         * @param {number} deg angle to normalize
+         * @returns {number} normalized angle
          */
         Degree.normalize = function (deg) {
             if (typeof deg !== "number") {
@@ -87,27 +108,33 @@ define((function () { 'use strict';
             }
         };
         /**
-         * @description 각도의 단위를 degree에서 radian으로 변경합니다.
-         * @param {number} 변경할 degree 각도
-         * @returns {number} 변경된 radian 각도
+         * @description
+         * Change the unit of angle from degree to radian.
+         *
          * @example
          * ```js
          * // Math.PI
          * const radian = Stopwatch.Degree.toRadian( 180 );
          * ```
+         *
+         * @param {number} deg angle to change ( degree )
+         * @returns {number} changed angle ( radian )
          */
         Degree.toRadian = function (deg) {
             return deg * Math.PI / 180;
         };
         /**
-         * @description 각도의 단위를 radian에서 degree로 변경합니다.
-         * @param {number} 변경할 radian 각도
-         * @returns {number} 변경된 degree 각도
+         * @description
+         * Change the unit of angle from radian to degree.
+         *
          * @example
          * ```js
          * // 90
          * const degree = Stopwatch.Degree.fromRadian( Math.PI / 2 );
          * ```
+         *
+         * @param {number} rad angle to change ( radian )
+         * @returns {number} changed angle ( degree )
          */
         Degree.fromRadian = function (rad) {
             return rad / Math.PI * 180;
@@ -200,7 +227,7 @@ define((function () { 'use strict';
     var requestAnimationFrame = _this[rAF];
     var cancelAnimationFrame = _this[cAF];
 
-    // 상수
+    // constant
     var Const = {
         dataManager: new StopwatchDataManager()
     };
@@ -428,7 +455,7 @@ define((function () { 'use strict';
          * } );
          * ```
          *
-         * @param {StopwatchAlarmEvent} eventName Events to register for callbacks
+         * @param {StopwatchEventType} eventName Events to register for callbacks
          * @param {function} callback A callback to be executed when an event occurs
          * @returns {boolean} Whether to run
          */
@@ -457,7 +484,7 @@ define((function () { 'use strict';
          * // Remove specific callbacks for specific events
          * stopwatch.off( "alarm", alarmListener );
          * ```
-         * @param {StopwatchAlarmEvent} eventName Event to delete callback
+         * @param {StopwatchEventType} eventName Event to delete callback
          * @param {function} callback callback to delete
          * @returns {boolean} Whether to run
          */
@@ -492,7 +519,7 @@ define((function () { 'use strict';
          * this.dispatch( "alarm", this.get() );
          * ```
          *
-         * @param {StopwatchAlarmEvent} eventName Event to execute callback
+         * @param {StopwatchEventType} eventName Event to execute callback
          * @param {any} args Argument value to be passed to the callback
          * @returns {boolean} Whether to run
          */
