@@ -39,6 +39,8 @@ stopwatch.start();
 <br>
 
 ## sample
+![stopwatch-sample-thumbnail](./sample/img/thumbnail.png)
+
 https://zzinpan.github.io/Stopwatch.js/sample/index.html  
 https://zzinpan.github.io/Stopwatch.js/sample/index-amd.html  
 https://zzinpan.github.io/Stopwatch.js/sample/index-umd.html
