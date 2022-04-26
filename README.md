@@ -38,7 +38,7 @@ stopwatch.start();
 
 <br>
 
-## Sample - borwser
+## Sample - browser
 
 <br>
 
