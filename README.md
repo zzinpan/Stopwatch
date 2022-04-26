@@ -38,19 +38,30 @@ stopwatch.start();
 
 <br>
 
-## sample
-![stopwatch-sample-thumbnail](./sample/img/thumbnail.png)
+## Sample - borwser
 
-https://zzinpan.github.io/Stopwatch.js/sample/index.html  
-https://zzinpan.github.io/Stopwatch.js/sample/index-amd.html  
-https://zzinpan.github.io/Stopwatch.js/sample/index-umd.html
+<br>
+
+![https://zzinpan.github.io/Stopwatch.js/sample/index.html](./sample/img/thumbnail.png)
+
+<br>
+
+The same features are implemented in IIFE, ESM, AMD, and UMD respectively.  
+
 - start: click the right button 
 - stop: click the right button ( toggle )
 - pause: click the left button ( during the start )
 - setAlarm: drag the small hand
 - stopAlarm: click the stopwatch
 
+https://zzinpan.github.io/Stopwatch.js/sample/index.html  
+https://zzinpan.github.io/Stopwatch.js/sample/index-esm.html  
+https://zzinpan.github.io/Stopwatch.js/sample/index-amd.html  
+https://zzinpan.github.io/Stopwatch.js/sample/index-umd.html
+
 <br>
 
 ## document
 https://zzinpan.github.io/Stopwatch.js/docs/
+
+<br>
