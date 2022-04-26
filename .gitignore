@@ -3,9 +3,3 @@ node_modules/
 
 # project file
 .project
-
-# documentation
-docs/
-
-# distribute
-dist/
