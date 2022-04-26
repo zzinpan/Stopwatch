@@ -42,7 +42,7 @@ stopwatch.start();
 
 <br>
 
-![https://zzinpan.github.io/Stopwatch.js/sample/index.html](./sample/img/thumbnail.png)
+![https://zzinpan.github.io/Stopwatch.js/sample/img/thumbnail.png](https://zzinpan.github.io/Stopwatch.js/sample/img/thumbnail.png)
 
 <br>
 
