@@ -6,5 +6,7 @@ module.exports = {
         "./src/Stopwatch.Degree.ts"
     ],
     out: "docs",
+    plugin: "./node_modules/typedoc-theme-hierarchy/dist/index.js",
+    theme: "hierarchy",
     excludePrivate: true
 }
