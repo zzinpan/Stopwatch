@@ -32,8 +32,13 @@ class StopwatchDataManager implements Manager<Stopwatch, StopwatchData> {
 
 	remove( stopwatch: Stopwatch ): boolean {
 
-		this.map.delete( stopwatch );
-		return true;
+		return this.map.delete( stopwatch );
+
+	}
+
+	size(): number {
+
+		return this.map.size;
 
 	}
 

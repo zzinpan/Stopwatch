@@ -1,5 +1,3 @@
-import Stopwatch from "../Stopwatch";
-
 /*** docs exclude
  * Stopwatch data
  * @property {number} startTime requestAnimationFrame start time
@@ -36,15 +34,19 @@ import Stopwatch from "../Stopwatch";
 
 	constructor(){
 
+		this.startTime = null;
+		this.elapsedTime = null;
+		this.frameTime = null;
 		this.paused = false;
-		this.alarms = [];
-		this.completeAlarms = [];
+		this.rafId = null;
 		this.event = {
 			
 			update: [],
 			alarm: []
 			
 		};
+		this.alarms = [];
+		this.completeAlarms = [];
 
 	}
 

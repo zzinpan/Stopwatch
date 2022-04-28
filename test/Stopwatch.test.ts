@@ -1,5 +1,7 @@
 import TestModule from "./TestModule";
 
+const waitingTime: number = 500;
+
 
 TestModule.Modules.forEach( ( testModule ) => {
 
@@ -11,7 +13,7 @@ TestModule.Modules.forEach( ( testModule ) => {
     test(`[${testModule.id}] new insatnce`, () => {
     
         const stopwatch = new Stopwatch();
-        expect( stopwatch instanceof Stopwatch ).toBe( true );
+        expect( stopwatch instanceof Stopwatch ).toBeTruthy();
         expect( Object.getPrototypeOf( stopwatch ) ).toBe( Stopwatch.prototype );
     
     });
@@ -27,11 +29,11 @@ TestModule.Modules.forEach( ( testModule ) => {
     
                 resolve( stopwatch );
     
-            }, 1000 );
+            }, waitingTime );
     
         }).then( () => {
     
-            expect( stopwatch.destroy() ).toBe( true );
+            expect( stopwatch.destroy() ).toBeTruthy();
     
         } );
     
@@ -48,11 +50,11 @@ TestModule.Modules.forEach( ( testModule ) => {
     
                 resolve( stopwatch );
     
-            }, 500 );
+            }, waitingTime / 2 );
     
         }).then( () => {
     
-            expect( stopwatch.pause() ).toBe( true );
+            expect( stopwatch.pause() ).toBeTruthy();
     
             return new Promise(( resolve, reject ) => {
 
@@ -60,15 +62,15 @@ TestModule.Modules.forEach( ( testModule ) => {
 
                     resolve( stopwatch );
 
-                }, 500 );
+                }, waitingTime / 2 );
 
             });
 
         } ).then( () => {
 
             const elapsed = stopwatch.get();
-            expect( 400 < elapsed && elapsed < 600 ).toBe( true );
-            expect( stopwatch.destroy() ).toBe( true );
+            expect( ( waitingTime / 2 - waitingTime / 10 ) < elapsed && elapsed < ( waitingTime / 2 + waitingTime / 10 ) ).toBeTruthy();
+            expect( stopwatch.destroy() ).toBeTruthy();
 
         } );
     
@@ -85,11 +87,11 @@ TestModule.Modules.forEach( ( testModule ) => {
     
                 resolve( stopwatch );
     
-            }, 1000 );
+            }, waitingTime );
     
         }).then( () => {
     
-            expect( stopwatch.stop() ).toBe( true );
+            expect( stopwatch.stop() ).toBeTruthy();
     
         } );
     
