@@ -157,8 +157,10 @@ var StopwatchDataManager = /** @class */ (function () {
         return this;
     };
     StopwatchDataManager.prototype.remove = function (stopwatch) {
-        this.map["delete"](stopwatch);
-        return true;
+        return this.map["delete"](stopwatch);
+    };
+    StopwatchDataManager.prototype.size = function () {
+        return this.map.size;
     };
     return StopwatchDataManager;
 }());
@@ -180,13 +182,17 @@ var StopwatchDataManager = /** @class */ (function () {
  ***/
 var StopwatchData = /** @class */ (function () {
     function StopwatchData() {
+        this.startTime = null;
+        this.elapsedTime = null;
+        this.frameTime = null;
         this.paused = false;
-        this.alarms = [];
-        this.completeAlarms = [];
+        this.rafId = null;
         this.event = {
             update: [],
             alarm: []
         };
+        this.alarms = [];
+        this.completeAlarms = [];
     }
     return StopwatchData;
 }());
