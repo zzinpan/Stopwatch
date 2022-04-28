@@ -69,10 +69,8 @@ const timeUI = document.querySelector("#time");
 /**
  * event
  */
-
 // 알람 바늘 mousedown event
 function onAlarmHandPointerdown( e ){
-
 	if( e instanceof MouseEvent && e.button !== 0 ){
 		return;
 	}
@@ -90,6 +88,7 @@ function onBodyPointermove( e ){
 	
 	let pageX = e.pageX;
     let pageY = e.pageY;
+	alert( `pageX: ${pageX}, pageY: ${pageY}` );
 
     if( pageX == null ){
         pageX = e.touches[ 0 ].pageX;
@@ -109,6 +108,7 @@ function onBodyPointermove( e ){
 					) + Math.PI / 2;
 	
 	handAlarm.deg = Stopwatch.Degree.fromRadian( radians );
+	alert( handAlarm.deg );
 	handAlarm.style.transform = `translateX( -50% ) rotate( ${radians}rad )`;
 
 }
