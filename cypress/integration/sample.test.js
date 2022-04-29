@@ -4,11 +4,15 @@ const Fn = {
 
     cy.wait( waitTime );
 
+    return this;
+
   },
 
   rightButton(){
 
     cy.get( "#right-button" ).click();
+
+    return this;
 
   },
 
@@ -16,13 +20,17 @@ const Fn = {
 
     cy.get( "#left-button" ).click();
 
+    return this;
+
   },
 
-  setAlarm( degree ){
+  setAlarm( ms ){
 
     const rect = Cypress.$("#hand-circle").get(0).getBoundingClientRect();
     const x = ( rect.left + rect.right ) / 2;
     const y = ( rect.top + rect.bottom ) / 2;
+
+    const degree = 360 * ms / 1000 / 60;
 
     // 삼각함수 범위: 0 < @ <= Math.PI
 
@@ -30,7 +38,7 @@ const Fn = {
     cy.get("body").trigger( "mousemove", { pageX: x + 100, pageY: y - ( Math.tan( -( Math.PI / 180 * degree ) - Math.PI / 2 ) * 100 ), force: true } );
     cy.get("body").trigger( "mouseup", { button: 0, force: true } );
 
-    return degree * 60 * 1000 / 360;
+    return this;
 
   },
 
@@ -38,14 +46,16 @@ const Fn = {
 
     cy.get("#stopwatch").click( { force: true } );
 
+    return this;
+
   }
 
 };
 
 [
   "sample/index.html",
-   "sample/index-esm.html",
-  "sample/index-amd.html",
+  //  "sample/index-esm.html",
+  // "sample/index-amd.html",
   // "sample/index-umd.html"
 ].forEach( ( html ) => {
 
@@ -60,46 +70,92 @@ const Fn = {
   
     it( "start -> stop -> start", () => {
   
-      Fn.rightButton();
-      Fn.wait();
-      Fn.rightButton();
-      Fn.wait();
-      Fn.rightButton();
+      Fn.rightButton()
+        .wait()
+        .rightButton()
+        .wait()
+        .rightButton();
       
     });
   
     it( "start -> pause -> start -> stop", () => {
   
-      Fn.rightButton();
-      Fn.wait();
-      Fn.leftButton();
-      Fn.wait();
-      Fn.leftButton();
-      Fn.wait();
-      Fn.rightButton();
+      Fn.rightButton()
+        .wait()
+        .leftButton()
+        .wait()
+        .leftButton()
+        .wait()
+        .rightButton();
       
     });
   
     it( "start -> pause -> stop", () => {
   
-      Fn.rightButton();
-      Fn.wait();
-      Fn.leftButton();
-      Fn.wait();
-      Fn.rightButton();
+      Fn.rightButton()
+        .wait()
+        .leftButton()
+        .wait()
+        .rightButton();
       
     });
   
     it( "alarm.set -> start -> alarm -> alarm.stop -> stop", () => {
   
-      const alarmTime = Fn.setAlarm( 10 );
-      Fn.rightButton();
-      Fn.wait( alarmTime + 100 );
-      Fn.stopAlarm();
-      Fn.rightButton();
+      const alarmTime = 1000;
+
+      Fn.setAlarm( alarmTime )
+        .rightButton()
+        .wait( alarmTime + 100 )
+        .stopAlarm()
+        .rightButton();
       
     });
-    
+  
+    it( "alarm.set -> start -> pause -> start -> alarm -> alarm.stop -> stop", () => {
+  
+      const alarmTime = 1000;
+
+      Fn.setAlarm( alarmTime )
+        .rightButton()
+        .wait( alarmTime / 2 )
+        .leftButton()
+        .wait()
+        .leftButton()
+        .wait( alarmTime / 2 + 100 )
+        .stopAlarm()
+        .rightButton();
+      
+    });
+  
+    it( "start -> alarm.set -> alarm -> alarm.stop -> stop", () => {
+  
+      const alarmTime = 1000;
+
+      Fn.rightButton()
+        .setAlarm( alarmTime )
+        .wait( alarmTime + 100 )
+        .stopAlarm()
+        .rightButton();
+      
+    });
+  
+    it( "start -> ( alarm.set -> alarm -> alarm.stop ) x2 -> stop", () => {
+  
+      const alarmTime = 1000;
+
+      Fn.rightButton()
+        .setAlarm( alarmTime )
+        .wait( alarmTime + 100 )
+        .stopAlarm()
+        .setAlarm( alarmTime * 2 )
+        .wait( alarmTime )
+        .stopAlarm()
+        .rightButton();
+      
+    });
+  
+
   }); // end - describe
 
 
