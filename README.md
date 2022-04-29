@@ -49,11 +49,11 @@ stopwatch.start();
 
 The same features are implemented in IIFE, ESM, AMD, and UMD respectively.  
 
-- start: click the right button 
-- stop: click the right button ( toggle )
-- pause: click the left button ( during the start )
-- setAlarm: drag the small hand
-- stopAlarm: click the stopwatch
+- __start__: click the right button 
+- __stop__: click the right button ( toggle )
+- __pause__: click the left button ( during the start )
+- __setAlarm__: drag the small hand
+- __stopAlarm__: click the stopwatch
 
 https://zzinpan.github.io/Stopwatch.js/sample/index.html  
 https://zzinpan.github.io/Stopwatch.js/sample/index-esm.html  

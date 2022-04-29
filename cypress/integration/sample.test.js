@@ -53,10 +53,12 @@ const Fn = {
 };
 
 [
+
   "sample/index.html",
-  //  "sample/index-esm.html",
-  // "sample/index-amd.html",
-  // "sample/index-umd.html"
+  "sample/index-esm.html",
+  "sample/index-amd.html",
+  "sample/index-umd.html"
+  
 ].forEach( ( html ) => {
 
 
