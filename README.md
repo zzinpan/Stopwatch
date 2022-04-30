@@ -12,7 +12,7 @@ Available in browsers, ESM, CJS, AMD, and UMD.
 
 <br>
 
-## getting started
+## getting started 
 
 ```html
 
