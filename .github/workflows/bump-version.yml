@@ -2,7 +2,7 @@ name: bump-version
 
 on:
   workflow_run:
-    workflows: ["build"]
+    workflows: ["documentation"]
     types:
       - completed
 
@@ -47,11 +47,14 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
 
+    # 깃 사용자 설정
     - name: Set git user config
       uses: fregante/setup-git-user@v1
 
+    # package.json 버전 업데이트
     - name: Update version in package.json
       run: npm version ${{ steps.tag_version.outputs.new_tag }} --allow-same-version --no-commit-hooks
 
+    # 깃허브 소스 반영
     - name: Git push
       run: git push
