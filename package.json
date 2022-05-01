@@ -1,5 +1,5 @@
 {
-  "name": "stopwatch",
+  "name": "@zzinpan/stopwatch.js",
   "version": "1.0.0",
   "description": "UI를 배제한 일반적인 스탑워치",
   "main": "index.js",
