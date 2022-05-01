@@ -48,6 +48,8 @@ jobs:
         cache: 'npm'
 
     - name: Update version in package.json
+      run: git config user.name "zzinpan"
+      run: git config user.email "zzinpan@kakao.com"
       run: npm version ${{ steps.tag_version.outputs.new_tag }} --allow-same-version --no-commit-hooks
 
     # 반영
