@@ -2,13 +2,13 @@ name: bump-version
 
 on:
   workflow_run:
-    workflows: ["documentation"]
+    workflows: ["build"]
     types:
       - completed
 
 jobs:
 
-  bump:
+  bump-version-with-auto-commit:
 
     runs-on: ubuntu-latest
 
