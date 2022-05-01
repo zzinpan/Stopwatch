@@ -18,39 +18,39 @@ jobs:
 
     steps:
 
-      # 소스 가져오기
-      - name: Checkout source
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-          ref: main
+    # 소스 가져오기
+    - name: Checkout source
+      uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+        ref: main
 
-      # 태그 푸시
-      - name: Bump version and push tag
-        id: tag_version
-        uses: mathieudutour/github-tag-action@v6.0
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+    # 태그 푸시
+    - name: Bump version and push tag
+      id: tag_version
+      uses: mathieudutour/github-tag-action@v6.0
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
 
-      # 릴리즈 깃허브
-      - name: Create a GitHub release
-        uses: ncipollo/release-action@v1
-        with:
-          tag: ${{ steps.tag_version.outputs.new_tag }}
-          name: Release ${{ steps.tag_version.outputs.new_tag }}
-          body: ${{ steps.tag_version.outputs.changelog }}
+    # 릴리즈 깃허브
+    - name: Create a GitHub release
+      uses: ncipollo/release-action@v1
+      with:
+        tag: ${{ steps.tag_version.outputs.new_tag }}
+        name: Release ${{ steps.tag_version.outputs.new_tag }}
+        body: ${{ steps.tag_version.outputs.changelog }}
 
-      # 노드 설치
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v3
-        with:
-          node-version: ${{ matrix.node-version }}
-          cache: 'npm'
+    # 노드 설치
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
 
-      - name: Update version in package.json
-        run: npm version ${{ steps.tag_version.outputs.new_tag }} --allow-same-version --no-commit-hooks
+    - name: Update version in package.json
+      run: npm version ${{ steps.tag_version.outputs.new_tag }} --allow-same-version --no-commit-hooks
 
-      # 반영
-      - name: Auto commit
-        uses: stefanzweifel/git-auto-commit-action@v4
-        if: success()
+    # 반영
+    - name: Auto commit
+      uses: stefanzweifel/git-auto-commit-action@v4
+      if: success()
