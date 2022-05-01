@@ -47,8 +47,10 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
 
-    - name: Update version in package.json
+    - name: Set git user config
       uses: fregante/setup-git-user@v1
+
+    - name: Update version in package.json
       run: npm version ${{ steps.tag_version.outputs.new_tag }} --allow-same-version --no-commit-hooks
 
     - name: Git push
