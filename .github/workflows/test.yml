@@ -1,4 +1,4 @@
-name: test-unit
+name: test
 
 on:
   workflow_run:
@@ -36,6 +36,29 @@ jobs:
     - name: Install Dependencies
       run: npm ci
 
-    # 테스트 jest
+    # 단위 테스트 jest
     - name: Test jest
       run: npm run test-jest
+      
+
+  test-e2e:
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+      # 소스 가져오기
+      - name: Checkout source
+        uses: actions/checkout@v2
+
+      # e2e 테스트 cypress - chrome
+      - name: Cypress run chrome
+        uses: cypress-io/github-action@v2
+        with:
+          browser: chrome
+
+      # e2e 테스트 cypress - chrome
+      - name: Cypress run - firefox
+        uses: cypress-io/github-action@v2
+        with:
+          browser: firefox
