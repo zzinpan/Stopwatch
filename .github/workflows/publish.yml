@@ -8,7 +8,7 @@ on:
 
 jobs:
 
-  bump-version-with-auto-commit:
+  bump-version-with-auto-commit-publish:
 
     runs-on: ubuntu-latest
 
@@ -56,5 +56,9 @@ jobs:
       run: npm version ${{ steps.tag_version.outputs.new_tag }} --allow-same-version --no-commit-hooks
 
     # 깃허브 소스 반영
-    - name: Git push
+    - name: git push
       run: git push
+
+    # npm 배포
+    - name: npm publish
+      run: npm publish

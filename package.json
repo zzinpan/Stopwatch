@@ -4,6 +4,12 @@
   "description": "Typical stopwatch JavaScript library",
   "main": "index.js",
   "keywords": [ "stopwatch", "timer", "requestAnimationFrame" ],
+  "people": {
+    "author": "SHIN MYUNG CHUL <zzipan@kakao.com> (https://github.com/zzinpan)"
+  },
+  "publishConfig": {
+    "registry":"https://npm.pkg.github.com"
+  },
   "scripts": {
     "build": "rollup --c",
     "test-jest": "jest",
@@ -12,14 +18,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/zzinpan/Stopwatch.git"
+    "url": "git+https://github.com/zzinpan/Stopwatch.js.git"
   },
   "author": "",
-  "license": "ISC",
+  "license": "(MIT OR Apache-2.0)",
   "bugs": {
-    "url": "https://github.com/zzinpan/Stopwatch/issues"
+    "url": "https://github.com/zzinpan/Stopwatch.js/issues",
+    "email": "zzinpan@kakao.com"
   },
-  "homepage": "https://github.com/zzinpan/Stopwatch#readme",
+  "homepage": "https://github.com/zzinpan/Stopwatch.js#readme",
   "devDependencies": {
     "@rollup/plugin-typescript": "^8.3.2",
     "@types/jest": "^27.4.1",

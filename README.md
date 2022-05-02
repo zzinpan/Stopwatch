@@ -3,7 +3,7 @@
 [![build](https://github.com/zzinpan/Stopwatch.js/workflows/build/badge.svg)](https://github.com/zzinpan/Stopwatch.js/actions/workflows/build.yml)
 [![test](https://github.com/zzinpan/Stopwatch.js/workflows/test/badge.svg)](https://github.com/zzinpan/Stopwatch.js/actions/workflows/test.yml)
 [![documentation](https://github.com/zzinpan/Stopwatch.js/workflows/documentation/badge.svg)](https://github.com/zzinpan/Stopwatch.js/actions/workflows/documentation.yml)
-[![bump-version](https://github.com/zzinpan/Stopwatch.js/workflows/bump-version/badge.svg)](https://github.com/zzinpan/Stopwatch.js/actions/workflows/bump-version.yml)
+[![publish](https://github.com/zzinpan/Stopwatch.js/workflows/publish/badge.svg)](https://github.com/zzinpan/Stopwatch.js/actions/workflows/publish.yml)
 [![pages-build-deployment](https://github.com/zzinpan/Stopwatch.js/actions/workflows/pages/pages-build-deployment/badge.svg)](https://github.com/zzinpan/Stopwatch.js/actions/workflows/pages/pages-build-deployment)
 
 Stopwatch.js is a JavaScript-based stopwatch library.  
