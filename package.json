@@ -1,9 +1,13 @@
 {
   "name": "@zzinpan/stopwatch.js",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "description": "Typical stopwatch JavaScript library",
   "main": "index.js",
-  "keywords": [ "stopwatch", "timer", "requestAnimationFrame" ],
+  "keywords": [
+    "stopwatch",
+    "timer",
+    "requestAnimationFrame"
+  ],
   "people": {
     "author": "SHIN MYUNG CHUL <zzipan@kakao.com> (https://github.com/zzinpan)"
   },
