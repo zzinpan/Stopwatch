@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "description": "Typical stopwatch JavaScript library",
   "main": "index.js",
+  "keywords": [ "stopwatch", "timer", "requestAnimationFrame" ],
   "scripts": {
     "build": "rollup --c",
     "test-jest": "jest",
