@@ -1,11 +1,10 @@
 # Stopwatch.js
 
 [![build](https://github.com/zzinpan/Stopwatch.js/workflows/build/badge.svg)](https://github.com/zzinpan/Stopwatch.js/actions/workflows/build.yml)
-[![build](https://github.com/zzinpan/Stopwatch.js/workflows/test-unit/badge.svg)](https://github.com/zzinpan/Stopwatch.js/actions/workflows/test-unit.yml)
-[![build](https://github.com/zzinpan/Stopwatch.js/workflows/test-e2e/badge.svg)](https://github.com/zzinpan/Stopwatch.js/actions/workflows/test-e2e.yml)
-[![build](https://github.com/zzinpan/Stopwatch.js/workflows/documentation/badge.svg)](https://github.com/zzinpan/Stopwatch.js/actions/workflows/documentation.yml)
+[![test](https://github.com/zzinpan/Stopwatch.js/workflows/test/badge.svg)](https://github.com/zzinpan/Stopwatch.js/actions/workflows/test.yml)
+[![documentation](https://github.com/zzinpan/Stopwatch.js/workflows/documentation/badge.svg)](https://github.com/zzinpan/Stopwatch.js/actions/workflows/documentation.yml)
+[![bump-version](https://github.com/zzinpan/Stopwatch.js/workflows/bump-version/badge.svg)](https://github.com/zzinpan/Stopwatch.js/actions/workflows/bump-version.yml)
 [![pages-build-deployment](https://github.com/zzinpan/Stopwatch.js/actions/workflows/pages/pages-build-deployment/badge.svg)](https://github.com/zzinpan/Stopwatch.js/actions/workflows/pages/pages-build-deployment)
-[![build](https://github.com/zzinpan/Stopwatch.js/workflows/bump-version/badge.svg)](https://github.com/zzinpan/Stopwatch.js/actions/workflows/bump-version.yml)
 
 Stopwatch.js is a JavaScript-based stopwatch library.  
 Lightweight, easy to use,  
