@@ -3,3 +3,7 @@ node_modules/
 
 # project file
 .project
+
+.idea/
+
+**/.DS_Store
