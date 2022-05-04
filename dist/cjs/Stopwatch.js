@@ -177,6 +177,7 @@ var StopwatchDataManager = /** @class */ (function () {
  * @property {object} event event items
  * @property {number[]} alarms set alarm times
  * @property {number[]} completeAlarms complete alarm times
+ * @property {function} a zzz
  * @example
  * ```js
  * const stopwatch = new Stopwatch();
@@ -288,7 +289,7 @@ var Stopwatch = /** @class */ (function () {
             }
             data.frameTime = time;
             data.elapsedTime = time - data.startTime;
-            self.dispatch("update", data.elapsedTime);
+            self.dispatch(StopwatchEvent.Update, data.elapsedTime);
             var alarms = data.alarms.filter(function (alarmTime) {
                 // 이미 알람을 발생한 경우
                 var isComplete = data.completeAlarms.some(function (cAlarmTime) { return cAlarmTime == alarmTime; });
@@ -298,7 +299,7 @@ var Stopwatch = /** @class */ (function () {
                 return alarmTime <= data.elapsedTime;
             });
             for (var i = 0; i < alarms.length; ++i) {
-                self.dispatch("alarm", data.elapsedTime);
+                self.dispatch(StopwatchEvent.Alarm, data.elapsedTime);
                 data.completeAlarms.push(alarms[i]);
             }
         }
@@ -461,7 +462,7 @@ var Stopwatch = /** @class */ (function () {
      * } );
      * ```
      *
-     * @param {StopwatchEventType} eventName Events to register for callbacks
+     * @param {StopwatchEvent} eventName Events to register for callbacks
      * @param {function} callback A callback to be executed when an event occurs
      * @returns {boolean} Whether to run
      */
@@ -490,7 +491,7 @@ var Stopwatch = /** @class */ (function () {
      * // Remove specific callbacks for specific events
      * stopwatch.off( "alarm", alarmListener );
      * ```
-     * @param {StopwatchEventType} eventName Event to delete callback
+     * @param {StopwatchEvent} eventName Event to delete callback
      * @param {function} callback callback to delete
      * @returns {boolean} Whether to run
      */
@@ -498,9 +499,10 @@ var Stopwatch = /** @class */ (function () {
         var data = Const.dataManager.get(this);
         // 모든 이벤트 삭제
         if (eventName == null) {
-            for (eventName in data.event) {
-                data.event[eventName] = [];
+            for (var eventName_1 in data.event) {
+                data.event[eventName_1] = [];
             }
+            // 동일이름의 경우, 같은 객체 참조
             return true;
         }
         // 특정 이벤트 삭제
@@ -525,7 +527,7 @@ var Stopwatch = /** @class */ (function () {
      * this.dispatch( "alarm", this.get() );
      * ```
      *
-     * @param {StopwatchEventType} eventName Event to execute callback
+     * @param {StopwatchEvent} eventName Event to execute callback
      * @param {any} args Argument value to be passed to the callback
      * @returns {boolean} Whether to run
      */
