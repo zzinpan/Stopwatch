@@ -200,6 +200,15 @@ var StopwatchData = /** @class */ (function () {
     return StopwatchData;
 }());
 
+/**
+ * Stopwatch event type
+ */
+var StopwatchEvent = {
+    "Update": "update",
+    "Tick": "tick",
+    "Alarm": "alarm"
+};
+
 // http://paulirish.com/2011/requestanimationframe-for-smart-animating/
 // http://my.opera.com/emoller/blog/2011/12/20/requestanimationframe-for-smart-er-animating
 // requestAnimationFrame polyfill by Erik Möller. fixes from Paul Irish and Tino Zijdel
@@ -462,7 +471,7 @@ var Stopwatch = /** @class */ (function () {
      * } );
      * ```
      *
-     * @param {StopwatchEvent} eventName Events to register for callbacks
+     * @param {Event} eventName Events to register for callbacks
      * @param {function} callback A callback to be executed when an event occurs
      * @returns {boolean} Whether to run
      */
@@ -491,7 +500,7 @@ var Stopwatch = /** @class */ (function () {
      * // Remove specific callbacks for specific events
      * stopwatch.off( "alarm", alarmListener );
      * ```
-     * @param {StopwatchEvent} eventName Event to delete callback
+     * @param {Event} eventName Event to delete callback
      * @param {function} callback callback to delete
      * @returns {boolean} Whether to run
      */
@@ -527,7 +536,7 @@ var Stopwatch = /** @class */ (function () {
      * this.dispatch( "alarm", this.get() );
      * ```
      *
-     * @param {StopwatchEvent} eventName Event to execute callback
+     * @param {Event} eventName Event to execute callback
      * @param {any} args Argument value to be passed to the callback
      * @returns {boolean} Whether to run
      */
@@ -583,6 +592,11 @@ var Stopwatch = /** @class */ (function () {
      * A utility object associated with degree.
      */
     Stopwatch.Degree = Degree;
+    /**
+     * @description
+     * Stopwath event type.
+     */
+    Stopwatch.Event = Event;
     return Stopwatch;
 }());
 

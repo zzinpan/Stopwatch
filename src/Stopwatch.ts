@@ -2,6 +2,7 @@ import AlarmType from "./Stopwatch.AlarmType";
 import Degree from "./Stopwatch.Degree";
 import StopwatchDataManager from "./manager/StopwatchDataManager";
 import StopwatchData from "./data/StopwatchData";
+import StopwatchEvent from "./Stopwatch.Event";
 import { requestAnimationFrame, cancelAnimationFrame } from "./polyfill/requestAnimatiionFrame";
 
 // constant
@@ -28,6 +29,12 @@ export default class Stopwatch {
 	 * A utility object associated with degree.
 	 */
 	static Degree = Degree;
+
+	/**
+	 * @description
+	 * Stopwath event type.
+	 */
+	static Event = StopwatchEvent;
 
 	/**
 	 * @description
@@ -310,11 +317,11 @@ export default class Stopwatch {
 	 * } );
 	 * ```
 	 * 
-	 * @param {StopwatchEvent} eventName Events to register for callbacks
+	 * @param {Event} eventName Events to register for callbacks
 	 * @param {function} callback A callback to be executed when an event occurs
 	 * @returns {boolean} Whether to run
 	 */	
-	on( eventName: StopwatchEvent, callback: Function ): boolean {
+	on( eventName: string, callback: Function ): boolean {
 		
 		const data: StopwatchData = Const.dataManager.get( this );
 		const callbacks: Function[] = data.event[ eventName ];
@@ -345,11 +352,11 @@ export default class Stopwatch {
 	 * // Remove specific callbacks for specific events
 	 * stopwatch.off( "alarm", alarmListener );
 	 * ```
-	 * @param {StopwatchEvent} eventName Event to delete callback
+	 * @param {Event} eventName Event to delete callback
 	 * @param {function} callback callback to delete
 	 * @returns {boolean} Whether to run
 	 */	
-	off( eventName?: StopwatchEvent, callback?: Function ): boolean {
+	off( eventName?: string, callback?: Function ): boolean {
 		
 		const data: StopwatchData = Const.dataManager.get( this );
 
@@ -397,11 +404,11 @@ export default class Stopwatch {
 	 * this.dispatch( "alarm", this.get() );
 	 * ```
 	 * 
-	 * @param {StopwatchEvent} eventName Event to execute callback
+	 * @param {Event} eventName Event to execute callback
 	 * @param {any} args Argument value to be passed to the callback
 	 * @returns {boolean} Whether to run
 	 */	
-	private dispatch( eventName: StopwatchEvent, ...args: any | number ): boolean {
+	private dispatch( eventName: string, ...args: any | number ): boolean {
 		
 		const data: StopwatchData = Const.dataManager.get( this );
 
