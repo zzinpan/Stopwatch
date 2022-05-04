@@ -87,7 +87,7 @@ export default class Stopwatch {
 			
 			data.frameTime = time;
 			data.elapsedTime = time - data.startTime;
-			self.dispatch( "update", data.elapsedTime );
+			self.dispatch( StopwatchEvent.Update, data.elapsedTime );
 			
 			const alarms: number[] = data.alarms.filter( alarmTime => {
 				
@@ -104,7 +104,7 @@ export default class Stopwatch {
 			
 			for( let i=0; i<alarms.length; ++i ){
 				
-				self.dispatch( "alarm", data.elapsedTime );
+				self.dispatch( StopwatchEvent.Alarm, data.elapsedTime );
 				data.completeAlarms.push( alarms[ i ] );
 				
 			}
@@ -310,11 +310,11 @@ export default class Stopwatch {
 	 * } );
 	 * ```
 	 * 
-	 * @param {StopwatchEventType} eventName Events to register for callbacks
+	 * @param {StopwatchEvent} eventName Events to register for callbacks
 	 * @param {function} callback A callback to be executed when an event occurs
 	 * @returns {boolean} Whether to run
 	 */	
-	on( eventName: StopwatchEventType, callback: Function ): boolean {
+	on( eventName: StopwatchEvent, callback: Function ): boolean {
 		
 		const data: StopwatchData = Const.dataManager.get( this );
 		const callbacks: Function[] = data.event[ eventName ];
@@ -345,22 +345,25 @@ export default class Stopwatch {
 	 * // Remove specific callbacks for specific events
 	 * stopwatch.off( "alarm", alarmListener );
 	 * ```
-	 * @param {StopwatchEventType} eventName Event to delete callback
+	 * @param {StopwatchEvent} eventName Event to delete callback
 	 * @param {function} callback callback to delete
 	 * @returns {boolean} Whether to run
 	 */	
-	off( eventName?: StopwatchEventType, callback?: Function ): boolean {
+	off( eventName?: StopwatchEvent, callback?: Function ): boolean {
 		
 		const data: StopwatchData = Const.dataManager.get( this );
 
 		// 모든 이벤트 삭제
 		if( eventName == null ){
-			
-			for( eventName in data.event ){
-				
+
+			for( let eventName in data.event ){
+
 				data.event[ eventName ] = [];
 				
 			}
+
+			// 동일이름의 경우, 같은 객체 참조
+
 			
 			return true;
 			
@@ -394,11 +397,11 @@ export default class Stopwatch {
 	 * this.dispatch( "alarm", this.get() );
 	 * ```
 	 * 
-	 * @param {StopwatchEventType} eventName Event to execute callback
+	 * @param {StopwatchEvent} eventName Event to execute callback
 	 * @param {any} args Argument value to be passed to the callback
 	 * @returns {boolean} Whether to run
 	 */	
-	private dispatch( eventName: StopwatchEventType, ...args: any ): boolean {
+	private dispatch( eventName: StopwatchEvent, ...args: any | number ): boolean {
 		
 		const data: StopwatchData = Const.dataManager.get( this );
 

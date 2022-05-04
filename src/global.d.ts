@@ -1,7 +1,14 @@
 /**
  * Stopwatch event type
  */
-type StopwatchEventType = "alarm" | "update";
+declare enum StopwatchEvent {
+
+    Update = "update",
+    Tick = "update",
+    Alarm = "alarm"
+
+}
+
 /**
  * string or number type
  */

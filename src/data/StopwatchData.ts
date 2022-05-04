@@ -8,12 +8,12 @@
  * @property {object} event event items
  * @property {number[]} alarms set alarm times
  * @property {number[]} completeAlarms complete alarm times
+ * @property {function} a zzz
  * @example
  * ```js
  * const stopwatch = new Stopwatch();
  * ```
  ***/
-
  class StopwatchData {
 
 	// 필드
@@ -24,6 +24,7 @@
 	rafId: number;
 
 	event: {
+		[key: string]: Function[],
 		update: Function[],
 		alarm: Function[]
 	};
