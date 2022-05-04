@@ -12,7 +12,7 @@
     "author": "SHIN MYUNG CHUL <zzipan@kakao.com> (https://github.com/zzinpan)"
   },
   "publishConfig": {
-    "registry": "https://npm.pkg.github.com"
+    "@zzinpan:registry": "https://npm.pkg.github.com"
   },
   "scripts": {
     "build": "rollup --c",
@@ -22,10 +22,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/zzinpan/Stopwatch.js.git"
+    "url": "https://github.com/zzinpan/Stopwatch.js.git"
   },
   "author": "",
-  "license": "(MIT OR Apache-2.0)",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/zzinpan/Stopwatch.js/issues",
     "email": "zzinpan@kakao.com"
