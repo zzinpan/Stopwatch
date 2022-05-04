@@ -597,7 +597,7 @@ var Stopwatch = (function () {
          * @description
          * Stopwath event type.
          */
-        Stopwatch.Event = Event;
+        Stopwatch.Event = StopwatchEvent;
         return Stopwatch;
     }());
 
