@@ -119,6 +119,7 @@ TestModule.Modules.forEach( ( testModule ) => {
 
         }).then( () => {
 
+            stopwatch.stop();
             expect( updated ).toBeTruthy();
 
         } );
