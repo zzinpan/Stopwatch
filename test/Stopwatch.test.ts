@@ -39,23 +39,23 @@ TestModule.Modules.forEach( ( testModule ) => {
     
     });
 
-    
+
     test(`[${testModule.id}] start -> pause -> get -> destroy`, () => {
-        
+
         const stopwatch = new Stopwatch();
         return new Promise(( resolve, reject ) => {
-    
+
             stopwatch.start();
             setTimeout( () => {
-    
+
                 resolve( stopwatch );
-    
+
             }, waitingTime / 2 );
-    
+
         }).then( () => {
-    
+
             expect( stopwatch.pause() ).toBeTruthy();
-    
+
             return new Promise(( resolve, reject ) => {
 
                 setTimeout( () => {
@@ -73,28 +73,56 @@ TestModule.Modules.forEach( ( testModule ) => {
             expect( stopwatch.destroy() ).toBeTruthy();
 
         } );
-    
+
     });
-    
+
 
     test(`[${testModule.id}] start -> stop`, () => {
-        
+
         const stopwatch = new Stopwatch();
         return new Promise(( resolve, reject ) => {
-    
+
             stopwatch.start();
             setTimeout( () => {
-    
+
                 resolve( stopwatch );
-    
+
             }, waitingTime );
-    
+
         }).then( () => {
-    
+
             expect( stopwatch.stop() ).toBeTruthy();
-    
+
         } );
-    
+
+    });
+
+
+    test(`[${testModule.id}] start -> tick -> stop`, () => {
+
+        let updated = false;
+        const stopwatch = new Stopwatch();
+        stopwatch.on( "update", () => {
+            updated = true;
+        } );
+
+        expect( updated ).toBeFalsy();
+
+        return new Promise(( resolve, reject ) => {
+
+            stopwatch.start();
+            setTimeout( () => {
+
+                resolve( stopwatch );
+
+            }, waitingTime );
+
+        }).then( () => {
+
+            expect( updated ).toBeTruthy();
+
+        } );
+
     });
 
 
