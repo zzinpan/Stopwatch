@@ -18,6 +18,27 @@ TestModule.Modules.forEach( ( testModule ) => {
     
     });
 
+    test(`[${testModule.id}] stopwatch.on("update")`, () => {
+
+        const stopwatch = new Stopwatch();
+        expect( stopwatch.on( "update", () => {} ) ).toBeTruthy();
+
+    });
+
+    test(`[${testModule.id}] stopwatch.on("alarm")`, () => {
+
+        const stopwatch = new Stopwatch();
+        expect( stopwatch.on( "alarm", () => {} ) ).toBeTruthy();
+
+    });
+
+    test(`[${testModule.id}] stopwatch.on("tick")`, () => {
+
+        const stopwatch = new Stopwatch();
+        expect( stopwatch.on( "tick", () => {} ) ).toBeTruthy();
+
+    });
+
     
     test(`[${testModule.id}] start -> destroy`, () => {
         
@@ -98,11 +119,39 @@ TestModule.Modules.forEach( ( testModule ) => {
     });
 
 
-    test(`[${testModule.id}] start -> tick -> stop`, () => {
+    test(`[${testModule.id}] start -> update -> stop`, () => {
 
         let updated = false;
         const stopwatch = new Stopwatch();
         stopwatch.on( "update", () => {
+            updated = true;
+        } );
+
+        expect( updated ).toBeFalsy();
+
+        return new Promise(( resolve, reject ) => {
+
+            stopwatch.start();
+            setTimeout( () => {
+
+                resolve( stopwatch );
+
+            }, waitingTime );
+
+        }).then( () => {
+
+            stopwatch.stop();
+            expect( updated ).toBeTruthy();
+
+        } );
+
+    });
+
+    test(`[${testModule.id}] start -> tick -> stop`, () => {
+
+        let updated = false;
+        const stopwatch = new Stopwatch();
+        stopwatch.on( "tick", () => {
             updated = true;
         } );
 

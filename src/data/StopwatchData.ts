@@ -26,6 +26,7 @@
 	event: {
 		[key: string]: Function[],
 		update: Function[],
+		tick: Function[],
 		alarm: Function[]
 	};
 
@@ -43,9 +44,14 @@
 		this.event = {
 			
 			update: [],
+			tick: null,
 			alarm: []
 			
 		};
+
+		// synonym
+		this.event.tick = this.event.update;
+
 		this.alarms = [];
 		this.completeAlarms = [];
 

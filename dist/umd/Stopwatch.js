@@ -209,7 +209,7 @@
      */
     var StopwatchEvent = {
         "Update": "update",
-        "Tick": "tick",
+        "Tick": "update",
         "Alarm": "alarm"
     };
 
