@@ -171,6 +171,46 @@
         return StopwatchDataManager;
     }());
 
+    var Synonym = [
+        ["update", "tick"],
+        ["alarm"]
+    ];
+    /**
+     * Stopwatch event type
+     */
+    var Type = Object.create(Object.prototype, {
+        "Update": {
+            enumerable: true,
+            value: "update"
+        },
+        "Tick": {
+            enumerable: true,
+            value: "tick"
+        },
+        "Alarm": {
+            enumerable: true,
+            value: "alarm"
+        },
+        "getSynonyms": {
+            value: function () {
+                return Synonym.map(function (synonymGroup) {
+                    return synonymGroup.slice();
+                });
+            }
+        },
+        "getSynonym": {
+            value: function (type) {
+                var synonymGroup = Synonym.find(function (synonymGroup) {
+                    return -1 < synonymGroup.indexOf(type);
+                });
+                if (synonymGroup == null) {
+                    return [];
+                }
+                return synonymGroup.slice();
+            }
+        }
+    });
+
     /*** docs exclude
      * Stopwatch data
      * @property {number} startTime requestAnimationFrame start time
@@ -189,29 +229,30 @@
      ***/
     var StopwatchData = /** @class */ (function () {
         function StopwatchData() {
+            var _this = this;
             this.startTime = null;
             this.elapsedTime = null;
             this.frameTime = null;
             this.paused = false;
             this.rafId = null;
             this.event = {
-                update: [],
-                alarm: []
+                update: null,
+                tick: null,
+                alarm: null
             };
+            // synonym
+            var synonymGroup = Type.getSynonyms();
+            synonymGroup.forEach(function (synonyms) {
+                var array = [];
+                synonyms.forEach(function (synonym) {
+                    _this.event[synonym] = array;
+                });
+            });
             this.alarms = [];
             this.completeAlarms = [];
         }
         return StopwatchData;
     }());
-
-    /**
-     * Stopwatch event type
-     */
-    var StopwatchEvent = {
-        "Update": "update",
-        "Tick": "update",
-        "Alarm": "alarm"
-    };
 
     // http://paulirish.com/2011/requestanimationframe-for-smart-animating/
     // http://my.opera.com/emoller/blog/2011/12/20/requestanimationframe-for-smart-er-animating
@@ -302,7 +343,7 @@
                 }
                 data.frameTime = time;
                 data.elapsedTime = time - data.startTime;
-                self.dispatch(StopwatchEvent.Update, data.elapsedTime);
+                self.dispatch(Type.Update, data.elapsedTime);
                 var alarms = data.alarms.filter(function (alarmTime) {
                     // 이미 알람을 발생한 경우
                     var isComplete = data.completeAlarms.some(function (cAlarmTime) { return cAlarmTime == alarmTime; });
@@ -312,7 +353,7 @@
                     return alarmTime <= data.elapsedTime;
                 });
                 for (var i = 0; i < alarms.length; ++i) {
-                    self.dispatch(StopwatchEvent.Alarm, data.elapsedTime);
+                    self.dispatch(Type.Alarm, data.elapsedTime);
                     data.completeAlarms.push(alarms[i]);
                 }
             }
@@ -512,15 +553,14 @@
             var data = Const.dataManager.get(this);
             // 모든 이벤트 삭제
             if (eventName == null) {
-                for (var eventName_1 in data.event) {
-                    data.event[eventName_1] = [];
-                }
-                // 동일이름의 경우, 같은 객체 참조
+                var callbackGroups = Object.values(data.event);
+                callbackGroups.forEach(function (callbacks) { return callbacks.length = 0; });
                 return true;
             }
             // 특정 이벤트 삭제
             if (callback == null) {
-                data.event[eventName] = [];
+                // 동의어에서 동일 참조가 필요하므로 신규 배열 할당이 아닌 아래코드 사용
+                data.event[eventName].length = 0;
                 return true;
             }
             // 특정 이벤트의 콜백 삭제
@@ -600,7 +640,7 @@
          * @description
          * Stopwath event type.
          */
-        Stopwatch.Event = StopwatchEvent;
+        Stopwatch.Event = Type;
         return Stopwatch;
     }());
 
