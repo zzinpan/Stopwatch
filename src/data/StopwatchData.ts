@@ -1,3 +1,5 @@
+import Type from "../Stopwatch.Event";
+
 /*** docs exclude
  * Stopwatch data
  * @property {number} startTime requestAnimationFrame start time
@@ -43,14 +45,24 @@
 		this.rafId = null;
 		this.event = {
 			
-			update: [],
+			update: null,
 			tick: null,
-			alarm: []
+			alarm: null
 			
 		};
 
 		// synonym
-		this.event.tick = this.event.update;
+		const synonymGroup: string[][] = Type.getSynonyms();
+		synonymGroup.forEach(( synonyms ) => {
+
+			const array: Function[] = [];
+			synonyms.forEach(( synonym ) => {
+
+				this.event[ synonym ] = array;
+
+			});
+
+		});
 
 		this.alarms = [];
 		this.completeAlarms = [];

@@ -4,6 +4,7 @@ import StopwatchDataManager from "./manager/StopwatchDataManager";
 import StopwatchData from "./data/StopwatchData";
 import StopwatchEvent from "./Stopwatch.Event";
 import { requestAnimationFrame, cancelAnimationFrame } from "./polyfill/requestAnimatiionFrame";
+import Type from "./Stopwatch.Event";
 
 // constant
 const Const = {
@@ -363,23 +364,18 @@ export default class Stopwatch {
 		// 모든 이벤트 삭제
 		if( eventName == null ){
 
-			for( let eventName in data.event ){
+			const callbackGroups = Object.values( data.event );
+			callbackGroups.forEach( callbacks => callbacks.length = 0 );
 
-				data.event[ eventName ] = [];
-				
-			}
-
-			// 동일이름의 경우, 같은 객체 참조
-
-			
 			return true;
 			
 		}
 
 		// 특정 이벤트 삭제
 		if( callback == null ){
-			
-			data.event[ eventName ] = [];
+
+			// 동의어에서 동일 참조가 필요하므로 신규 배열 할당이 아닌 아래코드 사용
+			data.event[ eventName ].length = 0;
 			return true;
 			
 		}

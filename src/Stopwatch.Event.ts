@@ -23,6 +23,18 @@ const Type = Object.create( Object.prototype, {
         value: "alarm"
     },
 
+    "getSynonyms": {
+      value: function(): string[][] {
+
+          return Synonym.map( ( synonymGroup ) => {
+
+              return synonymGroup.slice();
+
+          } );
+
+      }
+    },
+
     "getSynonym": {
         value: function( type: string ): string[] {
 
