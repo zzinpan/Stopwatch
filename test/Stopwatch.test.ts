@@ -10,7 +10,7 @@ TestModule.Modules.forEach( ( testModule ) => {
     const Stopwatch = testModule.Stopwatch;
 
     
-    test(`[${testModule.id}] new insatnce`, () => {
+    test(`[${testModule.id}] Stopwatch.constructor`, () => {
     
         const stopwatch = new Stopwatch();
         expect( stopwatch instanceof Stopwatch ).toBeTruthy();
@@ -18,7 +18,7 @@ TestModule.Modules.forEach( ( testModule ) => {
     
     });
 
-    test(`[${testModule.id}] stopwatch.on("update")`, () => {
+    test(`[${testModule.id}] Stopwatch.prototype.on`, () => {
 
         const stopwatch = new Stopwatch();
         expect( stopwatch.on( "update", () => {} ) ).toBeTruthy();
