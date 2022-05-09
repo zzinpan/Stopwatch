@@ -9,13 +9,13 @@ TestModule.Modules.forEach( ( testModule ) => {
     // Different constructors per module
     const Stopwatch = testModule.Stopwatch;
 
-    
+
     test(`[${testModule.id}] Stopwatch.constructor`, () => {
-    
+
         const stopwatch = new Stopwatch();
         expect( stopwatch instanceof Stopwatch ).toBeTruthy();
         expect( Object.getPrototypeOf( stopwatch ) ).toBe( Stopwatch.prototype );
-    
+
     });
 
     test(`[${testModule.id}] Stopwatch.prototype.on`, () => {
@@ -39,25 +39,25 @@ TestModule.Modules.forEach( ( testModule ) => {
 
     });
 
-    
+
     test(`[${testModule.id}] start -> destroy`, () => {
-        
+
         const stopwatch = new Stopwatch();
         return new Promise(( resolve, reject ) => {
-    
+
             stopwatch.start();
             setTimeout( () => {
-    
+
                 resolve( stopwatch );
-    
+
             }, waitingTime );
-    
+
         }).then( () => {
-    
+
             expect( stopwatch.destroy() ).toBeTruthy();
-    
+
         } );
-    
+
     });
 
 

@@ -2,6 +2,7 @@ import Type from "../Stopwatch.Event";
 
 /*** docs exclude
  * Stopwatch data
+ * @property {boolean} started started
  * @property {number} startTime requestAnimationFrame start time
  * @property {number} elapsedTime elapsed time = now time - start time
  * @property {number} frameTime requestAnimationFrame now time
@@ -19,6 +20,7 @@ import Type from "../Stopwatch.Event";
  class StopwatchData {
 
 	// 필드
+	started: boolean;
 	startTime: number;
 	elapsedTime: number;
 	frameTime: number;
@@ -38,6 +40,7 @@ import Type from "../Stopwatch.Event";
 
 	constructor(){
 
+		this.started = false;
 		this.startTime = null;
 		this.elapsedTime = null;
 		this.frameTime = null;

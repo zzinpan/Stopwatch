@@ -207,6 +207,7 @@ var Type = Object.create(Object.prototype, {
 
 /*** docs exclude
  * Stopwatch data
+ * @property {boolean} started started
  * @property {number} startTime requestAnimationFrame start time
  * @property {number} elapsedTime elapsed time = now time - start time
  * @property {number} frameTime requestAnimationFrame now time
@@ -224,6 +225,7 @@ var Type = Object.create(Object.prototype, {
 var StopwatchData = /** @class */ (function () {
     function StopwatchData() {
         var _this = this;
+        this.started = false;
         this.startTime = null;
         this.elapsedTime = null;
         this.frameTime = null;
@@ -324,9 +326,10 @@ var Stopwatch = /** @class */ (function () {
             return true;
         }
         // 현재 수행중인 경우, 다시 실행시킬 수 없음
-        if (data.rafId != null) {
+        if (data.started === true) {
             return false;
         }
+        data.started = true;
         function frame(time) {
             data.rafId = requestAnimationFrame(frame);
             if (data.startTime == null) {
@@ -368,7 +371,7 @@ var Stopwatch = /** @class */ (function () {
      */
     Stopwatch.prototype.pause = function () {
         var data = Const.dataManager.get(this);
-        if (data.rafId == null) {
+        if (data.started === false) {
             return false;
         }
         if (data.paused === true) {
@@ -391,11 +394,12 @@ var Stopwatch = /** @class */ (function () {
      */
     Stopwatch.prototype.stop = function () {
         var data = Const.dataManager.get(this);
-        if (data.startTime == null) {
+        if (data.started === false) {
             return false;
         }
         cancelAnimationFrame(data.rafId);
         data.rafId = null;
+        data.started = false;
         data.startTime = null;
         data.paused = false;
         data.completeAlarms = [];
