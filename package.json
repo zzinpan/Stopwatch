@@ -5,14 +5,18 @@
   "main": "index.js",
   "keywords": [
     "stopwatch",
+    "stopwatch.js",
+    "stopwatchjs",
     "timer",
+    "timer.js",
+    "timerjs",
     "requestAnimationFrame"
   ],
   "people": {
     "author": "SHIN MYUNG CHUL <zzipan@kakao.com> (https://github.com/zzinpan)"
   },
   "publishConfig": {
-    "@zzinpan:registry": "https://npm.pkg.github.com"
+    "zzinpan:registry": "https://npm.pkg.github.com"
   },
   "scripts": {
     "build": "rollup --c",

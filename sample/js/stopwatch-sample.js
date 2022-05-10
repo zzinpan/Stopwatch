@@ -88,7 +88,6 @@ function onBodyPointermove( e ){
 	
 	let pageX = e.pageX;
     let pageY = e.pageY;
-	alert( `pageX: ${pageX}, pageY: ${pageY}` );
 
     if( pageX == null ){
         pageX = e.touches[ 0 ].pageX;
@@ -108,7 +107,6 @@ function onBodyPointermove( e ){
 					) + Math.PI / 2;
 	
 	handAlarm.deg = Stopwatch.Degree.fromRadian( radians );
-	alert( handAlarm.deg );
 	handAlarm.style.transform = `translateX( -50% ) rotate( ${radians}rad )`;
 
 }

@@ -116,6 +116,11 @@ export default class Stopwatch {
 				self.dispatch( StopwatchEvent.Alarm, data.elapsedTime );
 				data.completeAlarms.push( alarms[ i ] );
 
+			}for( let i=0; i<alarms.length; ++i ){
+
+				self.dispatch( StopwatchEvent.Alarm, data.elapsedTime );
+				data.completeAlarms.push( alarms[ i ] );
+
 			}
 
 		}
