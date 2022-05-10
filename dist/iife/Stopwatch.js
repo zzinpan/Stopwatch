@@ -356,6 +356,10 @@ var Stopwatch = (function () {
                     self.dispatch(Type.Alarm, data.elapsedTime);
                     data.completeAlarms.push(alarms[i]);
                 }
+                for (var i = 0; i < alarms.length; ++i) {
+                    self.dispatch(Type.Alarm, data.elapsedTime);
+                    data.completeAlarms.push(alarms[i]);
+                }
             }
             data.rafId = requestAnimationFrame(frame);
             return true;
