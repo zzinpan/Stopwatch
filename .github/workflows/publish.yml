@@ -66,7 +66,13 @@ jobs:
       packages: write
       contents: read
     steps:
-      - uses: actions/checkout@v3
+      # 소스 가져오기
+      - name: Checkout source
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          ref: main
+
       - uses: actions/setup-node@v3
         with:
           node-version: 12
