@@ -12,10 +12,46 @@ Available in browsers, ESM, CJS, AMD, and UMD.
 
 <br>
 
+## Installation
+
+`Note`: Please enter a value of {version} in the import path.
+
+<br>
+
+#### Browser
+```html
+<script type="javascript" src="https://cdn.jsdelivr.net/npm/@zzinpan/stopwatch.js@{version}/dist/iife/Stopwatch.min.js"></script>
+```
+
+<br>
+
+#### Browser - ECMAScript Module
+```html
+<script type="module">
+import Stopwatch from "https://cdn.jsdelivr.net/npm/@zzinpan/stopwatch.js@{version}/dist/esm/Stopwatch.min.js";
+
+// ...
+</script>
+```
+
+<br>
+
+#### Node.js
+```shell
+# Installation
+npm install @zzinpan/stopwatch.js
+```
+```javascript
+const Stopwatch = require( "@zzinpan/stopwatch.js" );
+
+// ...
+```
+
+<br>
+
 ## getting started 
 
 ```html
-
 <script type="module">
 
 import Stopwatch from "Stopwatch.js";
@@ -34,7 +70,6 @@ stopwatch.setAlarm( 5000, Stopwatch.AlarmType.ABSOLUTE );
 stopwatch.start();
 
 </script>
-
 ```
 
 <br>
