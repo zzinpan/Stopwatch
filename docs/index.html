@@ -11,10 +11,43 @@
 <br>
 
 
+<a href="#installation" id="installation" style="color: inherit; text-decoration: none;">
+  <h2>Installation</h2>
+</a>
+<p><code>Note</code>: Please enter a value of {version} in the import path.</p>
+<br>
+
+
+<a href="#browser" id="browser" style="color: inherit; text-decoration: none;">
+  <h4>Browser</h4>
+</a>
+<pre><code class="language-html"><span class="hl-0">&lt;</span><span class="hl-1">script</span><span class="hl-2"> </span><span class="hl-3">type</span><span class="hl-2">=</span><span class="hl-4">&quot;javascript&quot;</span><span class="hl-2"> </span><span class="hl-3">src</span><span class="hl-2">=</span><span class="hl-4">&quot;https://cdn.jsdelivr.net/npm/@zzinpan/stopwatch.js@{version}/dist/iife/Stopwatch.min.js&quot;</span><span class="hl-0">&gt;&lt;/</span><span class="hl-1">script</span><span class="hl-0">&gt;</span>
+</code></pre>
+<br>
+
+
+<a href="#browser---ecmascript-module" id="browser---ecmascript-module" style="color: inherit; text-decoration: none;">
+  <h4>Browser - ECMAScript Module</h4>
+</a>
+<pre><code class="language-html"><span class="hl-0">&lt;</span><span class="hl-1">script</span><span class="hl-2"> </span><span class="hl-3">type</span><span class="hl-2">=</span><span class="hl-4">&quot;module&quot;</span><span class="hl-0">&gt;</span><br/><span class="hl-5">import</span><span class="hl-2"> </span><span class="hl-6">Stopwatch</span><span class="hl-2"> </span><span class="hl-5">from</span><span class="hl-2"> </span><span class="hl-7">&quot;https://cdn.jsdelivr.net/npm/@zzinpan/stopwatch.js@{version}/dist/esm/Stopwatch.min.js&quot;</span><span class="hl-2">;</span><br/><br/><span class="hl-8">// ...</span><br/><span class="hl-0">&lt;/</span><span class="hl-1">script</span><span class="hl-0">&gt;</span>
+</code></pre>
+<br>
+
+
+<a href="#nodejs" id="nodejs" style="color: inherit; text-decoration: none;">
+  <h4>Node.js</h4>
+</a>
+<pre><code class="language-shell"><span class="hl-8"># Installation</span><br/><span class="hl-9">npm install @zzinpan/stopwatch.js</span>
+</code></pre>
+<pre><code class="language-javascript"><span class="hl-10">const</span><span class="hl-9"> </span><span class="hl-11">Stopwatch</span><span class="hl-9"> = </span><span class="hl-12">require</span><span class="hl-9">( </span><span class="hl-7">&quot;@zzinpan/stopwatch.js&quot;</span><span class="hl-9"> );</span><br/><br/><span class="hl-8">// ...</span>
+</code></pre>
+<br>
+
+
 <a href="#getting-started" id="getting-started" style="color: inherit; text-decoration: none;">
   <h2>getting started</h2>
 </a>
-<pre><code class="language-html"><br/><span class="hl-0">&lt;</span><span class="hl-1">script</span><span class="hl-2"> </span><span class="hl-3">type</span><span class="hl-2">=</span><span class="hl-4">&quot;module&quot;</span><span class="hl-0">&gt;</span><br/><br/><span class="hl-5">import</span><span class="hl-2"> </span><span class="hl-6">Stopwatch</span><span class="hl-2"> </span><span class="hl-5">from</span><span class="hl-2"> </span><span class="hl-7">&quot;Stopwatch.js&quot;</span><span class="hl-2">;</span><br/><br/><span class="hl-8">// create api</span><br/><span class="hl-9">const</span><span class="hl-2"> </span><span class="hl-10">stopwatch</span><span class="hl-2"> </span><span class="hl-11">=</span><span class="hl-2"> </span><span class="hl-9">new</span><span class="hl-2"> </span><span class="hl-12">Stopwatch</span><span class="hl-2">();</span><br/><br/><span class="hl-8">// add events</span><br/><span class="hl-6">stopwatch</span><span class="hl-2">.</span><span class="hl-12">on</span><span class="hl-2">( </span><span class="hl-7">&quot;update&quot;</span><span class="hl-2">, ( </span><span class="hl-6">time</span><span class="hl-2"> ) </span><span class="hl-9">=&gt;</span><span class="hl-2"> </span><span class="hl-6">console</span><span class="hl-2">.</span><span class="hl-12">log</span><span class="hl-2">( </span><span class="hl-6">time</span><span class="hl-2"> ) );</span><br/><span class="hl-6">stopwatch</span><span class="hl-2">.</span><span class="hl-12">on</span><span class="hl-2">( </span><span class="hl-7">&quot;alarm&quot;</span><span class="hl-2">, ( </span><span class="hl-6">time</span><span class="hl-2"> ) </span><span class="hl-9">=&gt;</span><span class="hl-2"> </span><span class="hl-12">alert</span><span class="hl-2">( </span><span class="hl-6">time</span><span class="hl-2"> ) );</span><br/><br/><span class="hl-8">// set alarm</span><br/><span class="hl-6">stopwatch</span><span class="hl-2">.</span><span class="hl-12">setAlarm</span><span class="hl-2">( </span><span class="hl-13">5000</span><span class="hl-2">, </span><span class="hl-6">Stopwatch</span><span class="hl-2">.</span><span class="hl-6">AlarmType</span><span class="hl-2">.</span><span class="hl-10">ABSOLUTE</span><span class="hl-2"> );</span><br/><br/><span class="hl-8">// start</span><br/><span class="hl-6">stopwatch</span><span class="hl-2">.</span><span class="hl-12">start</span><span class="hl-2">();</span><br/><br/><span class="hl-0">&lt;/</span><span class="hl-1">script</span><span class="hl-0">&gt;</span><br/>
+<pre><code class="language-html"><span class="hl-0">&lt;</span><span class="hl-1">script</span><span class="hl-2"> </span><span class="hl-3">type</span><span class="hl-2">=</span><span class="hl-4">&quot;module&quot;</span><span class="hl-0">&gt;</span><br/><br/><span class="hl-5">import</span><span class="hl-2"> </span><span class="hl-6">Stopwatch</span><span class="hl-2"> </span><span class="hl-5">from</span><span class="hl-2"> </span><span class="hl-7">&quot;Stopwatch.js&quot;</span><span class="hl-2">;</span><br/><br/><span class="hl-8">// create api</span><br/><span class="hl-10">const</span><span class="hl-2"> </span><span class="hl-11">stopwatch</span><span class="hl-2"> </span><span class="hl-9">=</span><span class="hl-2"> </span><span class="hl-10">new</span><span class="hl-2"> </span><span class="hl-12">Stopwatch</span><span class="hl-2">();</span><br/><br/><span class="hl-8">// add events</span><br/><span class="hl-6">stopwatch</span><span class="hl-2">.</span><span class="hl-12">on</span><span class="hl-2">( </span><span class="hl-7">&quot;update&quot;</span><span class="hl-2">, ( </span><span class="hl-6">time</span><span class="hl-2"> ) </span><span class="hl-10">=&gt;</span><span class="hl-2"> </span><span class="hl-6">console</span><span class="hl-2">.</span><span class="hl-12">log</span><span class="hl-2">( </span><span class="hl-6">time</span><span class="hl-2"> ) );</span><br/><span class="hl-6">stopwatch</span><span class="hl-2">.</span><span class="hl-12">on</span><span class="hl-2">( </span><span class="hl-7">&quot;alarm&quot;</span><span class="hl-2">, ( </span><span class="hl-6">time</span><span class="hl-2"> ) </span><span class="hl-10">=&gt;</span><span class="hl-2"> </span><span class="hl-12">alert</span><span class="hl-2">( </span><span class="hl-6">time</span><span class="hl-2"> ) );</span><br/><br/><span class="hl-8">// set alarm</span><br/><span class="hl-6">stopwatch</span><span class="hl-2">.</span><span class="hl-12">setAlarm</span><span class="hl-2">( </span><span class="hl-13">5000</span><span class="hl-2">, </span><span class="hl-6">Stopwatch</span><span class="hl-2">.</span><span class="hl-6">AlarmType</span><span class="hl-2">.</span><span class="hl-11">ABSOLUTE</span><span class="hl-2"> );</span><br/><br/><span class="hl-8">// start</span><br/><span class="hl-6">stopwatch</span><span class="hl-2">.</span><span class="hl-12">start</span><span class="hl-2">();</span><br/><br/><span class="hl-0">&lt;/</span><span class="hl-1">script</span><span class="hl-0">&gt;</span>
 </code></pre>
 <br>
 
