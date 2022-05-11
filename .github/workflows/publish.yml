@@ -59,25 +59,46 @@ jobs:
     - name: git push
       run: git push
 
-  npm-publish:
+  github-packages-publish:
     needs: bump-version-with-auto-commit
     runs-on: ubuntu-latest
     permissions:
       packages: write
       contents: read
     steps:
-      # 소스 가져오기
-      - name: Checkout source
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-          ref: main
 
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 12
-          registry-url: https://npm.pkg.github.com/
-      - run: npm ci
-      - run: npm publish --access=public
-        env:
-          NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+    # 소스 가져오기
+    - name: Checkout source
+      uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+        ref: main
+
+    - uses: actions/setup-node@v3
+      with:
+        node-version: 12
+        registry-url: https://npm.pkg.github.com/
+    - run: npm ci
+    - run: npm publish --access=public
+      env:
+        NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+
+  nodejs-packages-publish:
+    runs-on: ubuntu-latest
+    steps:
+
+    # 소스 가져오기
+    - name: Checkout source
+      uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+        ref: main
+
+    - uses: actions/setup-node@v3
+      with:
+        node-version: 12
+        registry-url: https://registry.npmjs.org
+    - run: npm ci
+    - run: npm publish --access=public
+      env:
+        NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
