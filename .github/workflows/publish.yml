@@ -84,6 +84,7 @@ jobs:
         NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
 
   nodejs-packages-publish:
+    needs: bump-version-with-auto-commit
     runs-on: ubuntu-latest
     steps:
 
