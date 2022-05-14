@@ -411,6 +411,25 @@ var Stopwatch = /** @class */ (function () {
     };
     /**
      * @description
+     * Reset the stopwatch.
+     *
+     * @example
+     * ```js
+     * // Reset the stopwatch.
+     * stopwatch.reset();
+     * ```
+     *
+     * @returns {boolean} Whether to run
+     */
+    Stopwatch.prototype.reset = function () {
+        var data = Const.dataManager.get(this);
+        data.completeAlarms = [];
+        data.startTime = data.frameTime;
+        data.elapsedTime = 0;
+        return true;
+    };
+    /**
+     * @description
      * Get the elapsed time.
      *
      * @example

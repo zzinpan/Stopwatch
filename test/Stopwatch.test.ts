@@ -176,4 +176,31 @@ TestModule.Modules.forEach( ( testModule ) => {
     });
 
 
+    test(`[${testModule.id}] start -> reset -> stop`, () => {
+
+        const stopwatch = new Stopwatch();
+
+        return new Promise(( resolve, reject ) => {
+
+            stopwatch.start();
+            setTimeout( () => {
+
+                resolve( stopwatch );
+
+            }, waitingTime );
+
+        }).then( () => {
+
+            expect( waitingTime - waitingTime / 10 <= stopwatch.get() ).toBeTruthy();
+
+            stopwatch.reset();
+            expect( stopwatch.get() <= 20 ).toBeTruthy();
+
+            stopwatch.stop();
+
+        } );
+
+    });
+
+
 } );

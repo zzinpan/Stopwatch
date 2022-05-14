@@ -4,7 +4,6 @@ import StopwatchDataManager from "./manager/StopwatchDataManager";
 import StopwatchData from "./data/StopwatchData";
 import StopwatchEvent from "./Stopwatch.Event";
 import { requestAnimationFrame, cancelAnimationFrame } from "./polyfill/requestAnimatiionFrame";
-import Type from "./Stopwatch.Event";
 
 // constant
 const Const = {
@@ -188,6 +187,29 @@ export default class Stopwatch {
 		data.startTime = null;
 		data.paused = false;
 		data.completeAlarms = [];
+
+		return true;
+
+	}
+
+	/**
+	 * @description
+	 * Reset the stopwatch.
+	 *
+	 * @example
+	 * ```js
+	 * // Reset the stopwatch.
+	 * stopwatch.reset();
+	 * ```
+	 *
+	 * @returns {boolean} Whether to run
+	 */
+	reset(): boolean {
+
+		const data: StopwatchData = Const.dataManager.get( this );
+		data.completeAlarms = [];
+		data.startTime = data.frameTime;
+		data.elapsedTime = 0;
 
 		return true;
 
