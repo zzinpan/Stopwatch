@@ -51,9 +51,7 @@ const Stopwatch = require( "@zzinpan/stopwatch.js" );
 
 ## getting started 
 
-```html
-<script type="module">
-
+```javascript
 import Stopwatch from "Stopwatch.js";
 
 // create api
@@ -68,8 +66,6 @@ stopwatch.setAlarm( 5000, Stopwatch.AlarmType.ABSOLUTE );
 
 // start
 stopwatch.start();
-
-</script>
 ```
 
 <br>
@@ -98,6 +94,22 @@ https://zzinpan.github.io/Stopwatch.js/sample/index-umd.html
 <br>
 
 ## document
+
+If you want to use a simple stopwatch:  
+https://zzinpan.github.io/Stopwatch.js/docs/classes/Stopwatch.default.html
+<br>
+
+If you want to create a custom AlarmType:  
+https://zzinpan.github.io/Stopwatch.js/docs/classes/Stopwatch_AlarmType.default.html
+<br>
+
+If you are curious about the full code:  
 https://zzinpan.github.io/Stopwatch.js/docs/
+
+<br>
+
+---
+
+Thanks for using it!
 
 <br>
