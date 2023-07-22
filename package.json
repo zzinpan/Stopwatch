@@ -1,6 +1,6 @@
 {
   "name": "@zzinpan/stopwatch.js",
-  "version": "0.9.0",
+  "version": "0.9.1",
   "description": "Typical stopwatch JavaScript library",
   "main": "dist/umd/Stopwatch.min.js",
   "files": [
