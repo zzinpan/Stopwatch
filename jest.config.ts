@@ -13,6 +13,11 @@ const config: Config.InitialOptions = {
   transformIgnorePatterns: [ '<rootDir>/node_modules/' ],
   testMatch: [
       "<rootDir>/test/**/*.test.ts"
+  ],
+
+  collectCoverage: true,
+  coveragePathIgnorePatterns: [
+      'dist'
   ]
 
 };

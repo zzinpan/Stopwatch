@@ -1,5 +1,43 @@
 import TestModule from "./TestModule";
+import Type from "../src/Stopwatch.Event";
 
+describe('Stopwatch.Event.ts', () => {
+
+    test('Type', () => {
+
+        expect(Type.Update).toBe('update');
+        expect(Type.Tick).toBe('tick');
+        expect(Type.Alarm).toBe('alarm');
+
+    });
+
+    test('getSynonyms', () => {
+
+        const synonyms = Type.getSynonyms();
+        expect(synonyms).toStrictEqual([
+            [ "update", "tick" ],
+            [ "alarm" ]
+        ]);
+
+    });
+
+    test('getSynonym', () => {
+
+        const updateSynonyms = Type.getSynonym('update');
+        expect(updateSynonyms).toStrictEqual([ "update", "tick" ]);
+
+        const tickSynonyms = Type.getSynonym('tick');
+        expect(tickSynonyms).toStrictEqual([ "update", "tick" ]);
+
+        const alarmSynonyms = Type.getSynonym('alarm');
+        expect(alarmSynonyms).toStrictEqual([ "alarm" ]);
+
+        const noSynonyms = Type.getSynonym('no');
+        expect(noSynonyms).toStrictEqual([]);
+
+    });
+
+});
 
 TestModule.Modules.forEach( ( testModule ) => {
 

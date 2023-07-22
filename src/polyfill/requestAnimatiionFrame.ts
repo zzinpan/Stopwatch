@@ -7,12 +7,7 @@
 const rAF: any = "requestAnimationFrame";
 const cAF: any = "cancelAnimationFrame";
 
-let _this: any = this;
-
-// esm
-if( _this == null ){
-    _this = {};
-}
+let _this: any = this || {};
 
 const vendors: string[] = ['ms', 'moz', 'webkit', 'o'];
 let lastTime: number = 0;
