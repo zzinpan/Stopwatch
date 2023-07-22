@@ -259,11 +259,7 @@ var Stopwatch = (function () {
     // MIT license
     var rAF = "requestAnimationFrame";
     var cAF = "cancelAnimationFrame";
-    var _this = undefined;
-    // esm
-    if (_this == null) {
-        _this = {};
-    }
+    var _this = undefined || {};
     var vendors = ['ms', 'moz', 'webkit', 'o'];
     var lastTime = 0;
     var x;
