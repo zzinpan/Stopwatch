@@ -106,6 +106,9 @@ https://zzinpan.github.io/Stopwatch.js/docs/classes/Stopwatch_AlarmType.default.
 If you are curious about the full code:  
 https://zzinpan.github.io/Stopwatch.js/docs/
 
+If you want to see a test coverage:
+https://zzinpan.github.io/Stopwatch.js/coverage/lcov-report/index.html
+
 <br>
 
 ---
