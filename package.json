@@ -3,6 +3,7 @@
   "version": "0.7.0",
   "description": "Typical stopwatch JavaScript library",
   "main": "dist/umd/Stopwatch.min.js",
+  "files": ["dist"],
   "keywords": [
     "stopwatch",
     "stopwatch.js",
